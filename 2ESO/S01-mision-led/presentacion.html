@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S01 — Misión LED</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #1a1a1f;
+    color: #f5f3ec;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 4vh 6vw;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    text-align: center;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* DIAPOSITIVA 1 - Portada */
+  .slide-1 {
+    background: radial-gradient(circle at 70% 30%, #1a3a3a 0%, #1a1a1f 70%);
+  }
+
+  .slide-1 .led-hero {
+    width: 220px;
+    height: 220px;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+
+  .slide-1 .led-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #ff8a5c 0%, #E24B4A 50%, #8B1A1A 100%);
+    box-shadow: 0 0 60px rgba(226, 75, 74, 0.6);
+    animation: led-blink 2s ease-in-out infinite;
+  }
+
+  @keyframes led-blink {
+    0%, 49% {
+      opacity: 1;
+      box-shadow: 0 0 60px rgba(226, 75, 74, 0.8), 0 0 120px rgba(226, 75, 74, 0.4);
+    }
+    50%, 100% {
+      opacity: 0.25;
+      box-shadow: 0 0 10px rgba(226, 75, 74, 0.2);
+    }
+  }
+
+  .slide-1 h1 {
+    font-size: 5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .slide-1 .subtitle {
+    font-size: 1.8rem;
+    color: #9FE1CB;
+    font-weight: 300;
+  }
+
+  .slide-1 .badge {
+    margin-top: 3rem;
+    padding: 0.6rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    font-size: 1.1rem;
+    color: #d4d0e6;
+  }
+
+  /* DIAPOSITIVA 2 - El método profesional */
+  .slide-2 {
+    background: #1a1a1f;
+  }
+
+  .slide-2 h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    color: #ffd966;
+  }
+
+  .slide-2 .intro {
+    font-size: 1.2rem;
+    color: #b8b5cc;
+    margin-bottom: 3rem;
+    max-width: 800px;
+  }
+
+  .method-flow {
+    display: flex;
+    gap: 1.5rem;
+    align-items: stretch;
+    justify-content: center;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .method-step {
+    background: #2a2a35;
+    border: 2px solid #3d3d4a;
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    flex: 1;
+    position: relative;
+    transition: transform 0.3s;
+  }
+
+  .method-step.step-entender { border-color: #E24B4A; }
+  .method-step.step-disenar { border-color: #EF9F27; }
+  .method-step.step-programar { border-color: #1D9E75; }
+
+  .method-step-num {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background: #1a1a1f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border: 2px solid;
+  }
+
+  .step-entender .method-step-num { border-color: #E24B4A; color: #E24B4A; }
+  .step-disenar .method-step-num { border-color: #EF9F27; color: #EF9F27; }
+  .step-programar .method-step-num { border-color: #1D9E75; color: #1D9E75; }
+
+  .method-step-icon {
+    font-size: 3.5rem;
+    margin: 1rem 0;
+  }
+
+  .method-step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+
+  .step-entender h3 { color: #ff8a7a; }
+  .step-disenar h3 { color: #f5b95e; }
+  .step-programar h3 { color: #5DCAA5; }
+
+  .method-step p {
+    font-size: 1rem;
+    color: #b8b5cc;
+    line-height: 1.5;
+  }
+
+  .method-arrow {
+    display: flex;
+    align-items: center;
+    color: #6b6860;
+    font-size: 2rem;
+  }
+
+  /* DIAPOSITIVA 3 - La misión */
+  .slide-3 {
+    background: #1a1a1f;
+  }
+
+  .slide-3 h2 {
+    font-size: 2.8rem;
+    margin-bottom: 3rem;
+    color: #ffd966;
+  }
+
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1300px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .mission-visual {
+    background: #2a2a35;
+    border: 2px solid #3d3d4a;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .mission-visual-led {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 0 auto 2rem;
+    background: radial-gradient(circle at 35% 35%, #ff8a5c 0%, #E24B4A 50%, #8B1A1A 100%);
+    animation: led-blink 2s ease-in-out infinite;
+    box-shadow: 0 0 40px rgba(226, 75, 74, 0.5);
+  }
+
+  .pattern {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #d4d0e6;
+  }
+
+  .pattern-box {
+    background: #1a1a1f;
+    border: 1px solid #3d3d4a;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pattern-box.on {
+    color: #ff8a7a;
+    border-color: #E24B4A;
+  }
+
+  .pattern-box.off {
+    color: #6b6860;
+  }
+
+  .mission-rules {
+    text-align: left;
+  }
+
+  .mission-rules h3 {
+    font-size: 1.6rem;
+    color: #ffd966;
+    margin-bottom: 1.5rem;
+  }
+
+  .mission-rules ul {
+    list-style: none;
+    font-size: 1.3rem;
+    line-height: 2;
+  }
+
+  .mission-rules li {
+    padding-left: 2.5rem;
+    position: relative;
+    margin-bottom: 0.5rem;
+  }
+
+  .mission-rules li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #ffd966;
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+
+  .mission-rules em {
+    color: #5DCAA5;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* DIAPOSITIVA 4 - Plan de batalla */
+  .slide-4 {
+    background: linear-gradient(135deg, #1d9e75 0%, #0F6E56 100%);
+  }
+
+  .slide-4 h2 {
+    font-size: 3.5rem;
+    margin-bottom: 3rem;
+    font-weight: 700;
+  }
+
+  .battle-plan {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .battle-step {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    font-size: 1.15rem;
+    backdrop-filter: blur(10px);
+    min-width: 170px;
+    text-align: center;
+  }
+
+  .battle-step strong {
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .battle-arrow {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .warning {
+    font-size: 1.4rem;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    border-left: 4px solid #ffd966;
+  }
+
+  .warning strong {
+    color: #ffd966;
+  }
+
+  /* Navegación */
+  .nav {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .nav button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .nav button:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .counter {
+    font-size: 1rem;
+    padding: 0 1rem;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .dots {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+    z-index: 100;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .dot.active {
+    background: #ffd966;
+    width: 30px;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+
+<!-- DIAPOSITIVA 1 - PORTADA -->
+<div class="slide slide-1 active">
+  <div class="led-hero">
+    <div class="led-circle"></div>
+  </div>
+  <h1>Misión LED</h1>
+  <p class="subtitle">Tu primer proyecto de electrónica profesional</p>
+  <div class="badge">CyR · 2º ESO · Sesión 01</div>
+</div>
+
+<!-- DIAPOSITIVA 2 - EL MÉTODO -->
+<div class="slide slide-2">
+  <h2>El método profesional</h2>
+  <p class="intro">A partir de hoy, no programamos nada sin planificarlo antes. Tres fases, siempre en este orden.</p>
+  <div class="method-flow">
+    <div class="method-step step-entender">
+      <div class="method-step-num">1</div>
+      <div class="method-step-icon">🧠</div>
+      <h3>Entender</h3>
+      <p>¿Qué queremos que haga? ¿Qué componentes necesitamos?</p>
+    </div>
+    <div class="method-arrow">→</div>
+    <div class="method-step step-disenar">
+      <div class="method-step-num">2</div>
+      <div class="method-step-icon">✏️</div>
+      <h3>Diseñar</h3>
+      <p>¿Cómo conectamos todo? Dibujo del circuito antes de montarlo.</p>
+    </div>
+    <div class="method-arrow">→</div>
+    <div class="method-step step-programar">
+      <div class="method-step-num">3</div>
+      <div class="method-step-icon">💻</div>
+      <h3>Programar</h3>
+      <p>Ahora sí, abrimos Tinkercad y damos vida al circuito.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DIAPOSITIVA 3 - LA MISIÓN -->
+<div class="slide slide-3">
+  <h2>🎯 Tu misión</h2>
+  <div class="mission-grid">
+    <div class="mission-visual">
+      <div class="mission-visual-led"></div>
+      <div class="pattern">
+        <span class="pattern-box on">1 s ON</span>
+        <span class="pattern-box off">1 s OFF</span>
+        <span class="pattern-box on">1 s ON</span>
+        <span class="pattern-box off">1 s OFF</span>
+        <span style="color: #6b6860;">...</span>
+      </div>
+    </div>
+    <div class="mission-rules">
+      <h3>Programa un LED que parpadee así</h3>
+      <ul>
+        <li>1 segundo <em>encendido</em></li>
+        <li>1 segundo <em>apagado</em></li>
+        <li>Repite <em>indefinidamente</em></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- DIAPOSITIVA 4 - PLAN DE BATALLA -->
+<div class="slide slide-4">
+  <h2>Plan de batalla</h2>
+  <div class="battle-plan">
+    <div class="battle-step">
+      <strong>1</strong>
+      Rellenar<br>Entender
+    </div>
+    <div class="battle-arrow">→</div>
+    <div class="battle-step">
+      <strong>2</strong>
+      Rellenar<br>Diseñar
+    </div>
+    <div class="battle-arrow">→</div>
+    <div class="battle-step">
+      <strong>3</strong>
+      Visto bueno<br>del profe
+    </div>
+    <div class="battle-arrow">→</div>
+    <div class="battle-step">
+      <strong>4</strong>
+      Montar y<br>programar
+    </div>
+  </div>
+  <div class="warning">
+    ⚠️ <strong>Importante:</strong> nadie toca Tinkercad sin haber completado Entender y Diseñar.
+  </div>
+</div>
+
+<div class="dots">
+  <span class="dot active" data-slide="0"></span>
+  <span class="dot" data-slide="1"></span>
+  <span class="dot" data-slide="2"></span>
+  <span class="dot" data-slide="3"></span>
+</div>
+
+<div class="nav">
+  <button id="prev">←</button>
+  <span class="counter"><span id="current">1</span> / 4</span>
+  <button id="next">→</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const prevBtn = document.getElementById('prev');
+  const nextBtn = document.getElementById('next');
+  const currentSpan = document.getElementById('current');
+  let current = 0;
+
+  function show(n) {
+    slides.forEach((s, i) => s.classList.toggle('active', i === n));
+    dots.forEach((d, i) => d.classList.toggle('active', i === n));
+    currentSpan.textContent = n + 1;
+    prevBtn.disabled = n === 0;
+    nextBtn.disabled = n === slides.length - 1;
+    current = n;
+  }
+
+  prevBtn.addEventListener('click', () => { if (current > 0) show(current - 1); });
+  nextBtn.addEventListener('click', () => { if (current < slides.length - 1) show(current + 1); });
+
+  dots.forEach(d => {
+    d.addEventListener('click', () => show(parseInt(d.dataset.slide)));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { if (current < slides.length - 1) show(current + 1); }
+    if (e.key === 'ArrowLeft') { if (current > 0) show(current - 1); }
+  });
+
+  show(0);
+</script>
+
+</body>
+</html>

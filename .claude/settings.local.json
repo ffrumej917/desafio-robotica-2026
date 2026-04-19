@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh auth *)"
+      "Bash(gh auth *)",
+      "Bash(gh api *)",
+      "Read(//c/Users/user/Desktop/**)",
+      "Read(//c/Users/user/OneDrive/Escritorio/parche-s01-2eso/**)",
+      "Read(//c/Users/user/OneDrive/Escritorio/**)",
+      "Bash(cp -r parche-s01-2eso/2ESO/S01-mision-led desafio-robotica-2026/2ESO/)",
+      "Bash(cp parche-s01-2eso/index.html desafio-robotica-2026/index.html)"
     ]
   }
 }

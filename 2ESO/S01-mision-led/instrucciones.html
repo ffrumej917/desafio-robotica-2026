@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S01 2º ESO — Instrucciones paso a paso</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal-dark: #0F6E56;
+    --teal-light: #E1F5EE;
+    --coral-dark: #993C1D;
+    --coral-light: #FAECE7;
+    --amber-dark: #854F0B;
+    --amber-light: #FAEEDA;
+    --purple-dark: #534AB7;
+    --purple-light: #EEEDFE;
+    --gray-bg: #faf9f6;
+    --gray-border: #e0ddd3;
+    --gray-text: #6b6860;
+    --text: #2b2a27;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--gray-bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  header .tag {
+    display: inline-block;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    margin: 0 0 0.5rem;
+    color: var(--text);
+  }
+
+  header p {
+    font-size: 1rem;
+    color: var(--gray-text);
+    margin: 0;
+  }
+
+  .paso {
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+    scroll-margin-top: 20px;
+  }
+
+  .paso-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .paso-num {
+    width: 40px;
+    height: 40px;
+    background: var(--teal-dark);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .paso-titulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .paso-contenido {
+    padding-left: 54px;
+  }
+
+  .paso-contenido p {
+    margin-bottom: 0.75rem;
+  }
+
+  .paso-contenido ul, .paso-contenido ol {
+    margin: 0.5rem 0 0.75rem 1.5rem;
+  }
+
+  .paso-contenido li {
+    margin-bottom: 0.35rem;
+  }
+
+  kbd {
+    background: #f0ede3;
+    border: 1px solid var(--gray-border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: -apple-system, monospace;
+    font-size: 0.88em;
+    font-weight: 500;
+    box-shadow: 0 1px 0 var(--gray-border);
+  }
+
+  code {
+    background: #f0ede3;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 0.9em;
+    color: var(--teal-dark);
+  }
+
+  pre {
+    background: #2a2a35;
+    color: #f5f3ec;
+    padding: 1.2rem 1.5rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    margin: 1rem 0;
+  }
+
+  pre .comment { color: #8b86a8; font-style: italic; }
+  pre .keyword { color: #ff8a7a; }
+  pre .function { color: #f5b95e; }
+  pre .number { color: #5DCAA5; }
+
+  .tip-box {
+    background: var(--amber-light);
+    border-left: 4px solid var(--amber-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+  }
+
+  .tip-box strong { color: var(--amber-dark); }
+  .tip-box::before { content: "💡 "; margin-right: 4px; }
+
+  .check-box {
+    background: var(--teal-light);
+    border-left: 4px solid var(--teal-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+  }
+
+  .check-box::before { content: "✅ "; margin-right: 4px; }
+  .check-box strong { color: var(--teal-dark); }
+
+  .error-box {
+    background: var(--coral-light);
+    border-left: 4px solid var(--coral-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+  }
+
+  .error-box::before { content: "⚠️ "; margin-right: 4px; }
+  .error-box strong { color: var(--coral-dark); }
+
+  .circuito-container {
+    background: #1a1a1f;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+  }
+
+  .circuito-container svg {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .circuito-label {
+    color: #b8b5cc;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 0.75rem;
+    font-style: italic;
+  }
+
+  .pasos-nav {
+    position: sticky;
+    top: 1rem;
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    z-index: 10;
+  }
+
+  .pasos-nav a {
+    padding: 4px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--gray-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: var(--gray-bg);
+    transition: all 0.2s;
+  }
+
+  .pasos-nav a:hover {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+  }
+
+  .ampliacion {
+    background: linear-gradient(135deg, #f5f0ff 0%, #fff 100%);
+    border: 2px dashed var(--purple-dark);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 2rem;
+  }
+
+  .ampliacion h2 {
+    color: var(--purple-dark);
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .final-check {
+    background: var(--teal-dark);
+    color: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin: 2rem 0 1rem;
+    text-align: center;
+  }
+
+  .final-check h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .warning-prerequisito {
+    background: var(--coral-light);
+    border: 2px solid var(--coral-dark);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .warning-prerequisito strong {
+    color: var(--coral-dark);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  a { color: var(--teal-dark); font-weight: 500; }
+
+  @media (max-width: 600px) {
+    .paso-contenido { padding-left: 0; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="tag">CyR 2º ESO · S01</span>
+  <h1>Instrucciones paso a paso</h1>
+  <p>Misión LED: programa tu primer parpadeo — Tinkercad</p>
+</header>
+
+<div class="warning-prerequisito">
+  <strong>⚠️ ANTES de abrir esta guía:</strong>
+  Tenéis que haber completado las secciones <strong>ENTENDER</strong> y <strong>DISEÑAR</strong> de la ficha de reto. Si aún no las habéis hecho, volved a la ficha y completadlas primero. El profesor os tiene que dar luz verde antes de tocar Tinkercad.
+</div>
+
+<nav class="pasos-nav">
+  <a href="#paso-1">1. Abrir Tinkercad</a>
+  <a href="#paso-2">2. Componentes</a>
+  <a href="#paso-3">3. Montar</a>
+  <a href="#paso-4">4. Código</a>
+  <a href="#paso-5">5. Simular</a>
+  <a href="#paso-6">6. Guardar</a>
+</nav>
+
+<!-- PASO 1 -->
+<section class="paso" id="paso-1">
+  <div class="paso-header">
+    <div class="paso-num">1</div>
+    <div class="paso-titulo">Abrir Tinkercad y crear un circuito nuevo</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Abrid el navegador y entrad en <a href="https://www.tinkercad.com" target="_blank">tinkercad.com</a>.</p>
+    <ol>
+      <li>Iniciad sesión con vuestra cuenta (si no tenéis, consultad al profe).</li>
+      <li>En el panel izquierdo, pulsad en <strong>"Circuitos"</strong>.</li>
+      <li>Pulsad en <strong>"+ Nuevo circuito"</strong>.</li>
+      <li>Se abrirá un área de trabajo en blanco con un panel de componentes a la derecha.</li>
+    </ol>
+    <div class="tip-box">
+      <strong>Interfaz de Tinkercad:</strong> a la izquierda tenéis el lienzo donde montáis el circuito. A la derecha, el panel con todos los componentes. Arriba a la derecha están los botones "Código" e "Iniciar simulación".
+    </div>
+  </div>
+</section>
+
+<!-- PASO 2 -->
+<section class="paso" id="paso-2">
+  <div class="paso-header">
+    <div class="paso-num">2</div>
+    <div class="paso-titulo">Identificar los componentes que necesitáis</div>
+  </div>
+  <div class="paso-contenido">
+    <p>En el panel derecho, buscad estos 4 componentes (podéis usar el buscador):</p>
+    <ul>
+      <li><strong>Arduino Uno R3</strong> — el cerebro del circuito.</li>
+      <li><strong>Protoboard pequeña</strong> (<em>small breadboard</em>) — la placa para conectar cables sin soldar.</li>
+      <li><strong>LED</strong> — nuestro actuador; el componente que se va a encender y apagar.</li>
+      <li><strong>Resistencia</strong> — para proteger el LED (imprescindible).</li>
+    </ul>
+    <div class="error-box">
+      <strong>¡Nunca conectéis un LED directamente a 5V!</strong> Sin la resistencia, el LED recibe más corriente de la que puede soportar y <strong>se quema</strong>. Esta es la razón nº 1 por la que se estropean los LEDs en la vida real.
+    </div>
+    <div class="tip-box">
+      <strong>Valor de la resistencia:</strong> usaremos <strong>220 Ω</strong> (color naranja-rojo-marrón-dorado). Al soltar la resistencia en la protoboard, Tinkercad os permite elegir el valor en el recuadro que aparece.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 3 -->
+<section class="paso" id="paso-3">
+  <div class="paso-header">
+    <div class="paso-num">3</div>
+    <div class="paso-titulo">Montar el circuito</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Arrastrad los componentes al lienzo y conectadlos según este esquema:</p>
+
+    <div class="circuito-container">
+      <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+        <!-- Fondo -->
+        <rect width="700" height="400" fill="#1a1a1f"/>
+
+        <!-- ARDUINO UNO (izquierda) -->
+        <g id="arduino">
+          <rect x="40" y="100" width="230" height="220" rx="8" fill="#00979c" stroke="#005f60" stroke-width="2"/>
+          <!-- Etiqueta -->
+          <text x="155" y="128" text-anchor="middle" fill="white" font-size="14" font-weight="600" font-family="Arial">ARDUINO UNO</text>
+
+          <!-- Pines digitales (arriba) -->
+          <g id="digital-pins">
+            <!-- Header negro -->
+            <rect x="55" y="140" width="200" height="22" fill="#1a1a1f" stroke="#444" stroke-width="0.5"/>
+            <!-- Pines individuales -->
+            <g font-family="Arial" font-size="8" fill="#8a8a8a" text-anchor="middle">
+              <text x="65" y="155">13</text>
+              <text x="80" y="155">12</text>
+              <text x="95" y="155">11</text>
+              <text x="110" y="155">10</text>
+              <text x="125" y="155">9</text>
+              <text x="140" y="155">8</text>
+              <text x="160" y="155">7</text>
+              <text x="175" y="155">6</text>
+              <text x="190" y="155">5</text>
+              <text x="205" y="155">4</text>
+              <text x="220" y="155">3</text>
+              <text x="235" y="155">2</text>
+            </g>
+            <!-- GND destacado -->
+            <rect x="115" y="142" width="16" height="18" fill="none" stroke="#ffd966" stroke-width="1.5"/>
+            <text x="123" y="175" text-anchor="middle" fill="#ffd966" font-size="9" font-family="Arial" font-weight="600">GND</text>
+            <!-- Pin 13 destacado -->
+            <rect x="57" y="142" width="16" height="18" fill="none" stroke="#ff8a7a" stroke-width="1.5"/>
+            <text x="65" y="175" text-anchor="middle" fill="#ff8a7a" font-size="9" font-family="Arial" font-weight="600">~13</text>
+          </g>
+
+          <!-- Botón reset (decorativo) -->
+          <rect x="65" y="195" width="18" height="18" rx="2" fill="#ff8a7a" stroke="#993C1D"/>
+
+          <!-- Chip central -->
+          <rect x="100" y="215" width="100" height="40" fill="#1a1a1f" stroke="#444" stroke-width="0.5"/>
+          <text x="150" y="240" text-anchor="middle" fill="#8a8a8a" font-size="9" font-family="Arial">ATmega328P</text>
+
+          <!-- USB (izquierda saliente) -->
+          <rect x="20" y="115" width="20" height="30" fill="#c0c0c0" stroke="#808080"/>
+
+          <!-- Pines analógicos (abajo) -->
+          <g id="analog-pins">
+            <rect x="80" y="285" width="100" height="20" fill="#1a1a1f" stroke="#444" stroke-width="0.5"/>
+            <text x="130" y="299" text-anchor="middle" fill="#8a8a8a" font-size="8" font-family="Arial">A0  A1  A2  A3  A4  A5</text>
+          </g>
+        </g>
+
+        <!-- PROTOBOARD (derecha) -->
+        <g id="breadboard">
+          <rect x="330" y="80" width="330" height="260" rx="6" fill="#e8e4d5" stroke="#b5b0a0" stroke-width="1"/>
+
+          <!-- Rieles de alimentación superior -->
+          <line x1="345" y1="100" x2="645" y2="100" stroke="#E24B4A" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+          <text x="340" y="104" fill="#E24B4A" font-size="9" font-family="Arial" text-anchor="end" font-weight="600">+</text>
+          <line x1="345" y1="115" x2="645" y2="115" stroke="#3B8BD4" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+          <text x="340" y="119" fill="#3B8BD4" font-size="9" font-family="Arial" text-anchor="end" font-weight="600">−</text>
+
+          <!-- Agujeros protoboard (simplificado - solo la zona relevante) -->
+          <g fill="#1a1a1f" opacity="0.3">
+            <!-- Fila 5 (fila donde va el ánodo del LED) -->
+            <circle cx="380" cy="180" r="2"/>
+            <circle cx="400" cy="180" r="2"/>
+            <circle cx="420" cy="180" r="2"/>
+            <circle cx="440" cy="180" r="2"/>
+            <circle cx="460" cy="180" r="2"/>
+            <!-- Fila 8 (fila donde va el cátodo del LED) -->
+            <circle cx="380" cy="210" r="2"/>
+            <circle cx="400" cy="210" r="2"/>
+            <circle cx="420" cy="210" r="2"/>
+            <circle cx="440" cy="210" r="2"/>
+            <circle cx="460" cy="210" r="2"/>
+            <!-- Más filas -->
+            <circle cx="380" cy="240" r="2"/>
+            <circle cx="420" cy="240" r="2"/>
+            <circle cx="460" cy="240" r="2"/>
+          </g>
+
+          <!-- Números de fila -->
+          <g fill="#888" font-size="8" font-family="Arial">
+            <text x="362" y="184">5</text>
+            <text x="362" y="214">8</text>
+            <text x="362" y="244">11</text>
+          </g>
+
+          <!-- Canal central -->
+          <line x1="345" y1="220" x2="645" y2="220" stroke="#b5b0a0" stroke-width="0.5"/>
+
+          <!-- Rieles de alimentación inferior -->
+          <line x1="345" y1="315" x2="645" y2="315" stroke="#E24B4A" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+          <line x1="345" y1="330" x2="645" y2="330" stroke="#3B8BD4" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+          <text x="340" y="319" fill="#E24B4A" font-size="9" font-family="Arial" text-anchor="end" font-weight="600">+</text>
+          <text x="340" y="334" fill="#3B8BD4" font-size="9" font-family="Arial" text-anchor="end" font-weight="600">−</text>
+        </g>
+
+        <!-- LED en la protoboard -->
+        <g id="led">
+          <!-- Cuerpo del LED (círculo rojo) -->
+          <circle cx="420" cy="170" r="12" fill="#E24B4A" stroke="#7a1818" stroke-width="1.5" opacity="0.9"/>
+          <circle cx="420" cy="170" r="8" fill="#ff8a7a" opacity="0.5"/>
+          <!-- Patas del LED -->
+          <!-- Ánodo (+): larga, va a fila 5 -->
+          <line x1="417" y1="180" x2="417" y2="210" stroke="#c0c0c0" stroke-width="1.5"/>
+          <circle cx="417" cy="210" r="2" fill="#c0c0c0"/>
+          <text x="408" y="175" fill="white" font-size="9" font-family="Arial" font-weight="600">+</text>
+          <!-- Cátodo (−): corta, va a fila 8 -->
+          <line x1="423" y1="180" x2="423" y2="195" stroke="#c0c0c0" stroke-width="1.5"/>
+          <circle cx="423" cy="195" r="2" fill="#c0c0c0"/>
+          <text x="432" y="175" fill="white" font-size="9" font-family="Arial" font-weight="600">−</text>
+        </g>
+
+        <!-- Resistencia (horizontal en protoboard) -->
+        <g id="resistencia">
+          <!-- Cuerpo -->
+          <rect x="450" y="205" width="60" height="10" rx="5" fill="#c9a878" stroke="#7a6040" stroke-width="1"/>
+          <!-- Bandas de color (220Ω: rojo, rojo, marrón, dorado) -->
+          <rect x="460" y="205" width="3" height="10" fill="#E24B4A"/>
+          <rect x="467" y="205" width="3" height="10" fill="#E24B4A"/>
+          <rect x="474" y="205" width="3" height="10" fill="#7a3f1a"/>
+          <rect x="488" y="205" width="3" height="10" fill="#d4a72c"/>
+          <!-- Patas -->
+          <line x1="450" y1="210" x2="440" y2="210" stroke="#c0c0c0" stroke-width="1.5"/>
+          <line x1="510" y1="210" x2="520" y2="210" stroke="#c0c0c0" stroke-width="1.5"/>
+          <circle cx="440" cy="210" r="2" fill="#c0c0c0"/>
+          <circle cx="520" cy="210" r="2" fill="#c0c0c0"/>
+          <!-- Etiqueta -->
+          <text x="480" y="195" text-anchor="middle" fill="white" font-size="9" font-family="Arial" font-weight="600">220 Ω</text>
+        </g>
+
+        <!-- CABLES -->
+        <!-- Cable rojo: pin 13 de Arduino → ánodo del LED (fila 5) -->
+        <path d="M 65 148 L 65 90 L 380 90 L 380 180 L 417 180"
+              stroke="#E24B4A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Cable negro/azul: cátodo resistencia → GND de Arduino -->
+        <path d="M 520 210 L 540 210 L 540 250 L 250 250 L 250 175 L 123 175 L 123 160"
+              stroke="#3B8BD4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+        <!-- Etiquetas de cables -->
+        <text x="220" y="85" fill="#E24B4A" font-size="11" font-family="Arial" font-weight="600">Pin 13 → LED (+)</text>
+        <text x="320" y="263" fill="#3B8BD4" font-size="11" font-family="Arial" font-weight="600">Resistencia → GND</text>
+      </svg>
+      <div class="circuito-label">Esquema del circuito: Arduino + protoboard + LED + resistencia 220Ω</div>
+    </div>
+
+    <p><strong>Paso a paso, orden de montaje:</strong></p>
+    <ol>
+      <li>Arrastrad el <strong>Arduino Uno R3</strong> al lienzo, a la izquierda.</li>
+      <li>Arrastrad la <strong>protoboard pequeña</strong> a la derecha del Arduino.</li>
+      <li>Arrastrad un <strong>LED</strong> y colocadlo cruzando el canal central de la protoboard: la pata larga (<strong>ánodo, +</strong>) en una fila, la corta (<strong>cátodo, −</strong>) en otra.</li>
+      <li>Arrastrad una <strong>resistencia</strong> y, en el recuadro que aparece, cambiad el valor a <strong>220 Ω</strong>. Colocadla de forma que una pata toque la misma fila que el cátodo del LED.</li>
+      <li>Haced clic en el <strong>pin 13</strong> del Arduino y arrastrad un cable hasta la fila del <strong>ánodo del LED</strong>. Será un cable rojo.</li>
+      <li>Haced clic en la pata libre de la resistencia y arrastrad un cable hasta un pin <strong>GND</strong> del Arduino. Será un cable negro o azul.</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>Polaridad del LED:</strong> la pata <strong>larga</strong> es el + (ánodo, se conecta al pin 13). La pata <strong>corta</strong> es el − (cátodo, se conecta a GND a través de la resistencia). Si lo conectáis al revés, el LED no se encenderá (pero no se estropea).
+    </div>
+
+    <div class="check-box">
+      <strong>Comprobación visual:</strong> desde el pin 13 sale un cable rojo al LED. Del LED sale a una resistencia. De la resistencia sale un cable azul/negro de vuelta al GND del Arduino. Si esto no es así, el circuito no funcionará.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 4 -->
+<section class="paso" id="paso-4">
+  <div class="paso-header">
+    <div class="paso-num">4</div>
+    <div class="paso-titulo">Programar el Arduino</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Pulsad el botón <strong>"Código"</strong> arriba a la derecha. Se abrirá un panel con el editor.</p>
+    <ol>
+      <li>Arriba del editor tenéis un selector. Cambiadlo de <strong>"Bloques"</strong> a <strong>"Texto"</strong>.</li>
+      <li>Cuando os pregunte si queréis continuar (porque borrará el código de ejemplo en bloques), decid que sí.</li>
+      <li>Borrad todo el código que aparezca por defecto.</li>
+      <li>Escribid exactamente este código:</li>
+    </ol>
+
+<pre><span class="comment">// S01 2º ESO - Misión LED</span>
+<span class="comment">// El LED parpadea: 1s encendido, 1s apagado</span>
+
+<span class="keyword">void</span> <span class="function">setup</span>() {
+  <span class="function">pinMode</span>(<span class="number">13</span>, OUTPUT);
+}
+
+<span class="keyword">void</span> <span class="function">loop</span>() {
+  <span class="function">digitalWrite</span>(<span class="number">13</span>, HIGH);   <span class="comment">// enciende el LED</span>
+  <span class="function">delay</span>(<span class="number">1000</span>);               <span class="comment">// espera 1 segundo</span>
+  <span class="function">digitalWrite</span>(<span class="number">13</span>, LOW);    <span class="comment">// apaga el LED</span>
+  <span class="function">delay</span>(<span class="number">1000</span>);               <span class="comment">// espera 1 segundo</span>
+}</pre>
+
+    <div class="tip-box">
+      <strong>¿Qué hace cada parte?</strong>
+      <ul style="margin-top:0.5rem;">
+        <li><code>setup()</code> se ejecuta <strong>una sola vez</strong> al arrancar. Aquí configuramos el pin 13 como salida.</li>
+        <li><code>loop()</code> se ejecuta <strong>una y otra vez</strong> sin parar. Aquí programamos el parpadeo.</li>
+        <li><code>digitalWrite(13, HIGH)</code> = "pon el pin 13 a 5V" (enciende el LED).</li>
+        <li><code>digitalWrite(13, LOW)</code> = "pon el pin 13 a 0V" (apaga el LED).</li>
+        <li><code>delay(1000)</code> = "espera 1000 milisegundos" = 1 segundo.</li>
+      </ul>
+    </div>
+
+    <div class="error-box">
+      <strong>Errores típicos de sintaxis:</strong>
+      <ul style="margin-top:0.5rem;">
+        <li>Olvidar el <strong>punto y coma (;)</strong> al final de cada instrucción.</li>
+        <li>Escribir <strong>Delay</strong> en lugar de <strong>delay</strong> (Arduino distingue mayúsculas).</li>
+        <li>Cambiar el pin en <code>pinMode</code> pero no en <code>digitalWrite</code>, o viceversa.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PASO 5 -->
+<section class="paso" id="paso-5">
+  <div class="paso-header">
+    <div class="paso-num">5</div>
+    <div class="paso-titulo">Simular el circuito</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Ahora a probar:</p>
+    <ol>
+      <li>Pulsad el botón <strong>"Iniciar simulación"</strong> arriba a la derecha.</li>
+      <li>Si todo está bien montado y programado, el LED debe empezar a parpadear: 1 segundo encendido, 1 segundo apagado, repitiéndose sin parar.</li>
+      <li>Si queréis detener la simulación, pulsad <strong>"Detener simulación"</strong>.</li>
+    </ol>
+
+    <div class="error-box">
+      <strong>El LED no se enciende:</strong>
+      <ul style="margin-top:0.5rem;">
+        <li>Comprobad la <strong>polaridad del LED</strong>: pata larga al pin 13, pata corta a la resistencia.</li>
+        <li>Comprobad que el cable rojo sale del <strong>pin 13</strong>, no de otro pin.</li>
+        <li>Comprobad que el otro extremo llega a un pin <strong>GND</strong> (tiene que poner GND en el Arduino).</li>
+        <li>Comprobad que la <strong>resistencia está conectada</strong> en la misma fila que el cátodo.</li>
+      </ul>
+    </div>
+
+    <div class="error-box">
+      <strong>El LED está encendido fijo (no parpadea):</strong>
+      <ul style="margin-top:0.5rem;">
+        <li>Revisad que en el código tenéis <strong>dos <code>digitalWrite</code></strong>: uno con HIGH y otro con LOW.</li>
+        <li>Revisad que los <code>delay(1000)</code> están entre medias.</li>
+      </ul>
+    </div>
+
+    <div class="error-box">
+      <strong>Aparece error al compilar:</strong>
+      <ul style="margin-top:0.5rem;">
+        <li>Revisad letra a letra: <code>pinMode</code>, <code>digitalWrite</code>, <code>delay</code>, <code>HIGH</code>, <code>LOW</code>, <code>OUTPUT</code>.</li>
+        <li>Cada línea dentro de <code>setup()</code> y <code>loop()</code> debe acabar en punto y coma.</li>
+        <li>Todas las llaves <code>{ }</code> deben estar abiertas y cerradas.</li>
+      </ul>
+    </div>
+
+    <div class="check-box">
+      <strong>Cuando funcione:</strong> tomaos un segundo para mirar el LED parpadear y pensar: acabáis de programar un circuito electrónico. Enhorabuena.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 6 -->
+<section class="paso" id="paso-6">
+  <div class="paso-header">
+    <div class="paso-num">6</div>
+    <div class="paso-titulo">Guardar y compartir el enlace</div>
+  </div>
+  <div class="paso-contenido">
+    <ol>
+      <li>Arriba a la izquierda, cambiad el nombre del proyecto (donde pone algo tipo <em>Copia Ingenioso Waasa</em>). Ponedlo así: <strong>S01 - Misión LED - [Vuestros nombres]</strong>.</li>
+      <li>Pulsad arriba a la derecha en <strong>"Compartir"</strong>.</li>
+      <li>Se abrirá un diálogo. Pulsad en <strong>"Enlace para invitar"</strong>.</li>
+      <li>Activad el permiso de <strong>"Cualquiera con el enlace puede ver"</strong>.</li>
+      <li>Copiad el enlace que aparece.</li>
+      <li>Pegad ese enlace <strong>dentro de la ficha de reto</strong>, en el apartado destacado de entrega.</li>
+    </ol>
+    <div class="tip-box">
+      <strong>Importante:</strong> sin el enlace dentro de la ficha, la entrega está incompleta. La ficha + el enlace dentro de ella <strong>es la única entrega</strong>.
+    </div>
+  </div>
+</section>
+
+<!-- AMPLIACIÓN -->
+<section class="ampliacion">
+  <h2>⭐ ¿Ya habéis terminado? Ampliación: código Morse SOS</h2>
+  <p>Haced una <strong>copia</strong> del proyecto (menú arriba → <em>Duplicar</em>) para no perder el original. En la copia, sustituid el <code>loop()</code> por un patrón de código Morse SOS:</p>
+
+  <ul>
+    <li>3 parpadeos cortos (0,2 s encendido, 0,2 s apagado) = "S"</li>
+    <li>Pausa de 0,5 s</li>
+    <li>3 parpadeos largos (0,6 s encendido, 0,2 s apagado) = "O"</li>
+    <li>Pausa de 0,5 s</li>
+    <li>3 parpadeos cortos otra vez = "S"</li>
+    <li>Pausa de 2 s antes de repetir todo</li>
+  </ul>
+
+  <p style="margin-top:1rem;"><strong>Pistas:</strong></p>
+  <ul>
+    <li>Podéis copiar y pegar el bloque <code>digitalWrite(13, HIGH); delay(...); digitalWrite(13, LOW); delay(...);</code> tantas veces como necesitéis.</li>
+    <li>El <code>delay</code> va en <strong>milisegundos</strong>: 0,2 s = 200, 0,5 s = 500, 2 s = 2000.</li>
+  </ul>
+
+  <div class="tip-box" style="margin-top:1rem">
+    <strong>Reto máximo:</strong> si conseguís el SOS, probad a escribir otra palabra en Morse (vuestro nombre, por ejemplo). Un punto es un parpadeo corto, una raya un parpadeo largo.
+  </div>
+
+  <p style="margin-top:1rem;">Pegad el enlace de este proyecto ampliado en el apartado de ampliación de la ficha.</p>
+</section>
+
+<!-- FINAL -->
+<div class="final-check">
+  <h2>¡Misión cumplida!</h2>
+  <p>Recordad: la entrega es <strong>la ficha de reto rellenada</strong> con el enlace del proyecto Tinkercad dentro.</p>
+</div>
+
+<script>
+  const pasos = document.querySelectorAll('.paso');
+  const navLinks = document.querySelectorAll('.pasos-nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.background = link.getAttribute('href') === '#' + id ? 'var(--teal-light)' : 'var(--gray-bg)';
+          link.style.color = link.getAttribute('href') === '#' + id ? 'var(--teal-dark)' : 'var(--gray-text)';
+        });
+      }
+    });
+  }, { rootMargin: '-100px 0px -60% 0px' });
+
+  pasos.forEach(p => observer.observe(p));
+</script>
+
+</body>
+</html>
