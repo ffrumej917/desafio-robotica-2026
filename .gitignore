@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporales
+*.tmp
+*.bak
+~$*
+
+# LibreOffice / MS Office
+.~lock.*
+
+# Node (por si acaso en el futuro)
+node_modules/

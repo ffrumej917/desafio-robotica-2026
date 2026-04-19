@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desafío Robótica 2026 · CyR IES Punta del Verde</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple: #534AB7;
+    --purple-light: #EEEDFE;
+    --purple-dark: #26215C;
+    --teal: #0F6E56;
+    --teal-light: #E1F5EE;
+    --coral: #993C1D;
+    --coral-light: #FAECE7;
+    --amber: #BA7517;
+    --amber-light: #FAEEDA;
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e0ddd3;
+    --text: #2b2a27;
+    --text-muted: #6b6860;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, #2d2a4a 0%, #1a1a1f 100%);
+    color: white;
+    padding: 4rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50%; right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(127,119,221,0.25) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+    color: #d4d0e6;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: #b8b5cc;
+    max-width: 700px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+
+  .hero-meta-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-meta-label {
+    font-size: 0.75rem;
+    color: #8b86a8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-meta-value {
+    font-size: 1rem;
+    color: white;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* ===== NAV ===== */
+  .nav-tabs {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .nav-tabs-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+  }
+
+  .nav-tabs a {
+    padding: 1.1rem 1.5rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-tabs a:hover {
+    color: var(--purple);
+  }
+
+  .nav-tabs a.active {
+    color: var(--purple);
+    border-bottom-color: var(--purple);
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  section {
+    margin-bottom: 4rem;
+  }
+
+  section h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  section .section-desc {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+  }
+
+  /* ===== CURSO SELECTOR (cards) ===== */
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .course-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .course-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .course-card.course-1::before { background: linear-gradient(90deg, #7F77DD, #534AB7); }
+  .course-card.course-2::before { background: linear-gradient(90deg, #5DCAA5, #0F6E56); }
+
+  .course-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .course-card .platform {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+  }
+
+  .course-card.course-1 .platform {
+    background: var(--purple-light);
+    color: var(--purple-dark);
+  }
+
+  .course-card.course-2 .platform {
+    background: var(--teal-light);
+    color: var(--teal);
+  }
+
+  .course-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .course-stats {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .course-stats strong {
+    color: var(--text);
+  }
+
+  /* ===== SESIONES LIST ===== */
+  .sesiones-bloque {
+    margin-bottom: 3rem;
+  }
+
+  .sesiones-bloque-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+  }
+
+  .sesiones-bloque-badge {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+
+  .fase-1 { background: var(--purple-light); color: var(--purple-dark); }
+  .fase-2 { background: var(--teal-light); color: var(--teal); }
+  .fase-3 { background: var(--coral-light); color: var(--coral); }
+
+  .sesiones-bloque h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .sesion-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 1.1fr 1.1fr;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    align-items: center;
+    transition: all 0.2s;
+  }
+
+  .sesion-row:hover {
+    border-color: var(--purple);
+    box-shadow: 0 2px 8px rgba(83,74,183,0.08);
+  }
+
+  .sesion-row.disabled {
+    opacity: 0.5;
+  }
+
+  .sesion-num {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--purple);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .sesion-concepto {
+    font-weight: 500;
+  }
+
+  .sesion-concepto-desc {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .sesion-acceso {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sesion-acceso-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .sesion-acceso-links {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .btn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .btn-link.primary {
+    background: var(--purple);
+    color: white;
+  }
+
+  .btn-link.primary:hover {
+    background: var(--purple-dark);
+  }
+
+  .btn-link.secondary {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-link.secondary:hover {
+    background: var(--purple-light);
+    color: var(--purple-dark);
+    border-color: var(--purple-light);
+  }
+
+  .btn-link.disabled {
+    background: var(--bg);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .btn-link-big {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.8rem 1.4rem;
+    background: var(--purple);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: background 0.2s;
+  }
+
+  .btn-link-big:hover {
+    background: var(--purple-dark);
+  }
+
+  /* ===== DOCS LINKS ===== */
+  .docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .doc-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.2s;
+    display: block;
+  }
+
+  .doc-card:hover {
+    border-color: var(--purple);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(83,74,183,0.1);
+  }
+
+  .doc-card-title {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .doc-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1a1a1f;
+    color: #b8b5cc;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 4rem;
+  }
+
+  footer a {
+    color: #d4d0e6;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 700px) {
+    .hero { padding: 3rem 1.5rem; }
+    main { padding: 2rem 1.5rem; }
+    .nav-tabs-inner { padding: 0 1rem; overflow-x: auto; }
+    .nav-tabs a { padding: 1rem 1rem; white-space: nowrap; }
+    .sesion-row {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+    .sesion-num { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-badge">🤖 Tercer trimestre · Curso 2025-26</span>
+    <h1>Desafío<br>Robótica 2026</h1>
+    <p class="subtitle">Entrenamiento de programación y pensamiento computacional para Computación y Robótica · IES Punta del Verde</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Niveles</span>
+        <span class="hero-meta-value">1º y 2º ESO</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Plataformas</span>
+        <span class="hero-meta-value">Scratch · Tinkercad</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Duración</span>
+        <span class="hero-meta-value">15 sesiones</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="hero-meta-label">Enfoque</span>
+        <span class="hero-meta-value">Retos autorrealizables</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<nav class="nav-tabs">
+  <div class="nav-tabs-inner">
+    <a href="#inicio" class="active">Inicio</a>
+    <a href="#sesiones-1eso">1º ESO</a>
+    <a href="#sesiones-2eso">2º ESO</a>
+    <a href="#documentacion">Documentación</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ===== INICIO: DOS CURSOS ===== -->
+<section id="inicio">
+  <h2>Dos cursos, un mismo camino</h2>
+  <p class="section-desc">Los alumnos de 1º y 2º trabajan los mismos conceptos en paralelo, cada uno con la herramienta adecuada a su nivel. La narrativa común: <em>nos preparamos para competir en robótica con robots reales el curso que viene</em>.</p>
+
+  <div class="course-grid">
+    <div class="course-card course-1">
+      <h3>1º ESO</h3>
+      <span class="platform">Scratch</span>
+      <p>Primer contacto con la programación. El "robot" es un sprite que obedece instrucciones. Aprenden secuencias, condicionales, bucles y lógica a través de mini-juegos.</p>
+      <div class="course-stats">
+        <span><strong>15</strong> sesiones</span>
+        <span><strong>Parejas</strong> de trabajo</span>
+        <span><strong>scratch.mit.edu</strong></span>
+      </div>
+    </div>
+
+    <div class="course-card course-2">
+      <h3>2º ESO</h3>
+      <span class="platform">Tinkercad</span>
+      <p>Programación de componentes electrónicos reales. Los mismos conceptos que 1º, pero produciendo proyectos con LEDs, sensores, botones y actuadores. Transición a hardware.</p>
+      <div class="course-stats">
+        <span><strong>15</strong> sesiones</span>
+        <span><strong>Equipos</strong> 2-3</span>
+        <span><strong>tinkercad.com</strong></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SESIONES 1º ESO ===== -->
+<section id="sesiones-1eso">
+  <h2>Sesiones 1º ESO</h2>
+  <p class="section-desc">Cada sesión incluye una presentación proyectable, la ficha de reto (Word/Google Doc) y las instrucciones paso a paso.</p>
+
+  <!-- FASE 1 -->
+  <div class="sesiones-bloque">
+    <div class="sesiones-bloque-header">
+      <span class="sesiones-bloque-badge fase-1">Fase 1</span>
+      <h3>Fundamentos del pensamiento de programación</h3>
+    </div>
+
+    <div class="sesion-row">
+      <div class="sesion-num">S01</div>
+      <div>
+        <div class="sesion-concepto">El sprite obediente</div>
+        <div class="sesion-concepto-desc">Secuencias e instrucciones ordenadas</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links">
+          <a class="btn-link primary" href="1ESO/S01-sprite-obediente/instrucciones.html" target="_blank">📖 Instrucciones</a>
+          <a class="btn-link secondary" href="1ESO/S01-sprite-obediente/ficha-reto.docx">📄 Ficha reto</a>
+        </div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links">
+          <a class="btn-link secondary" href="1ESO/S01-sprite-obediente/presentacion.html" target="_blank">🖥️ Presentación</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S02</div>
+      <div>
+        <div class="sesion-concepto">El sprite reactivo</div>
+        <div class="sesion-concepto-desc">Condicional IF</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S03</div>
+      <div>
+        <div class="sesion-concepto">El sprite de dos caras</div>
+        <div class="sesion-concepto-desc">Condicional IF-ELSE</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S04</div>
+      <div>
+        <div class="sesion-concepto">El sprite artista</div>
+        <div class="sesion-concepto-desc">Bucle FOR</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S05</div>
+      <div>
+        <div class="sesion-concepto">El mini-juego de reglas</div>
+        <div class="sesion-concepto-desc">Operadores lógicos (AND / OR / NOT)</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links">
+          <span class="btn-link disabled">Próximamente</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FASE 2 -->
+  <div class="sesiones-bloque">
+    <div class="sesiones-bloque-header">
+      <span class="sesiones-bloque-badge fase-2">Fase 2</span>
+      <h3>Sensores e interacción con el entorno</h3>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S06</div>
+      <div>
+        <div class="sesion-concepto">Marcador de puntos</div>
+        <div class="sesion-concepto-desc">Variables y contadores</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S07</div>
+      <div>
+        <div class="sesion-concepto">Misión: llegar a la meta</div>
+        <div class="sesion-concepto-desc">Bucle WHILE</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S08</div>
+      <div>
+        <div class="sesion-concepto">Sensor del sprite</div>
+        <div class="sesion-concepto-desc">Sensor de luz (analógico)</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S09</div>
+      <div>
+        <div class="sesion-concepto">El sprite detector</div>
+        <div class="sesion-concepto-desc">Sensor de distancia</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S10</div>
+      <div>
+        <div class="sesion-concepto">El vigilante</div>
+        <div class="sesion-concepto-desc">Combinación de sensores</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FASE 3 -->
+  <div class="sesiones-bloque">
+    <div class="sesiones-bloque-header">
+      <span class="sesiones-bloque-badge fase-3">Fase 3</span>
+      <h3>Actuadores y proyecto integrador</h3>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S11</div>
+      <div>
+        <div class="sesion-concepto">El sprite músico</div>
+        <div class="sesion-concepto-desc">Salidas: sonido y movimiento</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S12</div>
+      <div>
+        <div class="sesion-concepto">Arcoíris progresivo</div>
+        <div class="sesion-concepto-desc">Salidas variables (intensidad)</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S13</div>
+      <div>
+        <div class="sesion-concepto">Diseño del mini-proyecto</div>
+        <div class="sesion-concepto-desc">Planificación del proyecto final</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S14</div>
+      <div>
+        <div class="sesion-concepto">Desarrollo guiado</div>
+        <div class="sesion-concepto-desc">Producción del proyecto en parejas</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+    <div class="sesion-row disabled">
+      <div class="sesion-num">S15</div>
+      <div>
+        <div class="sesion-concepto">Feria del sprite</div>
+        <div class="sesion-concepto-desc">Exposición y evaluación final</div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Alumno</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+      <div class="sesion-acceso">
+        <span class="sesion-acceso-label">Profesor</span>
+        <div class="sesion-acceso-links"><span class="btn-link disabled">Próximamente</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== SESIONES 2º ESO ===== -->
+<section id="sesiones-2eso">
+  <h2>Sesiones 2º ESO</h2>
+  <p class="section-desc">Versión Tinkercad: mismos conceptos que 1º ESO trabajados con componentes electrónicos reales simulados.</p>
+
+  <div style="background:white; border:1px solid var(--border); border-radius:10px; padding:2rem; text-align:center; color:var(--text-muted);">
+    <p style="font-size:1.05rem; margin-bottom:0.5rem;">🚧 En construcción</p>
+    <p style="font-size:0.9rem;">Las sesiones de 2º ESO se irán añadiendo a medida que se produzcan.</p>
+  </div>
+</section>
+
+<!-- ===== DOCUMENTACIÓN ===== -->
+<section id="documentacion">
+  <h2>Documentación del curso</h2>
+  <p class="section-desc">Planificación general y recursos de consulta.</p>
+
+  <div class="docs-grid">
+    <a class="doc-card" href="docs/mapa-bloque.html" target="_blank">
+      <div class="doc-card-title">🗺️ Mapa del bloque</div>
+      <div class="doc-card-desc">Temporalización completa de las 15 sesiones con criterios LOMLOE y saberes básicos</div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Desafío Robótica 2026 · IES Punta del Verde · Computación y Robótica · Tercer trimestre 2025-26</p>
+  <p style="margin-top:0.5rem;">Material docente elaborado para uso educativo. <a href="https://github.com/ffrumej917/desafio-robotica-2026" target="_blank">Ver en GitHub</a></p>
+</footer>
+
+<script>
+  // Marcar tab activo según scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-tabs a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= 100 && rect.bottom > 100) {
+        current = section.id;
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

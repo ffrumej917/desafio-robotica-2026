@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S1 — Instrucciones paso a paso</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple-dark: #534AB7;
+    --purple-light: #EEEDFE;
+    --coral-dark: #993C1D;
+    --coral-light: #FAECE7;
+    --green-dark: #0F6E56;
+    --green-light: #E1F5EE;
+    --amber-dark: #854F0B;
+    --amber-light: #FAEEDA;
+    --gray-bg: #faf9f6;
+    --gray-border: #e0ddd3;
+    --gray-text: #6b6860;
+    --text: #2b2a27;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--gray-bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  header .tag {
+    display: inline-block;
+    background: var(--purple-light);
+    color: var(--purple-dark);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+    margin: 0 0 0.5rem;
+    color: var(--text);
+  }
+
+  header p {
+    font-size: 1rem;
+    color: var(--gray-text);
+    margin: 0;
+  }
+
+  .progress {
+    display: flex;
+    gap: 6px;
+    margin-top: 1rem;
+  }
+
+  .progress-pill {
+    flex: 1;
+    height: 8px;
+    background: var(--gray-border);
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+
+  .progress-pill.done { background: var(--green-dark); }
+  .progress-pill.current { background: var(--purple-dark); }
+
+  .paso {
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+    scroll-margin-top: 20px;
+  }
+
+  .paso-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .paso-num {
+    width: 40px;
+    height: 40px;
+    background: var(--purple-dark);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .paso-titulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .paso-contenido {
+    padding-left: 54px;
+  }
+
+  .paso-contenido p {
+    margin-bottom: 0.75rem;
+  }
+
+  .paso-contenido ul, .paso-contenido ol {
+    margin: 0.5rem 0 0.75rem 1.5rem;
+  }
+
+  .paso-contenido li {
+    margin-bottom: 0.35rem;
+  }
+
+  kbd {
+    background: #f0ede3;
+    border: 1px solid var(--gray-border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: -apple-system, monospace;
+    font-size: 0.88em;
+    font-weight: 500;
+    box-shadow: 0 1px 0 var(--gray-border);
+  }
+
+  .scratch-block {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    margin: 2px 4px 2px 0;
+    vertical-align: middle;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  }
+
+  .block-events { background: #cf9c27; }
+  .block-motion { background: #4c97ff; }
+  .block-looks { background: #9966ff; }
+  .block-control { background: #ffab19; }
+  .block-pen { background: #0fbd8c; }
+
+  .scratch-block .oval {
+    background: rgba(0,0,0,0.25);
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin: 0 4px;
+    font-variant-numeric: tabular-nums;
+    min-width: 32px;
+    text-align: center;
+  }
+
+  .scratch-block .hexagon {
+    background: rgba(0,0,0,0.25);
+    padding: 2px 10px;
+    margin: 0 4px;
+    clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
+    min-width: 64px;
+    text-align: center;
+  }
+
+  .script-panel {
+    background: #f5f3ec;
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .script-panel .scratch-block {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .script-panel .script-block {
+    display: flex;
+    position: relative;
+  }
+
+  .script-block-top {
+    border-radius: 10px 10px 4px 4px !important;
+    padding-top: 10px !important;
+  }
+
+  .script-block-bottom {
+    border-radius: 4px 4px 10px 10px !important;
+    padding-bottom: 10px !important;
+  }
+
+  .tip-box {
+    background: var(--amber-light);
+    border-left: 4px solid var(--amber-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+  }
+
+  .tip-box strong {
+    color: var(--amber-dark);
+  }
+
+  .tip-box::before {
+    content: "💡 ";
+    margin-right: 4px;
+  }
+
+  .check-box {
+    background: var(--green-light);
+    border-left: 4px solid var(--green-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+  }
+
+  .check-box::before {
+    content: "✅ ";
+    margin-right: 4px;
+  }
+
+  .check-box strong {
+    color: var(--green-dark);
+  }
+
+  .error-box {
+    background: var(--coral-light);
+    border-left: 4px solid var(--coral-dark);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.92rem;
+  }
+
+  .error-box::before {
+    content: "⚠️ ";
+    margin-right: 4px;
+  }
+
+  .error-box strong {
+    color: var(--coral-dark);
+  }
+
+  .scratch-ui {
+    background: #e6ebef;
+    border: 1px solid #c5ccd0;
+    border-radius: 8px;
+    padding: 0;
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+
+  .scratch-ui-header {
+    background: #4c97ff;
+    color: white;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .scratch-ui-body {
+    padding: 12px;
+    font-family: monospace;
+    font-size: 0.85rem;
+    background: white;
+  }
+
+  .xy-display {
+    background: #f0ede3;
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9rem;
+  }
+
+  .hero-image {
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto;
+    display: block;
+  }
+
+  .pasos-nav {
+    position: sticky;
+    top: 1rem;
+    background: white;
+    border: 1px solid var(--gray-border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    z-index: 10;
+  }
+
+  .pasos-nav a {
+    padding: 4px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--gray-text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: var(--gray-bg);
+    transition: all 0.2s;
+  }
+
+  .pasos-nav a:hover {
+    background: var(--purple-light);
+    color: var(--purple-dark);
+  }
+
+  .ampliacion {
+    background: linear-gradient(135deg, #f5f0ff 0%, #fff 100%);
+    border: 2px dashed var(--purple-dark);
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+    margin-top: 2rem;
+  }
+
+  .ampliacion h2 {
+    color: var(--purple-dark);
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+  }
+
+  .final-check {
+    background: var(--green-dark);
+    color: white;
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin: 2rem 0 1rem;
+    text-align: center;
+  }
+
+  .final-check h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .final-check p {
+    opacity: 0.95;
+  }
+
+  a { color: var(--purple-dark); }
+
+  @media (max-width: 600px) {
+    .paso-contenido { padding-left: 0; }
+    body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="tag">CyR 1º ESO · S1</span>
+  <h1>Instrucciones paso a paso</h1>
+  <p>El sprite obediente — Primera misión del Desafío</p>
+</header>
+
+<nav class="pasos-nav">
+  <a href="#paso-1">1. Abrir Scratch</a>
+  <a href="#paso-2">2. Preparar el sprite</a>
+  <a href="#paso-3">3. Posición inicial</a>
+  <a href="#paso-4">4. Primer movimiento</a>
+  <a href="#paso-5">5. Giro y subida</a>
+  <a href="#paso-6">6. Mensaje final</a>
+  <a href="#paso-7">7. Probar</a>
+  <a href="#paso-8">8. Guardar</a>
+</nav>
+
+<!-- PASO 1 -->
+<section class="paso" id="paso-1">
+  <div class="paso-header">
+    <div class="paso-num">1</div>
+    <div class="paso-titulo">Abrir Scratch y crear un proyecto nuevo</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Abrid el navegador y entrad en <a href="https://scratch.mit.edu" target="_blank">scratch.mit.edu</a>.</p>
+    <ol>
+      <li>Iniciad sesión con vuestra cuenta (si no tenéis, consultad al profe).</li>
+      <li>Arriba a la izquierda, pulsad en <strong>"Crear"</strong>.</li>
+      <li>Se abrirá un proyecto nuevo con el gato naranja en el centro del escenario.</li>
+    </ol>
+    <div class="tip-box">
+      <strong>Importante:</strong> trabajáis en <u>un solo ordenador</u>, pero los dos miembros del equipo tenéis que entender todo lo que programáis. Id turnándoos quién toca el teclado.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 2 -->
+<section class="paso" id="paso-2">
+  <div class="paso-header">
+    <div class="paso-num">2</div>
+    <div class="paso-titulo">Conocer los ejes del escenario</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Antes de programar, mirad el escenario (zona del gato). Scratch usa un sistema de <strong>coordenadas (x, y)</strong>:</p>
+
+    <svg viewBox="0 0 480 360" style="width:100%; max-width:500px; margin:1rem auto; display:block; background:white; border:1px solid var(--gray-border); border-radius:8px;">
+      <defs>
+        <pattern id="grid-bg" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#ecebe4" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="480" height="360" fill="url(#grid-bg)"/>
+      <!-- Ejes -->
+      <line x1="240" y1="0" x2="240" y2="360" stroke="#9c9a92" stroke-width="1.5"/>
+      <line x1="0" y1="180" x2="480" y2="180" stroke="#9c9a92" stroke-width="1.5"/>
+      <!-- Etiquetas de ejes -->
+      <text x="465" y="176" fill="#6b6860" font-size="14" font-weight="500">x</text>
+      <text x="244" y="14" fill="#6b6860" font-size="14" font-weight="500">y</text>
+      <!-- Valores en esquinas -->
+      <text x="10" y="174" fill="#993C1D" font-size="13" font-weight="500">-240</text>
+      <text x="412" y="174" fill="#993C1D" font-size="13" font-weight="500">+240</text>
+      <text x="248" y="16" fill="#993C1D" font-size="13" font-weight="500">+180</text>
+      <text x="248" y="354" fill="#993C1D" font-size="13" font-weight="500">-180</text>
+      <text x="248" y="196" fill="#6b6860" font-size="13">0</text>
+      <!-- Punto inicio -->
+      <circle cx="40" cy="330" r="10" fill="#0F6E56"/>
+      <text x="56" y="335" fill="#0F6E56" font-size="13" font-weight="600">Inicio</text>
+      <text x="10" y="350" fill="#0F6E56" font-size="11">(-200, -150)</text>
+      <!-- Punto giro -->
+      <circle cx="440" cy="330" r="10" fill="#BA7517"/>
+      <text x="345" y="335" fill="#BA7517" font-size="13" font-weight="600">Giro</text>
+      <text x="370" y="350" fill="#BA7517" font-size="11">(200, -150)</text>
+      <!-- Punto meta -->
+      <circle cx="440" cy="50" r="10" fill="#E24B4A"/>
+      <text x="355" y="55" fill="#E24B4A" font-size="13" font-weight="600">Meta</text>
+      <text x="385" y="70" fill="#E24B4A" font-size="11">(200, 150)</text>
+      <!-- Camino -->
+      <path d="M 40 330 L 440 330 L 440 50" stroke="#FFD966" stroke-width="4" fill="none" stroke-dasharray="8 6" opacity="0.8"/>
+    </svg>
+
+    <ul>
+      <li>El <strong>centro del escenario</strong> es el punto (0, 0).</li>
+      <li>A la <strong>derecha</strong> la x es positiva, a la <strong>izquierda</strong> negativa.</li>
+      <li>Hacia <strong>arriba</strong> la y es positiva, hacia <strong>abajo</strong> negativa.</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Truco:</strong> si mueves el gato con el ratón, en la parte de abajo del panel de bloques verás las coordenadas (x, y) donde está. Probadlo.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 3 -->
+<section class="paso" id="paso-3">
+  <div class="paso-header">
+    <div class="paso-num">3</div>
+    <div class="paso-titulo">Colocar el sprite en la posición inicial</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Queremos que cada vez que pulsemos la <strong>bandera verde</strong>, el gato empiece en la esquina de abajo a la izquierda. Arrastrad estos bloques al área de programación:</p>
+
+    <div class="script-panel">
+      <div class="scratch-block block-events script-block-top">
+        al hacer clic en 🏁
+      </div>
+      <div class="scratch-block block-motion script-block-bottom">
+        ir a x: <span class="oval">-200</span> y: <span class="oval">-150</span>
+      </div>
+    </div>
+
+    <ol>
+      <li>En la categoría <strong style="color:#cf9c27">Eventos</strong> (naranja), coged el bloque <span class="scratch-block block-events">al hacer clic en 🏁</span></li>
+      <li>En la categoría <strong style="color:#4c97ff">Movimiento</strong> (azul), coged <span class="scratch-block block-motion">ir a x: <span class="oval">0</span> y: <span class="oval">0</span></span></li>
+      <li>Cambiad los valores a <strong>x = -200</strong> y <strong>y = -150</strong>.</li>
+    </ol>
+
+    <div class="check-box">
+      <strong>Probad ahora:</strong> pulsad la bandera verde. El gato debe saltar a la esquina de abajo a la izquierda.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 4 -->
+<section class="paso" id="paso-4">
+  <div class="paso-header">
+    <div class="paso-num">4</div>
+    <div class="paso-titulo">Primer movimiento: avanzar hacia la derecha</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Ahora vamos a hacer que el gato avance en línea recta. <strong>Añadid debajo</strong> del bloque anterior:</p>
+
+    <div class="script-panel">
+      <div class="scratch-block block-events script-block-top">
+        al hacer clic en 🏁
+      </div>
+      <div class="scratch-block block-motion">
+        ir a x: <span class="oval">-200</span> y: <span class="oval">-150</span>
+      </div>
+      <div class="scratch-block block-motion">
+        apuntar en dirección <span class="oval">90</span>
+      </div>
+      <div class="scratch-block block-control">
+        esperar <span class="oval">1</span> segundos
+      </div>
+      <div class="scratch-block block-motion script-block-bottom">
+        mover <span class="oval">200</span> pasos
+      </div>
+    </div>
+
+    <p>Tres cosas nuevas:</p>
+    <ul>
+      <li><strong style="color:#4c97ff">Movimiento → apuntar en dirección 90</strong>: hace que el gato mire a la derecha.</li>
+      <li><strong style="color:#ffab19">Control → esperar 1 segundos</strong>: pausa de 1 segundo para que veamos lo que pasa.</li>
+      <li><strong style="color:#4c97ff">Movimiento → mover 200 pasos</strong>: avanza 200 píxeles.</li>
+    </ul>
+
+    <div class="error-box">
+      <strong>¡Ojo!</strong> El bloque <span class="scratch-block block-control">esperar <span class="oval">1</span> segundos</span> es de la categoría <strong>Control</strong> (amarillo), no Movimiento.
+    </div>
+
+    <div class="check-box">
+      <strong>Probad ahora:</strong> pulsad la bandera verde. El gato debe aparecer a la izquierda, esperar un segundo y avanzar a la derecha.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 5 -->
+<section class="paso" id="paso-5">
+  <div class="paso-header">
+    <div class="paso-num">5</div>
+    <div class="paso-titulo">Girar y subir hasta arriba</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Ahora el gato tiene que girar 90° a la izquierda y subir. <strong>Añadid debajo</strong>:</p>
+
+    <div class="script-panel">
+      <div class="scratch-block block-events script-block-top">
+        al hacer clic en 🏁
+      </div>
+      <div class="scratch-block block-motion">
+        ir a x: <span class="oval">-200</span> y: <span class="oval">-150</span>
+      </div>
+      <div class="scratch-block block-motion">
+        apuntar en dirección <span class="oval">90</span>
+      </div>
+      <div class="scratch-block block-control">
+        esperar <span class="oval">1</span> segundos
+      </div>
+      <div class="scratch-block block-motion">
+        mover <span class="oval">200</span> pasos
+      </div>
+      <div class="scratch-block block-control">
+        esperar <span class="oval">1</span> segundos
+      </div>
+      <div class="scratch-block block-motion">
+        apuntar en dirección <span class="oval">0</span>
+      </div>
+      <div class="scratch-block block-control">
+        esperar <span class="oval">1</span> segundos
+      </div>
+      <div class="scratch-block block-motion script-block-bottom">
+        mover <span class="oval">150</span> pasos
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>¿Por qué dirección 0?</strong> En Scratch, 90 es derecha, 180 es abajo, -90 (o 270) es izquierda y <strong>0 es arriba</strong>. Es el norte en una brújula.
+    </div>
+  </div>
+</section>
+
+<!-- PASO 6 -->
+<section class="paso" id="paso-6">
+  <div class="paso-header">
+    <div class="paso-num">6</div>
+    <div class="paso-titulo">Mensaje final: "¡Misión cumplida!"</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Cuando el gato llega arriba, tiene que decir que la misión está cumplida. <strong>Añadid al final</strong>:</p>
+
+    <div class="script-panel">
+      <div class="scratch-block block-control script-block-top">
+        esperar <span class="oval">0.5</span> segundos
+      </div>
+      <div class="scratch-block block-looks script-block-bottom">
+        decir <span class="oval" style="background:white; color:#2b2a27; min-width:140px;">¡Misión cumplida!</span> por <span class="oval">2</span> segundos
+      </div>
+    </div>
+
+    <ol>
+      <li>En la categoría <strong style="color:#9966ff">Apariencia</strong> (morado), coged el bloque <span class="scratch-block block-looks">decir <span class="oval" style="background:white; color:#2b2a27;">¡Hola!</span> por <span class="oval">2</span> segundos</span></li>
+      <li>Haced clic en el texto "¡Hola!" y cambiadlo por <strong>¡Misión cumplida!</strong></li>
+    </ol>
+  </div>
+</section>
+
+<!-- PASO 7 -->
+<section class="paso" id="paso-7">
+  <div class="paso-header">
+    <div class="paso-num">7</div>
+    <div class="paso-titulo">Probar el programa completo</div>
+  </div>
+  <div class="paso-contenido">
+    <p>Pulsad la bandera verde. Vuestro gato debería:</p>
+
+    <ol>
+      <li>Saltar a la esquina de abajo a la izquierda.</li>
+      <li>Esperar 1 segundo.</li>
+      <li>Avanzar en línea recta hacia la derecha.</li>
+      <li>Esperar 1 segundo.</li>
+      <li>Girar hacia arriba.</li>
+      <li>Esperar 1 segundo.</li>
+      <li>Subir hasta arriba.</li>
+      <li>Decir "¡Misión cumplida!".</li>
+    </ol>
+
+    <div class="error-box">
+      <strong>¿No funciona?</strong> Comprobad:
+      <ul style="margin-top:0.5rem;">
+        <li>¿Están todos los bloques <strong>encajados uno bajo otro</strong>, sin huecos?</li>
+        <li>¿Son los valores exactamente <strong>-200, -150, 90, 200, 0, 150</strong>?</li>
+        <li>¿Está el bloque <span class="scratch-block block-events">al hacer clic en 🏁</span> al principio?</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PASO 8 -->
+<section class="paso" id="paso-8">
+  <div class="paso-header">
+    <div class="paso-num">8</div>
+    <div class="paso-titulo">Guardar y compartir el enlace</div>
+  </div>
+  <div class="paso-contenido">
+    <ol>
+      <li>Arriba en el nombre del proyecto (donde pone <em>Proyecto sin título</em>), poned un nombre así: <strong>S1 - Sprite obediente - [Vuestros nombres]</strong></li>
+      <li>Pulsad arriba a la derecha en <strong>"Compartir"</strong> (si no lo veis, pulsad primero en <strong>"Ver página del proyecto"</strong> y luego en "Compartir").</li>
+      <li>Copiad la <strong>URL de la barra del navegador</strong> (empieza por <code>https://scratch.mit.edu/projects/...</code>).</li>
+      <li>Pegad esa URL en la ficha de reto y en la tarea de Classroom.</li>
+    </ol>
+
+    <div class="tip-box">
+      <strong>Si no podéis compartir</strong> (algunas cuentas de centro no lo permiten), descargad el proyecto desde <strong>Archivo → Guardar en tu ordenador</strong> y subid el fichero <code>.sb3</code> a Classroom.
+    </div>
+  </div>
+</section>
+
+<!-- AMPLIACIÓN -->
+<section class="ampliacion">
+  <h2>⭐ ¿Ya habéis terminado? Ampliación</h2>
+  <p>Guardad el proyecto que tenéis hecho y haced una copia nueva (<strong>Archivo → Guardar como copia</strong>) para la ampliación.</p>
+  <p><strong>Reto:</strong> haced que el gato <strong>dibuje un cuadrado</strong> en el escenario.</p>
+
+  <p style="margin-top:1rem;"><strong>Pistas:</strong></p>
+  <ol>
+    <li>Tenéis que añadir la <strong>extensión Lápiz</strong>. Abajo a la izquierda del panel de bloques, pulsad en <strong>"Añadir extensión"</strong> y elegid <strong>Lápiz</strong>.</li>
+    <li>Usad los bloques:
+      <ul style="margin-top:0.5rem">
+        <li><span class="scratch-block block-pen">bajar lápiz</span> para que el gato empiece a dibujar.</li>
+        <li><span class="scratch-block block-motion">mover <span class="oval">100</span> pasos</span> para avanzar.</li>
+        <li><span class="scratch-block block-motion">girar ↻ <span class="oval">90</span> grados</span> para girar 90° en cada esquina.</li>
+      </ul>
+    </li>
+    <li>Un cuadrado tiene <strong>4 lados iguales y 4 giros de 90°</strong>. ¿Cuántas veces tenéis que repetir la secuencia "avanzar + girar"?</li>
+  </ol>
+
+  <div class="tip-box" style="margin-top:1rem">
+    <strong>Reto aún mayor:</strong> si el cuadrado sale bien, probad con un <strong>triángulo</strong> (3 lados, giros de 120°) o un <strong>pentágono</strong> (5 lados, giros de 72°).
+  </div>
+</section>
+
+<!-- FINAL -->
+<div class="final-check">
+  <h2>¡Misión completada!</h2>
+  <p>Recordad: la entrega son <strong>dos cosas</strong>.</p>
+  <p style="margin-top:0.5rem;">📄 La ficha de reto rellenada &nbsp;+&nbsp; 🔗 El enlace a vuestro proyecto</p>
+</div>
+
+<script>
+  // Marcado visual de progreso con scroll
+  const pasos = document.querySelectorAll('.paso');
+  const navLinks = document.querySelectorAll('.pasos-nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.background = link.getAttribute('href') === '#' + id ? 'var(--purple-light)' : 'var(--gray-bg)';
+          link.style.color = link.getAttribute('href') === '#' + id ? 'var(--purple-dark)' : 'var(--gray-text)';
+        });
+      }
+    });
+  }, { rootMargin: '-100px 0px -60% 0px' });
+
+  pasos.forEach(p => observer.observe(p));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bloque Desafío — CyR 1º/2º ESO (3T)</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e0ddd3;
+    --border-strong: #c9c5b8;
+    --text: #2b2a27;
+    --text-muted: #6b6860;
+    --accent-1: #534AB7;
+    --accent-2: #0F6E56;
+    --accent-3: #B0541F;
+    --fase-1-bg: #EEEDFE;
+    --fase-1-text: #26215C;
+    --fase-2-bg: #E1F5EE;
+    --fase-2-text: #04342C;
+    --fase-3-bg: #FAECE7;
+    --fase-3-text: #4A1B0C;
+    --chip-bg: #f1efe8;
+    --chip-text: #444441;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 2rem 1.5rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--text);
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin: 0 0 2rem;
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 2rem;
+  }
+
+  .meta-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+
+  .meta-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .meta-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2.5rem 0 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .fase-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 2rem 0 1rem;
+  }
+
+  .fase-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .fase-1 { background: var(--fase-1-bg); color: var(--fase-1-text); }
+  .fase-2 { background: var(--fase-2-bg); color: var(--fase-2-text); }
+  .fase-3 { background: var(--fase-3-bg); color: var(--fase-3-text); }
+
+  .fase-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .fase-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0 0 1rem;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+  }
+
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    background: #f5f3ec;
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    border-bottom: 2px solid var(--border-strong);
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  td.sesion-num {
+    font-weight: 600;
+    white-space: nowrap;
+    width: 50px;
+    color: var(--accent-1);
+  }
+
+  td.concepto {
+    font-weight: 500;
+    width: 180px;
+  }
+
+  td.curso-1, td.curso-2 {
+    width: 32%;
+  }
+
+  td.curso-1 {
+    background: #fcfbf5;
+  }
+
+  .reto-titulo {
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  .reto-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    margin-bottom: 8px;
+  }
+
+  .chip-grupo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 6px;
+  }
+
+  .chip {
+    display: inline-block;
+    background: var(--chip-bg);
+    color: var(--chip-text);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  .chip-curr {
+    background: #E6F1FB;
+    color: #0C447C;
+  }
+
+  .chip-saber {
+    background: #EAF3DE;
+    color: #27500A;
+  }
+
+  .ampliacion {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+
+  .ampliacion::before {
+    content: "↗ Ampliación: ";
+    font-style: normal;
+    font-weight: 500;
+    color: var(--accent-3);
+  }
+
+  .nota-inicial {
+    background: #fefaf0;
+    border-left: 3px solid #EF9F27;
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin: 1.5rem 0 2rem;
+    font-size: 0.9rem;
+  }
+
+  .nota-inicial strong { color: #854F0B; }
+
+  .leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.82rem;
+  }
+
+  .leyenda-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .proyecto-final {
+    background: linear-gradient(135deg, #f5f0ff, #fff);
+    border: 2px solid var(--accent-1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .proyecto-final h3 {
+    margin: 0 0 0.5rem;
+    color: var(--accent-1);
+    font-size: 1.1rem;
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 1rem; }
+    table { font-size: 0.8rem; }
+    td.curso-1, td.curso-2 { width: auto; }
+  }
+
+  @media print {
+    body { background: white; padding: 1rem; }
+    .nota-inicial { page-break-inside: avoid; }
+    table { page-break-inside: avoid; }
+    .fase-header { page-break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Bloque Desafío: Prepárate para competir en robótica</h1>
+<p class="subtitle">Computación y Robótica · 1º y 2º ESO · Tercer trimestre (curso 2025-26)</p>
+
+<div class="meta-grid">
+  <div class="meta-card">
+    <div class="meta-label">Duración</div>
+    <div class="meta-value">15 sesiones (7-8 semanas)</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-label">Horas semanales</div>
+    <div class="meta-value">2h × curso</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-label">Plataformas</div>
+    <div class="meta-value">1º Scratch · 2º Tinkercad</div>
+  </div>
+  <div class="meta-card">
+    <div class="meta-label">Metodología</div>
+    <div class="meta-value">Retos autorrealizables</div>
+  </div>
+</div>
+
+<div class="nota-inicial">
+  <strong>Cómo leer este mapa.</strong> Cada sesión presenta el mismo concepto en los dos cursos, pero con retos de distinta profundidad. En 1º el alumno trabaja con un "robot" como sprite de Scratch (programación visual pura); en 2º programa componentes electrónicos reales en Tinkercad (bloques y/o código Arduino). Cada sesión incluye un reto base para todos + una ampliación (Track B) para los que avanzan rápido. La narrativa común: "os estamos entrenando para un concurso real de robótica el año que viene".
+</div>
+
+<h2>Fase 1 — Fundamentos del pensamiento de programación</h2>
+
+<div class="fase-header">
+  <span class="fase-badge fase-1">Sesiones 1 a 5</span>
+  <p class="fase-title">Secuencias, condicionales, bucles y lógica</p>
+</div>
+<p class="fase-desc">Consolidación de lo visto en el primer y segundo trimestre. Introducción del vocabulario formal y de la plantilla "Entender / Diseñar / Programar" como andamiaje de trabajo.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Concepto clave</th>
+      <th>1º ESO (Scratch)</th>
+      <th>2º ESO (Tinkercad)</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td class="sesion-num">S1</td>
+      <td class="concepto">Secuencias e instrucciones ordenadas</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El sprite obediente</div>
+        <div class="reto-desc">Dar instrucciones a un gato para que recorra un camino concreto: avanza, gira, espera, di "llegué".</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">1.3</span>
+          <span class="chip chip-saber">CYR.1.A.3</span>
+        </div>
+        <div class="ampliacion">El sprite dibuja una figura geométrica (cuadrado, triángulo).</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Repaso: LED intermitente con timing</div>
+        <div class="reto-desc">Reforzar pinMode, digitalWrite y delay. Aplicar la plantilla E/D/P por primera vez. Diagnóstico de nivel.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">1.3</span>
+          <span class="chip chip-saber">CYR.2.A.3</span>
+          <span class="chip chip-saber">CYR.2.F.3</span>
+        </div>
+        <div class="ampliacion">LED que emite código Morse SOS.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S2</td>
+      <td class="concepto">Condicional simple (IF)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El sprite que reacciona</div>
+        <div class="reto-desc">"Si toca el borde, gira". "Si toca color rojo, di peligro". Primera decisión programada.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.4</span>
+        </div>
+        <div class="ampliacion">Sprite que cambia de disfraz según el color que toca.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">LED controlado por pulsador</div>
+        <div class="reto-desc">Introducción a digitalRead con montaje pull-down. Si se pulsa el botón, se enciende el LED.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+          <span class="chip chip-saber">CYR.2.C.3</span>
+        </div>
+        <div class="ampliacion">Dos LEDs: uno se enciende solo cuando el botón NO está pulsado.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S3</td>
+      <td class="concepto">Condicional completo (IF-ELSE)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El sprite de dos caras</div>
+        <div class="reto-desc">Si pulsas flecha derecha, avanza; si pulsas izquierda, retrocede; si no, se queda quieto. Decisión con alternativa.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.4</span>
+        </div>
+        <div class="ampliacion">Añade cuarta opción: si tecla espacio, salta.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Semáforo con botón peatonal</div>
+        <div class="reto-desc">Adaptación del proyecto G1. Sin pulsar, ciclo normal. Pulsado, salta a ámbar parpadeante + rojo. Estados de funcionamiento.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+          <span class="chip chip-saber">CYR.2.C.5</span>
+        </div>
+        <div class="ampliacion">Añade un segundo semáforo (coche) sincronizado en sentido inverso.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S4</td>
+      <td class="concepto">Bucle FOR (repetir N veces)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El sprite artista</div>
+        <div class="reto-desc">Repetir N veces: "avanza X, gira grados" → dibujar polígonos regulares. Concepto de iteración controlada.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.4</span>
+        </div>
+        <div class="ampliacion">El usuario introduce número de lados y el sprite dibuja el polígono.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Semáforo que parpadea N veces</div>
+        <div class="reto-desc">Usar FOR para hacer que el LED parpadee un número variable de veces antes de fijarse. Patrón muy común en FLL.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+        </div>
+        <div class="ampliacion">N de parpadeos dependiente del número de pulsaciones acumuladas.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S5</td>
+      <td class="concepto">Operadores lógicos (AND / OR / NOT)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El mini-juego de reglas</div>
+        <div class="reto-desc">"Si pulsas flecha arriba Y estás sobre rojo, saltas". Dos condiciones combinadas. Pensamiento booleano.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.4</span>
+        </div>
+        <div class="ampliacion">Juego con tres reglas combinadas: pulsar + color + contador de tiempo.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Puerta de seguridad con dos pulsadores</div>
+        <div class="reto-desc">El LED (puerta) solo se enciende si se pulsan AMBOS botones a la vez. Luego variar: si cualquiera de los dos (OR).</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+        </div>
+        <div class="ampliacion">Interruptor doble tipo escalera: cambiar estado pulsando cualquiera de los dos (XOR).</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<h2>Fase 2 — Sensores e interacción con el entorno</h2>
+
+<div class="fase-header">
+  <span class="fase-badge fase-2">Sesiones 6 a 10</span>
+  <p class="fase-title">Variables, entradas analógicas y combinación de sensores</p>
+</div>
+<p class="fase-desc">El "robot" empieza a recibir información del mundo. Concepto central: medir - decidir - actuar. Introducción de la cultura "probar, calibrar, ajustar" imprescindible para competiciones de robótica.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Concepto clave</th>
+      <th>1º ESO (Scratch)</th>
+      <th>2º ESO (Tinkercad)</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td class="sesion-num">S6</td>
+      <td class="concepto">Variables y contadores</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Marcador de puntos</div>
+        <div class="reto-desc">Crear un marcador que suma 1 cada vez que el sprite toca un objeto. Introducir variable y su uso.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.5</span>
+        </div>
+        <div class="ampliacion">Vidas y puntos: dos variables simultáneas, cuando vidas=0 acaba el juego.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Cerradura de N pulsaciones</div>
+        <div class="reto-desc">Contador de pulsaciones; cuando llega a 3, se enciende un LED verde (cerradura "abierta"). Reseteable.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+        </div>
+        <div class="ampliacion">Si la secuencia es correcta (botón A - A - B), desbloquea; si no, enciende LED rojo.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S7</td>
+      <td class="concepto">Bucle WHILE (mientras)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Misión: llegar a la meta</div>
+        <div class="reto-desc">"Mientras no toques la meta, sigue avanzando". Diferencia clave con FOR: el bucle depende de una condición, no de un número fijo.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.4</span>
+        </div>
+        <div class="ampliacion">Sprite que navega un laberinto: mientras no toque pared, avanza; si la toca, gira.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Esperar pulsación activa</div>
+        <div class="reto-desc">"Mientras el botón no se pulse, parpadea el LED". Programa reactivo, no temporal. Concepto clave para robots autónomos.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+        </div>
+        <div class="ampliacion">Mientras no se pulse, el LED parpadea cada vez más rápido (simula cuenta atrás).</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S8</td>
+      <td class="concepto">Sensor de luz (analógico)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Sensor del sprite</div>
+        <div class="reto-desc">Usar el sensor de luminosidad de la webcam (si disponible) o simular con el fondo. "Si hay poca luz, el sprite duerme".</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.1.C.3</span>
+        </div>
+        <div class="ampliacion">El sprite se mueve más lento cuanto menos luz hay.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Luz nocturna automática (LDR)</div>
+        <div class="reto-desc">Leer LDR con analogRead; calibrar umbrales tomando valores reales en claro/oscuro; si oscurece, encender LED.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.C.3</span>
+          <span class="chip chip-saber">CYR.2.F.3</span>
+        </div>
+        <div class="ampliacion">El LED se atenúa progresivamente según la luz (introducir map y analogWrite).</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S9</td>
+      <td class="concepto">Sensor de distancia (ultrasonidos)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El sprite detector</div>
+        <div class="reto-desc">Simular un "sensor de distancia" con otro sprite. Si el sprite objetivo está a menos de X píxeles, el protagonista reacciona.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.1.C.3</span>
+          <span class="chip chip-saber">CYR.1.C.4</span>
+        </div>
+        <div class="ampliacion">El sprite huye (se aleja) cuando el otro se acerca demasiado.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Robot que frena ante obstáculo</div>
+        <div class="reto-desc">Sensor HC-SR04. Si obstáculo a menos de 20cm, el LED rojo se enciende y zumbador pita. Simula robot autónomo.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.C.3</span>
+          <span class="chip chip-saber">CYR.2.C.4</span>
+        </div>
+        <div class="ampliacion">Aparcamiento asistido: el zumbador pita cada vez más rápido cuanto más cerca (usar map).</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S10</td>
+      <td class="concepto">Combinación de sensores</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El vigilante</div>
+        <div class="reto-desc">"Si hay oscuridad Y un sprite se acerca, suena alarma". Dos condiciones combinadas con datos del entorno.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.4</span>
+        </div>
+        <div class="ampliacion">Añadir modo "día" y modo "noche" que cambia el comportamiento del vigilante.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Alarma inteligente</div>
+        <div class="reto-desc">LDR + ultrasonidos. Solo suena si hay poca luz Y alguien se acerca. Evita falsos positivos. Lógica combinada.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.C.3</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+        </div>
+        <div class="ampliacion">Tres modos: desactivada, parcial (solo detección), total (detección + alarma).</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<h2>Fase 3 — Actuadores y proyecto integrador</h2>
+
+<div class="fase-header">
+  <span class="fase-badge fase-3">Sesiones 11 a 15</span>
+  <p class="fase-title">Salidas variables, actuadores y proyecto final</p>
+</div>
+<p class="fase-desc">El robot ahora puede producir salidas complejas: movimiento controlado, intensidades variables, sonido modulado. Los alumnos aplican todo lo aprendido en un proyecto libre que defienden ante la clase.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Concepto clave</th>
+      <th>1º ESO (Scratch)</th>
+      <th>2º ESO (Tinkercad)</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td class="sesion-num">S11</td>
+      <td class="concepto">Salidas: sonido y movimiento</td>
+      <td class="curso-1">
+        <div class="reto-titulo">El sprite músico</div>
+        <div class="reto-desc">Programar sprite que emite sonidos y se mueve según reglas. Integración de las dos salidas más comunes.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.1.C.3</span>
+        </div>
+        <div class="ampliacion">Mini-piano: cada tecla reproduce una nota y anima un sprite.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Barrera automática</div>
+        <div class="reto-desc">Servomotor + ultrasonidos + zumbador. Cuando detecta coche, pita brevemente y abre barrera (servo 0°→90°).</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.C.3</span>
+        </div>
+        <div class="ampliacion">La barrera se mantiene abierta hasta que el coche pase (ultrasonidos vuelve a valor alto).</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S12</td>
+      <td class="concepto">Salidas variables (PWM / intensidad)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Arcoíris progresivo</div>
+        <div class="reto-desc">Sprite que cambia de color suavemente (bucle de efecto color). Introducir el concepto de "valor continuo" en salidas.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.5</span>
+        </div>
+        <div class="ampliacion">Tres sprites: los tres colores primarios mezclados controlados con sliders.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Regulador de brillo y mezclador RGB</div>
+        <div class="reto-desc">Potenciómetro controla brillo de LED con analogWrite. Luego RGB con 3 potenciómetros: mezcla aditiva.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.A.4</span>
+          <span class="chip chip-saber">CYR.2.C.5</span>
+        </div>
+        <div class="ampliacion">El RGB cambia de color automáticamente cada 2s recorriendo el círculo cromático.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S13</td>
+      <td class="concepto">Planificación de proyecto (plantilla E/D/P)</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Diseño del mini-proyecto</div>
+        <div class="reto-desc">Formar parejas. Elegir proyecto de un catálogo de 5 opciones. Rellenar plantilla Entender/Diseñar/Programar en papel.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.3</span>
+        </div>
+        <div class="ampliacion">Proyecto propio fuera del catálogo, validado por el profesor.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Diseño del proyecto integrador</div>
+        <div class="reto-desc">Formar equipos de 2-3. Elegir proyecto de un catálogo de 6 opciones. Usar la plantilla E/D/P para planificar.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.A.3</span>
+        </div>
+        <div class="ampliacion">Proyecto propio fuera del catálogo, con mínimo 2 sensores y 2 actuadores.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S14</td>
+      <td class="concepto">Desarrollo del proyecto</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Desarrollo guiado</div>
+        <div class="reto-desc">Trabajo en parejas. Sesión de producción, con apoyo puntual del profesor. Entregables: proyecto + captura explicada.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.5</span>
+        </div>
+        <div class="ampliacion">Añadir una funcionalidad extra no contemplada en el diseño original.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Desarrollo guiado</div>
+        <div class="reto-desc">Trabajo en equipos. Roles: coder, diseñador de circuito, documentador. Iteraciones con ciclo probar-ajustar.</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.C.5</span>
+        </div>
+        <div class="ampliacion">Grabar un vídeo corto (30s) del proyecto funcionando con voz en off explicativa.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="sesion-num">S15</td>
+      <td class="concepto">Exposición y evaluación final</td>
+      <td class="curso-1">
+        <div class="reto-titulo">Feria del sprite</div>
+        <div class="reto-desc">Cada pareja presenta su proyecto en 2 min. Puntuación por rúbrica + votación de compañeros (premio "el más original").</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">2.1</span>
+          <span class="chip chip-saber">CYR.1.A.5</span>
+        </div>
+        <div class="ampliacion">Los alumnos más avanzados hacen demo en vivo contestando preguntas del público.</div>
+      </td>
+      <td class="curso-2">
+        <div class="reto-titulo">Torneo de proyectos</div>
+        <div class="reto-desc">Cada equipo demuestra su proyecto (3 min). Evaluación: producto + código + presentación. Premio "Mejor proyecto".</div>
+        <div class="chip-grupo">
+          <span class="chip chip-curr">3.1</span>
+          <span class="chip chip-saber">CYR.2.A.5</span>
+        </div>
+        <div class="ampliacion">Explicación técnica detallada a los alumnos candidatos a FLL del próximo curso.</div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div class="proyecto-final">
+  <h3>Proyecto final: catálogo orientativo</h3>
+
+  <p style="margin-top:0; margin-bottom: 0.5rem;"><strong>1º ESO (Scratch):</strong></p>
+  <ul style="margin-top: 0;">
+    <li>Luz nocturna automática (sprite que se enciende/apaga según variable "luz")</li>
+    <li>Juego esquiva-obstáculos con marcador y vidas</li>
+    <li>Mascota virtual que reacciona a eventos (click, tecla, tiempo)</li>
+    <li>Mini-piano interactivo de 8 teclas con animación</li>
+    <li>Semáforo inteligente de ciudad con peatones</li>
+  </ul>
+
+  <p style="margin-bottom: 0.5rem;"><strong>2º ESO (Tinkercad):</strong></p>
+  <ul style="margin-top: 0;">
+    <li>Alarma antirrobo con ultrasonidos + LDR + zumbador</li>
+    <li>Semáforo inteligente con detección de vehículo</li>
+    <li>Invernadero mini: LDR + sensor humedad simulado + LED de "riego"</li>
+    <li>Aparcamiento asistido con barrera automática</li>
+    <li>Detector de acercamiento con LEDs de nivel (verde/ámbar/rojo)</li>
+    <li>Puerta automática de garaje con dos pulsadores y servo</li>
+  </ul>
+</div>
+
+<h2>Metodología de sesión autorrealizable</h2>
+
+<p>Todas las sesiones siguen el mismo esqueleto (misma para 1º y 2º) para minimizar explicación directa:</p>
+
+<ol>
+  <li><strong>Cabecera</strong> — Título + objetivo en una frase + duración.</li>
+  <li><strong>Vídeo o presentación corta</strong> (3-5 min) — Explicación visual del concepto. De momento presentación HTML proyectada; a medio plazo, vídeos grabados reutilizables.</li>
+  <li><strong>Ficha de reto</strong> — Plantilla E/D/P con partes rellenadas y partes en blanco.</li>
+  <li><strong>Instrucciones paso a paso</strong> — Capturas numeradas para avanzar sin ayuda docente.</li>
+  <li><strong>Pista de ampliación (Track B)</strong> — Variante más compleja del mismo reto para quienes terminan pronto.</li>
+  <li><strong>Mini-quiz de salida</strong> (2-3 preguntas HTML autocorregido) — Checking de comprensión.</li>
+  <li><strong>Diario de bitácora</strong> — Una frase o captura en Classroom. Alimenta evaluación continua.</li>
+</ol>
+
+<h2>Vinculación curricular: justificación LOMLOE</h2>
+
+<div class="leyenda">
+  <div class="leyenda-item"><span class="chip chip-curr">1.3, 2.1, 3.1</span> Criterios de evaluación</div>
+  <div class="leyenda-item"><span class="chip chip-saber">CYR.x.y.z</span> Saberes básicos</div>
+</div>
+
+<table style="margin-top: 1rem;">
+  <thead>
+    <tr>
+      <th>Curso</th>
+      <th>Competencias específicas trabajadas</th>
+      <th>Criterios de evaluación cubiertos</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="sesion-num" style="color: var(--accent-1); font-weight: 600;">1º ESO</td>
+      <td>
+        <strong>CE1</strong> Comprender el impacto de la computación y robótica.<br>
+        <strong>CE2</strong> Producir programas informáticos colaborando en equipo.<br>
+        <strong>CE3</strong> Diseñar sistemas de computación física y robóticos sencillos.
+      </td>
+      <td>
+        <strong>1.3</strong> Entender la estructura básica de un programa.<br>
+        <strong>2.1</strong> Resolver problemas desarrollando un programa colaborativamente.<br>
+        <strong>3.1</strong> Construir un sistema de computación o robótico.
+      </td>
+    </tr>
+    <tr>
+      <td class="sesion-num" style="color: var(--accent-1); font-weight: 600;">2º ESO</td>
+      <td>
+        <strong>CE1</strong> Pensamiento computacional para proyectos de sistemas digitales.<br>
+        <strong>CE2</strong> Producir programas usando principales estructuras de un lenguaje.<br>
+        <strong>CE3</strong> Diseñar y construir sistemas de computación físicos o robóticos.
+      </td>
+      <td>
+        <strong>1.3</strong> Entender cómo funciona un programa informático y sus componentes.<br>
+        <strong>2.1</strong> Resolver problemas desarrollando un programa y generalizando soluciones.<br>
+        <strong>3.1</strong> Construir un sistema robótico para un problema real de forma sostenible.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2rem; text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+  Mapa del bloque "Desafío: prepárate para competir en robótica" · IES Punta del Verde ·
+  Computación y Robótica 1º y 2º ESO · Tercer trimestre 2025-26
+</p>
+
+</body>
+</html>
