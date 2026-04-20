@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S02 · Instrucciones · El botón de la verdad</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#f7f5f0;--fg:#1c1c1c;--muted:#555;
+    --coral:#ff6f61;--coral-bg:#ffe4e1;
+    --ambar:#d98c00;--ambar-bg:#fff2d6;
+    --verde:#2e8b57;--verde-bg:#dff2e4;
+    --morado:#6b3fa0;--morado-bg:#eadcfb;
+    --code-bg:#1e2630;--code-fg:#ffe8a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+  .wrap{max-width:900px;margin:0 auto;padding:2rem 1.2rem 4rem}
+  header{text-align:center;padding:2rem 0 1rem;border-bottom:3px solid var(--coral);margin-bottom:2rem}
+  header .tag{display:inline-block;background:var(--coral);color:#fff;padding:.3rem 1rem;border-radius:999px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem}
+  h1{font-size:2.2rem;margin:.3rem 0}
+  header p{color:var(--muted);margin:.4rem 0}
+  .pill{display:inline-block;background:#fff;border:1px solid #e0d8c8;padding:.15rem .6rem;border-radius:999px;font-size:.85rem;margin-right:.3rem;color:var(--muted)}
+  .step{background:#fff;border-radius:14px;padding:1.6rem 1.8rem;margin-bottom:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:6px solid var(--ambar)}
+  .step h2{display:flex;align-items:center;gap:.8rem;font-size:1.35rem;margin:0 0 .8rem;color:var(--ambar)}
+  .step h2 .n{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;background:var(--ambar);color:#fff;border-radius:50%;font-size:1rem;font-weight:700;flex-shrink:0}
+  .step p{margin:.5rem 0;color:#333}
+  .step ul{padding-left:1.4rem}
+  .step ul li{margin:.4rem 0}
+  .step.verde{border-left-color:var(--verde)} .step.verde h2{color:var(--verde)} .step.verde h2 .n{background:var(--verde)}
+  .step.coral{border-left-color:var(--coral)} .step.coral h2{color:var(--coral)} .step.coral h2 .n{background:var(--coral)}
+  .step.morado{border-left-color:var(--morado)} .step.morado h2{color:var(--morado)} .step.morado h2 .n{background:var(--morado)}
+  .code{background:var(--code-bg);color:var(--code-fg);padding:1rem 1.2rem;font-family:"SF Mono",Consolas,monospace;border-radius:8px;white-space:pre;font-size:.92rem;margin:.8rem 0;overflow-x:auto}
+  .tip{background:var(--ambar-bg);border-left:4px solid var(--ambar);padding:.9rem 1.1rem;border-radius:6px;margin:.8rem 0;font-size:.97rem}
+  .tip strong{color:var(--ambar)}
+  .warn{background:#fff3cd;border-left:4px solid #e59400;padding:.9rem 1.1rem;border-radius:6px;margin:.8rem 0;font-size:.97rem}
+  .circuit-img{width:100%;border-radius:10px;border:1px solid #ddd;margin:.8rem 0;display:block}
+  .circuit-caption{font-size:.88rem;color:var(--muted);text-align:center;margin-top:.3rem;font-style:italic}
+  table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.95rem}
+  th{background:var(--ambar);color:#fff;padding:.5rem .8rem;text-align:left}
+  td{padding:.5rem .8rem;border-bottom:1px solid #eee}
+  tr:nth-child(even) td{background:#fafafa}
+  .entrega{background:linear-gradient(135deg,var(--morado-bg),#fff);border:2px solid var(--morado);border-radius:14px;padding:1.8rem;margin-top:2.5rem}
+  .entrega h2{color:var(--morado);margin-top:0}
+  .entrega .url{display:inline-block;background:var(--morado);color:#fff;padding:.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:700;margin-top:.6rem;word-break:break-all}
+  kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:.1rem .4rem;font-family:inherit;font-size:.88rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="tag">Sesión 02 · 2.º ESO · CyR</span>
+  <h1>🔘 El botón de la verdad</h1>
+  <p>Controla un LED con un pulsador usando el condicional <b>IF</b> en Arduino (C++)</p>
+  <p><span class="pill">55 min</span><span class="pill">Tinkercad online</span><span class="pill">Condicional IF</span><span class="pill">Equipos 2–3</span></p>
+</header>
+
+<!-- PASO 0: Contexto -->
+<div class="step coral">
+  <h2><span class="n">0</span>Qué aprendes hoy</h2>
+  <p>En S01 el LED parpadeaba siempre igual: el programa ejecutaba las instrucciones en bucle sin condición. Hoy añadimos una <b>entrada digital</b>: el Arduino va a <em>leer</em> el estado del pulsador y decidir si encender o apagar el LED.</p>
+  <p>Eso es un <b>condicional IF</b>: <em>«SI se cumple esta condición, ejecuta esto»</em>.</p>
+  <table>
+    <tr><th>Elemento</th><th>Función</th><th>Pin Arduino</th></tr>
+    <tr><td>LED verde</td><td>Salida digital (OUTPUT)</td><td><strong>13</strong></td></tr>
+    <tr><td>Resistencia 220 Ω</td><td>Limita corriente del LED</td><td>Serie con pin 13</td></tr>
+    <tr><td>Pulsador</td><td>Entrada digital (INPUT)</td><td><strong>7</strong></td></tr>
+    <tr><td>Resistencia 10 kΩ</td><td>Pull-down: fuerza pin 7 = LOW cuando botón suelto</td><td>Entre pin 7 y GND</td></tr>
+  </table>
+</div>
+
+<!-- PASO 1: Entender (E) -->
+<div class="step verde">
+  <h2><span class="n">1</span>Entender — antes de tocar Tinkercad</h2>
+  <p>Contesta en tu cuaderno:</p>
+  <ul>
+    <li>Sin el pulsador, el LED siempre estaría en el mismo estado. ¿Cuál? ¿Por qué?</li>
+    <li>¿Qué función hace la resistencia de 10 kΩ conectada entre el pin del pulsador y GND? ¿Qué pasaría sin ella?</li>
+    <li>Dibuja el diagrama de flujo: el Arduino lee el pin 7. Si pin 7 = HIGH → ___. Si pin 7 = LOW → ___.</li>
+  </ul>
+  <div class="tip"><strong>💡 Pull-down explicado:</strong> Sin la resistencia de 10 kΩ, cuando el botón está suelto el pin 7 queda "flotando" — puede leer HIGH o LOW aleatoriamente. La resistencia conecta el pin a GND y garantiza que lea LOW cuando el botón no está pulsado.</div>
+</div>
+
+<!-- PASO 2: Diseñar (D) -->
+<div class="step verde">
+  <h2><span class="n">2</span>Diseñar — diagrama de flujo</h2>
+  <p>En el cuaderno, dibuja el diagrama de flujo del programa antes de escribir código:</p>
+  <div class="code">  setup()
+    pinMode(13, OUTPUT)
+    pinMode(7, INPUT)
+
+  loop()  ← se repite indefinidamente
+    leer pin 7
+    SI (pin 7 == HIGH)  → encender LED
+    FIN SI
+    SI (pin 7 == LOW)   → apagar LED
+    FIN SI</div>
+  <div class="warn">⚠️ Hoy usamos <strong>dos IF independientes</strong>, no IF-ELSE. Con IF-ELSE el segundo bloque no se evalúa si el primero ya fue verdadero — eso lo introducimos en S03.</div>
+</div>
+
+<!-- PASO 3: Abrir Tinkercad -->
+<div class="step">
+  <h2><span class="n">3</span>Abre Tinkercad y monta el circuito</h2>
+  <ul>
+    <li>Ve a <strong>tinkercad.com</strong>, inicia sesión y crea un nuevo proyecto de <strong>Circuitos</strong>.</li>
+    <li>Añade los componentes: Arduino Uno, LED verde, resistencia 220 Ω, pulsador, resistencia 10 kΩ.</li>
+    <li>Monta el circuito exactamente como aparece en la imagen siguiente:</li>
+  </ul>
+  <img class="circuit-img" src="circuito.png" alt="Circuito S02 2.º ESO — LED con pulsador, pull-down 10 kΩ">
+  <p class="circuit-caption">Circuito de referencia: LED verde en pin 13 (220 Ω), pulsador en pin 7 con pull-down 10 kΩ a GND.</p>
+  <div class="tip"><strong>💡 Ánodo y cátodo del LED:</strong> La pata larga del LED (ánodo +) va hacia la resistencia. La pata corta (cátodo −) va a GND. En Tinkercad el LED tiene los terminales marcados.</div>
+</div>
+
+<!-- PASO 4: Programar -->
+<div class="step">
+  <h2><span class="n">4</span>Escribe el código</h2>
+  <p>En Tinkercad, pulsa <strong>«Código»</strong> (arriba a la derecha) y selecciona modo <strong>Texto</strong>. Escribe exactamente:</p>
+  <div class="code">const int PIN_LED   = 13;
+const int PIN_BOTON = 7;
+
+void setup() {
+  pinMode(PIN_LED,   OUTPUT);
+  pinMode(PIN_BOTON, INPUT);
+}
+
+void loop() {
+  if (digitalRead(PIN_BOTON) == HIGH) {
+    digitalWrite(PIN_LED, HIGH);
+  }
+  if (digitalRead(PIN_BOTON) == LOW) {
+    digitalWrite(PIN_LED, LOW);
+  }
+}</div>
+  <ul>
+    <li><code>digitalRead(PIN_BOTON)</code> devuelve <strong>HIGH</strong> (1) cuando el botón está pulsado y <strong>LOW</strong> (0) cuando está suelto.</li>
+    <li><code>digitalWrite(PIN_LED, HIGH)</code> pone el pin 13 a 5V → el LED se enciende.</li>
+    <li><code>digitalWrite(PIN_LED, LOW)</code> pone el pin 13 a 0V → el LED se apaga.</li>
+  </ul>
+</div>
+
+<!-- PASO 5: Simular -->
+<div class="step verde">
+  <h2><span class="n">5</span>Simula y verifica</h2>
+  <ul>
+    <li>Pulsa <strong>«Iniciar simulación»</strong>.</li>
+    <li>Haz clic en el pulsador (en Tinkercad se pulsa haciendo clic sobre él) — el LED debe encenderse.</li>
+    <li>Suelta el pulsador (clic de nuevo) — el LED debe apagarse.</li>
+    <li>Si el LED no responde: revisa que <code>pinMode(PIN_BOTON, INPUT)</code> esté en el setup y que el pull-down esté conectado correctamente.</li>
+  </ul>
+  <div class="tip"><strong>💡 Anota en el cuaderno:</strong> ¿Qué valor devuelve <code>digitalRead()</code> cuando pulsas? ¿Y cuando sueltas? ¿Cómo lo compruebas sin monitor serie?</div>
+</div>
+
+<!-- PASO 6: Captura y compartir -->
+<div class="step">
+  <h2><span class="n">6</span>Captura y comparte</h2>
+  <ul>
+    <li>Haz una captura de pantalla con el <strong>circuito y el código visibles a la vez</strong> (ajusta el zoom para que quepan los dos paneles). No son válidas dos capturas separadas.</li>
+    <li>Para compartir el proyecto: menú <strong>«Compartir»</strong> (icono arriba a la derecha) → activa <strong>«Acceso público»</strong> → copia la URL.</li>
+    <li>Pon nombre al proyecto: <strong>S02 - El botón de la verdad - NombreApellido</strong>.</li>
+  </ul>
+</div>
+
+<!-- ENTREGA -->
+<div class="entrega">
+  <h2>📤 Entrega</h2>
+  <p>Sube a Google Classroom, en la tarea de esta sesión:</p>
+  <ol>
+    <li><strong>Enlace</strong> público de tu proyecto Tinkercad.</li>
+    <li><strong>Captura</strong> con circuito + código visibles simultáneamente.</li>
+    <li><strong>Respuestas</strong> a las 3 preguntas de ENTENDER.</li>
+  </ol>
+  <p style="margin-top:1rem"><strong>Si tienes dudas, vuelve aquí:</strong></p>
+  <a class="url" href="https://ffrumej917.github.io/desafio-robotica-2026/">ffrumej917.github.io/desafio-robotica-2026/</a>
+</div>
+
+</div>
+</body>
+</html>

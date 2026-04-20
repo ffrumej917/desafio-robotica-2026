@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S02 · 2.º ESO · El botón de la verdad</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#0f1419;--bg2:#151c24;--fg:#f5f5f5;--muted:#9aa5b1;
+    --coral:#ff6f61;--ambar:#f1b043;--verde:#5dd39e;--morado:#b58cff;
+    --code:#1e2630;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+  .deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:4vh 6vw;animation:fade .35s ease}
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.1;margin-bottom:1rem}
+  h2{font-size:clamp(1.6rem,3vw,2.6rem);margin-bottom:1rem;color:var(--coral)}
+  .sub{color:var(--muted);font-size:clamp(1rem,1.6vw,1.3rem);margin-bottom:1.5rem}
+  .tag{display:inline-block;padding:.3rem .9rem;border-radius:999px;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
+  .tag.reto{background:#3a1f1c;color:var(--coral)}
+  .tag.aprende{background:#3a2e12;color:var(--ambar)}
+  .tag.edp{background:#143528;color:var(--verde)}
+  .tag.entrega{background:#2a1d3f;color:var(--morado)}
+  ul{list-style:none;display:grid;gap:.8rem;font-size:clamp(1rem,1.6vw,1.4rem)}
+  ul li{padding-left:2rem;position:relative}
+  ul li::before{content:"→";position:absolute;left:0;color:var(--ambar);font-weight:700}
+  .code{background:var(--code);border-left:4px solid var(--ambar);padding:.9rem 1.2rem;font-family:"SF Mono",Consolas,monospace;font-size:clamp(.85rem,1.3vw,1.1rem);color:#ffe8a8;border-radius:6px;margin:.8rem 0;white-space:pre}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:.8rem;flex:1;min-height:0}
+  .card{background:var(--bg2);border-radius:12px;padding:1.2rem;border-top:4px solid var(--verde);overflow:auto}
+  .card h3{font-size:1.2rem;margin-bottom:.6rem}
+  .card.e{border-top-color:var(--coral)} .card.e h3{color:var(--coral)}
+  .card.d{border-top-color:var(--ambar)} .card.d h3{color:var(--ambar)}
+  .card.p{border-top-color:var(--verde)} .card.p h3{color:var(--verde)}
+  .card p,.card ul{font-size:clamp(.9rem,1.3vw,1.1rem);color:var(--muted);line-height:1.5}
+  .entrega-box{background:linear-gradient(135deg,#2a1d3f,#1a1228);border:2px solid var(--morado);border-radius:14px;padding:1.6rem;margin-top:.8rem}
+  .entrega-box .url{display:inline-block;background:var(--morado);color:#0f1419;padding:.7rem 1.2rem;border-radius:8px;font-weight:700;margin-top:.8rem;font-size:clamp(.9rem,1.4vw,1.2rem);word-break:break-all}
+  footer{position:fixed;bottom:1.2rem;left:0;right:0;display:flex;justify-content:space-between;padding:0 2rem;color:var(--muted);font-size:.85rem;pointer-events:none}
+  .hint{position:fixed;top:1rem;right:1.5rem;color:var(--muted);font-size:.75rem;opacity:.6}
+  .dots{display:flex;gap:.5rem;justify-content:center}
+  .dots span{width:10px;height:10px;border-radius:50%;background:#2a3341;transition:background .2s}
+  .dots span.on{background:var(--coral)}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1. Portada -->
+  <section class="slide active" style="justify-content:center;align-items:flex-start;gap:1rem">
+    <span class="tag reto">Sesión 02 · 2.º ESO · CyR</span>
+    <h1>🔘 El botón de la verdad</h1>
+    <p class="sub">Aprendemos a leer una <b>entrada digital</b> con <code style="background:#1e2630;padding:.1rem .4rem;border-radius:4px">digitalRead()</code> y a tomar decisiones con <b>IF</b>.</p>
+    <div style="margin-top:1.5rem">
+      <p style="color:var(--muted);font-size:.95rem">DESAFÍO ROBÓTICA 2026 · IES Punta del Verde</p>
+    </div>
+  </section>
+
+  <!-- 2. El circuito -->
+  <section class="slide">
+    <span class="tag reto">⚡ El circuito</span>
+    <h2>Componentes y conexiones</h2>
+    <div class="grid2" style="grid-template-columns:1.2fr 0.8fr">
+      <div style="background:var(--bg2);border-radius:12px;padding:.8rem;display:flex;align-items:center;justify-content:center">
+        <img id="circuito" style="max-width:100%;max-height:100%;border-radius:8px;object-fit:contain" alt="Circuito S02 2ESO">
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.8rem">
+        <div class="card e"><h3>Pin 13 → LED</h3><p>Resistencia 220 Ω en serie. Salida digital (OUTPUT).</p></div>
+        <div class="card d"><h3>Pin 7 → Pulsador</h3><p>Entrada digital (INPUT). Pull-down 10 kΩ a GND.</p></div>
+        <div class="card p"><h3>Pull-down 10 kΩ</h3><p>Garantiza que pin 7 = LOW cuando el botón está suelto. Sin ella: estado flotante.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. El código -->
+  <section class="slide">
+    <span class="tag aprende">💻 El código</span>
+    <h2>Estructura IF en Arduino (C++)</h2>
+    <p class="sub">Dos IF independientes — sin ELSE todavía (eso es S03).</p>
+    <div class="code">const int PIN_LED   = 13;
+const int PIN_BOTON = 7;
+
+void setup() {
+  pinMode(PIN_LED,   OUTPUT);
+  pinMode(PIN_BOTON, INPUT);
+}
+
+void loop() {
+  if (digitalRead(PIN_BOTON) == HIGH) {
+    digitalWrite(PIN_LED, HIGH);  // pulso → LED ON
+  }
+  if (digitalRead(PIN_BOTON) == LOW) {
+    digitalWrite(PIN_LED, LOW);   // suelto → LED OFF
+  }
+}</div>
+  </section>
+
+  <!-- 4. E/D/P + Entrega -->
+  <section class="slide">
+    <span class="tag edp">🧠 Método E · D · P</span>
+    <h2>Fases y entrega</h2>
+    <div class="grid2">
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div class="card e"><h3>🧠 Entender</h3><p>¿Por qué necesitamos el pull-down? ¿Qué devuelve digitalRead() al pulsar y al soltar? Diagrama de flujo del IF.</p></div>
+        <div class="card d"><h3>✏️ Diseñar</h3><p>Dibuja el diagrama de flujo completo en el cuaderno antes de escribir el código.</p></div>
+        <div class="card p"><h3>💻 Programar</h3><p>Monta el circuito y el código en Tinkercad. Prueba. Captura con circuito + código visibles a la vez.</p></div>
+      </div>
+      <div class="entrega-box">
+        <p style="color:var(--morado);font-weight:700;letter-spacing:.08em;font-size:.9rem">📤 ENTREGA</p>
+        <ul style="margin-top:.6rem;font-size:1rem;color:var(--fg)">
+          <li>Enlace público Tinkercad</li>
+          <li>Captura circuito + código</li>
+          <li>Respuestas ENTENDER</li>
+        </ul>
+        <a class="url" href="https://ffrumej917.github.io/desafio-robotica-2026/">ffrumej917.github.io/desafio-robotica-2026/</a>
+        <p style="color:var(--muted);margin-top:.6rem;font-size:.9rem">Abre → 2.º ESO → S02</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="hint">← → navegar · F11 pantalla completa</div>
+<footer>
+  <div>IES Punta del Verde · CyR 2.º ESO · S02</div>
+  <div class="dots" id="dots"></div>
+  <div id="counter">1 / 4</div>
+</footer>
+
+<script>
+  // Imagen circuito en base64 (incrustada para evitar dependencias de ruta)
+  document.getElementById('circuito').src = 'circuito.png';
+
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  const counter=document.getElementById('counter');
+  slides.forEach((_,i)=>{const d=document.createElement('span');if(i===0)d.classList.add('on');dots.appendChild(d)});
+  const dotsEls=[...dots.children];
+  let i=0;
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dotsEls.forEach((d,k)=>d.classList.toggle('on',k===i));
+    counter.textContent=`${i+1} / ${slides.length}`;
+  }
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+    if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1);
+  });
+  document.addEventListener('click',e=>{
+    if(e.target.closest('a'))return;
+    const x=e.clientX,w=window.innerWidth;
+    go(x>w/2?i+1:i-1);
+  });
+</script>
+</body>
+</html>
