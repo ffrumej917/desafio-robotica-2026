@@ -2,178 +2,198 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>S02 · Instrucciones · El botón de la verdad</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrucciones – S02 El botón de la verdad | 2º ESO</title>
 <style>
-  :root{
-    --bg:#f7f5f0;--fg:#1c1c1c;--muted:#555;
-    --coral:#ff6f61;--coral-bg:#ffe4e1;
-    --ambar:#d98c00;--ambar-bg:#fff2d6;
-    --verde:#2e8b57;--verde-bg:#dff2e4;
-    --morado:#6b3fa0;--morado-bg:#eadcfb;
-    --code-bg:#1e2630;--code-fg:#ffe8a8;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
-  .wrap{max-width:900px;margin:0 auto;padding:2rem 1.2rem 4rem}
-  header{text-align:center;padding:2rem 0 1rem;border-bottom:3px solid var(--coral);margin-bottom:2rem}
-  header .tag{display:inline-block;background:var(--coral);color:#fff;padding:.3rem 1rem;border-radius:999px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem}
-  h1{font-size:2.2rem;margin:.3rem 0}
-  header p{color:var(--muted);margin:.4rem 0}
-  .pill{display:inline-block;background:#fff;border:1px solid #e0d8c8;padding:.15rem .6rem;border-radius:999px;font-size:.85rem;margin-right:.3rem;color:var(--muted)}
-  .step{background:#fff;border-radius:14px;padding:1.6rem 1.8rem;margin-bottom:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:6px solid var(--ambar)}
-  .step h2{display:flex;align-items:center;gap:.8rem;font-size:1.35rem;margin:0 0 .8rem;color:var(--ambar)}
-  .step h2 .n{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;background:var(--ambar);color:#fff;border-radius:50%;font-size:1rem;font-weight:700;flex-shrink:0}
-  .step p{margin:.5rem 0;color:#333}
-  .step ul{padding-left:1.4rem}
-  .step ul li{margin:.4rem 0}
-  .step.verde{border-left-color:var(--verde)} .step.verde h2{color:var(--verde)} .step.verde h2 .n{background:var(--verde)}
-  .step.coral{border-left-color:var(--coral)} .step.coral h2{color:var(--coral)} .step.coral h2 .n{background:var(--coral)}
-  .step.morado{border-left-color:var(--morado)} .step.morado h2{color:var(--morado)} .step.morado h2 .n{background:var(--morado)}
-  .code{background:var(--code-bg);color:var(--code-fg);padding:1rem 1.2rem;font-family:"SF Mono",Consolas,monospace;border-radius:8px;white-space:pre;font-size:.92rem;margin:.8rem 0;overflow-x:auto}
-  .tip{background:var(--ambar-bg);border-left:4px solid var(--ambar);padding:.9rem 1.1rem;border-radius:6px;margin:.8rem 0;font-size:.97rem}
-  .tip strong{color:var(--ambar)}
-  .warn{background:#fff3cd;border-left:4px solid #e59400;padding:.9rem 1.1rem;border-radius:6px;margin:.8rem 0;font-size:.97rem}
-  .circuit-img{width:100%;border-radius:10px;border:1px solid #ddd;margin:.8rem 0;display:block}
-  .circuit-caption{font-size:.88rem;color:var(--muted);text-align:center;margin-top:.3rem;font-style:italic}
-  table{width:100%;border-collapse:collapse;margin:.8rem 0;font-size:.95rem}
-  th{background:var(--ambar);color:#fff;padding:.5rem .8rem;text-align:left}
-  td{padding:.5rem .8rem;border-bottom:1px solid #eee}
-  tr:nth-child(even) td{background:#fafafa}
-  .entrega{background:linear-gradient(135deg,var(--morado-bg),#fff);border:2px solid var(--morado);border-radius:14px;padding:1.8rem;margin-top:2.5rem}
-  .entrega h2{color:var(--morado);margin-top:0}
-  .entrega .url{display:inline-block;background:var(--morado);color:#fff;padding:.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:700;margin-top:.6rem;word-break:break-all}
-  kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:.1rem .4rem;font-family:inherit;font-size:.88rem}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f0f1e; color:#e8eaf0; font-family:'Segoe UI',Arial,sans-serif; min-height:100vh; padding:40px 20px 60px; }
+  .page-header { max-width:860px; margin:0 auto 40px; text-align:center; }
+  .page-header .badge { display:inline-block; background:#4c97ff; color:#fff; font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:20px; margin-bottom:14px; }
+  .page-header h1 { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; color:#fff; margin-bottom:8px; }
+  .page-header h1 span { color:#4c97ff; }
+  .page-header p { font-size:clamp(0.9rem,2vw,1.05rem); color:#8899bb; }
+  .phases-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:860px; margin:0 auto 40px; }
+  .phase-pill { display:flex; align-items:center; gap:7px; padding:7px 18px; border-radius:20px; font-size:0.82rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+  .phase-pill.coral { background:rgba(255,107,107,0.18); border:1.5px solid #ff6b6b; color:#ff9090; }
+  .phase-pill.amber { background:rgba(251,188,4,0.13); border:1.5px solid #fbbc04; color:#fbcc44; }
+  .phase-pill.green { background:rgba(52,211,153,0.13); border:1.5px solid #34d399; color:#5de8b0; }
+  .container { max-width:860px; margin:0 auto; }
+  .section { border-radius:16px; padding:28px 30px; margin-bottom:24px; }
+  .section.entender { background:rgba(255,107,107,0.08); border:1.5px solid rgba(255,107,107,0.35); }
+  .section.diseniar { background:rgba(251,188,4,0.07); border:1.5px solid rgba(251,188,4,0.3); }
+  .section.programar { background:rgba(52,211,153,0.07); border:1.5px solid rgba(52,211,153,0.3); }
+  .section-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .section-icon { font-size:1.6rem; width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .entender .section-icon { background:rgba(255,107,107,0.2); }
+  .diseniar .section-icon { background:rgba(251,188,4,0.15); }
+  .programar .section-icon { background:rgba(52,211,153,0.15); }
+  .section-title { font-size:1.15rem; font-weight:800; }
+  .entender .section-title { color:#ff8080; }
+  .diseniar .section-title { color:#fbcc44; }
+  .programar .section-title { color:#5de8b0; }
+  .section-time { font-size:0.78rem; color:#667; margin-top:2px; }
+  .step { display:flex; gap:16px; margin-bottom:20px; align-items:flex-start; }
+  .step-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; flex-shrink:0; margin-top:2px; }
+  .entender .step-num { background:rgba(255,107,107,0.3); color:#ff8080; border:1.5px solid #ff6b6b; }
+  .diseniar .step-num { background:rgba(251,188,4,0.2); color:#fbcc44; border:1.5px solid #fbbc04; }
+  .programar .step-num { background:rgba(52,211,153,0.2); color:#5de8b0; border:1.5px solid #34d399; }
+  .step-body { flex:1; }
+  .step-body p { font-size:0.95rem; line-height:1.7; color:#ccd; }
+  .step-body p strong { color:#fff; }
+  .hint { margin-top:8px; background:rgba(255,255,255,0.05); border-left:3px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 14px; font-size:0.85rem; color:#99aabb; line-height:1.6; }
+  .circuit-placeholder { background:rgba(76,151,255,0.08); border:2px dashed rgba(76,151,255,0.4); border-radius:12px; padding:30px; margin:14px 0; text-align:center; }
+  .circuit-placeholder p { color:#7ab8ff; font-size:0.9rem; line-height:1.6; }
+  .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:18px 22px; font-family:'Courier New',monospace; font-size:0.88rem; line-height:1.9; color:#e2e8f0; margin:12px 0; }
+  .code-block .kw { color:#f472b6; font-weight:700; }
+  .code-block .cm { color:#6b7280; font-style:italic; }
+  .code-block .num { color:#fbbf24; }
+  .code-block .i1 { margin-left:1.5em; }
+  .code-block .i2 { margin-left:3em; }
+  .design-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:0.9rem; }
+  .design-table th { background:rgba(251,188,4,0.15); color:#fbcc44; padding:10px 14px; text-align:left; font-weight:700; border-bottom:1px solid rgba(251,188,4,0.25); }
+  .design-table td { padding:10px 14px; color:#ccd; border-bottom:1px solid rgba(255,255,255,0.07); vertical-align:top; }
+  .design-table .field { color:#fff; font-weight:600; }
+  .entrega-final { background:rgba(168,85,247,0.12); border:2px solid #a855f7; border-radius:16px; padding:24px 28px; margin-top:10px; max-width:860px; margin-left:auto; margin-right:auto; }
+  .entrega-final h3 { color:#c084fc; font-size:1.05rem; margin-bottom:12px; }
+  .entrega-final ol { margin-left:20px; }
+  .entrega-final li { color:#ccd; font-size:0.92rem; line-height:1.8; }
+  .entrega-final li strong { color:#fff; }
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<header>
-  <span class="tag">Sesión 02 · 2.º ESO · CyR</span>
-  <h1>🔘 El botón de la verdad</h1>
-  <p>Controla un LED con un pulsador usando el condicional <b>IF</b> en Arduino (C++)</p>
-  <p><span class="pill">55 min</span><span class="pill">Tinkercad online</span><span class="pill">Condicional IF</span><span class="pill">Equipos 2–3</span></p>
-</header>
-
-<!-- PASO 0: Contexto -->
-<div class="step coral">
-  <h2><span class="n">0</span>Qué aprendes hoy</h2>
-  <p>En S01 el LED parpadeaba siempre igual: el programa ejecutaba las instrucciones en bucle sin condición. Hoy añadimos una <b>entrada digital</b>: el Arduino va a <em>leer</em> el estado del pulsador y decidir si encender o apagar el LED.</p>
-  <p>Eso es un <b>condicional IF</b>: <em>«SI se cumple esta condición, ejecuta esto»</em>.</p>
-  <table>
-    <tr><th>Elemento</th><th>Función</th><th>Pin Arduino</th></tr>
-    <tr><td>LED verde</td><td>Salida digital (OUTPUT)</td><td><strong>13</strong></td></tr>
-    <tr><td>Resistencia 220 Ω</td><td>Limita corriente del LED</td><td>Serie con pin 13</td></tr>
-    <tr><td>Pulsador</td><td>Entrada digital (INPUT)</td><td><strong>7</strong></td></tr>
-    <tr><td>Resistencia 10 kΩ</td><td>Pull-down: fuerza pin 7 = LOW cuando botón suelto</td><td>Entre pin 7 y GND</td></tr>
-  </table>
+<div class="page-header">
+  <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 2</div>
+  <h1>🔘 El <span>Botón de la Verdad</span></h1>
+  <p>Guía paso a paso · IF con pulsador en Tinkercad · 55 minutos</p>
 </div>
-
-<!-- PASO 1: Entender (E) -->
-<div class="step verde">
-  <h2><span class="n">1</span>Entender — antes de tocar Tinkercad</h2>
-  <p>Contesta en tu cuaderno:</p>
-  <ul>
-    <li>Sin el pulsador, el LED siempre estaría en el mismo estado. ¿Cuál? ¿Por qué?</li>
-    <li>¿Qué función hace la resistencia de 10 kΩ conectada entre el pin del pulsador y GND? ¿Qué pasaría sin ella?</li>
-    <li>Dibuja el diagrama de flujo: el Arduino lee el pin 7. Si pin 7 = HIGH → ___. Si pin 7 = LOW → ___.</li>
-  </ul>
-  <div class="tip"><strong>💡 Pull-down explicado:</strong> Sin la resistencia de 10 kΩ, cuando el botón está suelto el pin 7 queda "flotando" — puede leer HIGH o LOW aleatoriamente. La resistencia conecta el pin a GND y garantiza que lea LOW cuando el botón no está pulsado.</div>
+<div class="phases-bar">
+  <div class="phase-pill coral">🧠 Entender · 10 min</div>
+  <div class="phase-pill amber">✏️ Diseñar · 10 min</div>
+  <div class="phase-pill green">💻 Programar · 30 min</div>
 </div>
+<div class="container">
 
-<!-- PASO 2: Diseñar (D) -->
-<div class="step verde">
-  <h2><span class="n">2</span>Diseñar — diagrama de flujo</h2>
-  <p>En el cuaderno, dibuja el diagrama de flujo del programa antes de escribir código:</p>
-  <div class="code">  setup()
-    pinMode(13, OUTPUT)
-    pinMode(7, INPUT)
+  <div class="section entender">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <div><div class="section-title">ENTENDER — IF con entrada digital</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <p>El bloque <strong>IF</strong> en Arduino funciona igual que en Scratch: ejecuta un bloque de código solo si la condición es verdadera. Aquí la condición es leer el estado del pulsador.</p>
+        <div class="hint">📌 <code>digitalRead(pin)</code> devuelve <strong>HIGH (1)</strong> si hay tensión en el pin, y <strong>LOW (0)</strong> si no la hay.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <p><strong>¿Por qué la resistencia pull-down de 10 kΩ?</strong> Sin ella, el pin 7 flota entre 0 y 1 aleatoriamente cuando el botón está abierto. La resistencia pull-down conecta el pin a GND y fuerza la lectura a LOW cuando no se pulsa, garantizando lecturas fiables.</p>
+        <div class="hint">⚡ Conexión: un extremo del pulsador a 5V, el otro al pin 7 y a GND a través de 10 kΩ.</div>
+      </div>
+    </div>
+  </div>
 
-  loop()  ← se repite indefinidamente
-    leer pin 7
-    SI (pin 7 == HIGH)  → encender LED
-    FIN SI
-    SI (pin 7 == LOW)   → apagar LED
-    FIN SI</div>
-  <div class="warn">⚠️ Hoy usamos <strong>dos IF independientes</strong>, no IF-ELSE. Con IF-ELSE el segundo bloque no se evalúa si el primero ya fue verdadero — eso lo introducimos en S03.</div>
-</div>
+  <div class="section diseniar">
+    <div class="section-header">
+      <div class="section-icon">✏️</div>
+      <div><div class="section-title">DISEÑAR — Planifica el circuito y el código</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <p>Antes de montar nada, completa la tabla de diseño en tu ficha:</p>
+        <table class="design-table">
+          <thead><tr><th>Elemento</th><th>Especificación</th></tr></thead>
+          <tbody>
+            <tr><td class="field">🔘 Entrada: pulsador</td><td>Pin 7 · configurado como INPUT · pull-down 10 kΩ a GND</td></tr>
+            <tr><td class="field">💡 Salida: LED</td><td>Pin 13 · configurado como OUTPUT · resistencia 220 Ω en serie</td></tr>
+            <tr><td class="field">🔀 Condición IF</td><td>digitalRead(7) == HIGH</td></tr>
+            <tr><td class="field">✅ Acción si verdad</td><td>digitalWrite(13, HIGH) → LED encendido</td></tr>
+            <tr><td class="field">❌ Sin ELSE</td><td>Si no se pulsa, el LED no cambia de estado</td></tr>
+          </tbody>
+        </table>
+        <div class="hint">⚠️ Nota: al no tener ELSE, si el LED estaba encendido y sueltas el botón, permanece encendido. Lo resolveremos en S03 con IF-ELSE.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <p>El circuito que deberás montar en Tinkercad. Tu profesor te mostrará la captura del circuito real.</p>
+        <div class="circuit-placeholder">
+          <p>📸 <strong>Captura del circuito</strong><br>Pulsador (pin 7 + pull-down 10 kΩ) · LED (pin 13 + 220 Ω)<br><em>Ver imagen adjunta en la presentación o en la ficha</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- PASO 3: Abrir Tinkercad -->
-<div class="step">
-  <h2><span class="n">3</span>Abre Tinkercad y monta el circuito</h2>
-  <ul>
-    <li>Ve a <strong>tinkercad.com</strong>, inicia sesión y crea un nuevo proyecto de <strong>Circuitos</strong>.</li>
-    <li>Añade los componentes: Arduino Uno, LED verde, resistencia 220 Ω, pulsador, resistencia 10 kΩ.</li>
-    <li>Monta el circuito exactamente como aparece en la imagen siguiente:</li>
-  </ul>
-  <img class="circuit-img" src="circuito.png" alt="Circuito S02 2.º ESO — LED con pulsador, pull-down 10 kΩ">
-  <p class="circuit-caption">Circuito de referencia: LED verde en pin 13 (220 Ω), pulsador en pin 7 con pull-down 10 kΩ a GND.</p>
-  <div class="tip"><strong>💡 Ánodo y cátodo del LED:</strong> La pata larga del LED (ánodo +) va hacia la resistencia. La pata corta (cátodo −) va a GND. En Tinkercad el LED tiene los terminales marcados.</div>
-</div>
+  <div class="section programar">
+    <div class="section-header">
+      <div class="section-icon">💻</div>
+      <div><div class="section-title">PROGRAMAR — Monta y codifica en Tinkercad</div><div class="section-time">⏱ 30 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <p>Abre <strong>tinkercad.com</strong>, entra en Circuits y crea un nuevo circuito. Añade: Arduino UNO, 1 pulsador, 1 LED, 1 resistencia 220 Ω, 1 resistencia 10 kΩ.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <p>Realiza las conexiones siguiendo el esquema:</p>
+        <div class="hint">
+          🔘 <strong>Pulsador:</strong> pin superior-izquierdo → 5V · pin inferior-izquierdo → pin 7 Arduino y también a GND a través de resistencia 10 kΩ.<br>
+          💡 <strong>LED:</strong> ánodo (+, pata larga) → resistencia 220 Ω → pin 13 Arduino · cátodo (-, pata corta) → GND.
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <p>Abre el editor de código (botón <strong>Código</strong>) y escribe el siguiente programa:</p>
+        <div class="code-block">
+          <div><span class="cm">// Pines</span></div>
+          <div><span class="kw">const int</span> pinBoton = <span class="num">7</span>;</div>
+          <div><span class="kw">const int</span> pinLed   = <span class="num">13</span>;</div>
+          <div>&nbsp;</div>
+          <div><span class="kw">void</span> setup() {</div>
+          <div class="i1">pinMode(pinBoton, <span class="kw">INPUT</span>);  <span class="cm">// entrada digital</span></div>
+          <div class="i1">pinMode(pinLed,   <span class="kw">OUTPUT</span>); <span class="cm">// salida digital</span></div>
+          <div>}</div>
+          <div>&nbsp;</div>
+          <div><span class="kw">void</span> loop() {</div>
+          <div class="i1"><span class="kw">if</span> (digitalRead(pinBoton) == <span class="kw">HIGH</span>) {</div>
+          <div class="i2">digitalWrite(pinLed, <span class="kw">HIGH</span>); <span class="cm">// LED encendido</span></div>
+          <div class="i1">}</div>
+          <div>}</div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <p>Haz clic en <strong>Iniciar simulación</strong>. Pulsa el botón → el LED debe encenderse. Suelta → el LED permanece encendido (sin ELSE por ahora). Esto es correcto.</p>
+        <div class="hint">💡 Observa que al no tener ELSE, el LED no se apaga al soltar. En S03 añadiremos esa segunda rama.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <p>Haz clic en <strong>Compartir</strong> en Tinkercad y copia el enlace público del proyecto.</p>
+      </div>
+    </div>
+  </div>
 
-<!-- PASO 4: Programar -->
-<div class="step">
-  <h2><span class="n">4</span>Escribe el código</h2>
-  <p>En Tinkercad, pulsa <strong>«Código»</strong> (arriba a la derecha) y selecciona modo <strong>Texto</strong>. Escribe exactamente:</p>
-  <div class="code">const int PIN_LED   = 13;
-const int PIN_BOTON = 7;
-
-void setup() {
-  pinMode(PIN_LED,   OUTPUT);
-  pinMode(PIN_BOTON, INPUT);
-}
-
-void loop() {
-  if (digitalRead(PIN_BOTON) == HIGH) {
-    digitalWrite(PIN_LED, HIGH);
-  }
-  if (digitalRead(PIN_BOTON) == LOW) {
-    digitalWrite(PIN_LED, LOW);
-  }
-}</div>
-  <ul>
-    <li><code>digitalRead(PIN_BOTON)</code> devuelve <strong>HIGH</strong> (1) cuando el botón está pulsado y <strong>LOW</strong> (0) cuando está suelto.</li>
-    <li><code>digitalWrite(PIN_LED, HIGH)</code> pone el pin 13 a 5V → el LED se enciende.</li>
-    <li><code>digitalWrite(PIN_LED, LOW)</code> pone el pin 13 a 0V → el LED se apaga.</li>
-  </ul>
-</div>
-
-<!-- PASO 5: Simular -->
-<div class="step verde">
-  <h2><span class="n">5</span>Simula y verifica</h2>
-  <ul>
-    <li>Pulsa <strong>«Iniciar simulación»</strong>.</li>
-    <li>Haz clic en el pulsador (en Tinkercad se pulsa haciendo clic sobre él) — el LED debe encenderse.</li>
-    <li>Suelta el pulsador (clic de nuevo) — el LED debe apagarse.</li>
-    <li>Si el LED no responde: revisa que <code>pinMode(PIN_BOTON, INPUT)</code> esté en el setup y que el pull-down esté conectado correctamente.</li>
-  </ul>
-  <div class="tip"><strong>💡 Anota en el cuaderno:</strong> ¿Qué valor devuelve <code>digitalRead()</code> cuando pulsas? ¿Y cuando sueltas? ¿Cómo lo compruebas sin monitor serie?</div>
-</div>
-
-<!-- PASO 6: Captura y compartir -->
-<div class="step">
-  <h2><span class="n">6</span>Captura y comparte</h2>
-  <ul>
-    <li>Haz una captura de pantalla con el <strong>circuito y el código visibles a la vez</strong> (ajusta el zoom para que quepan los dos paneles). No son válidas dos capturas separadas.</li>
-    <li>Para compartir el proyecto: menú <strong>«Compartir»</strong> (icono arriba a la derecha) → activa <strong>«Acceso público»</strong> → copia la URL.</li>
-    <li>Pon nombre al proyecto: <strong>S02 - El botón de la verdad - NombreApellido</strong>.</li>
-  </ul>
-</div>
-
-<!-- ENTREGA -->
-<div class="entrega">
-  <h2>📤 Entrega</h2>
-  <p>Sube a Google Classroom, en la tarea de esta sesión:</p>
-  <ol>
-    <li><strong>Enlace</strong> público de tu proyecto Tinkercad.</li>
-    <li><strong>Captura</strong> con circuito + código visibles simultáneamente.</li>
-    <li><strong>Respuestas</strong> a las 3 preguntas de ENTENDER.</li>
-  </ol>
-  <p style="margin-top:1rem"><strong>Si tienes dudas, vuelve aquí:</strong></p>
-  <a class="url" href="https://ffrumej917.github.io/desafio-robotica-2026/">ffrumej917.github.io/desafio-robotica-2026/</a>
-</div>
-
+  <div class="entrega-final">
+    <h3>🟣 ENTREGA FINAL</h3>
+    <ol>
+      <li>Copia el <strong>enlace público</strong> de tu circuito en Tinkercad.</li>
+      <li>Pégalo en el <strong>recuadro de entrega</strong> de tu ficha.</li>
+      <li>Rellena la tabla de Diseño en la ficha.</li>
+      <li>Sube la ficha en <strong>Google Classroom</strong>.</li>
+    </ol>
+  </div>
 </div>
 </body>
 </html>

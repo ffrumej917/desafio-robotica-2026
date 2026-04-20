@@ -2,137 +2,192 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>S02 · 1.º ESO · El guardián de la puerta</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S02 – El guardián de la puerta | Desafío Robótica 2026</title>
 <style>
-  :root{
-    --bg:#0f1419; --bg2:#151c24; --fg:#f5f5f5; --muted:#9aa5b1;
-    --coral:#ff6f61; --ambar:#f1b043; --verde:#5dd39e; --morado:#b58cff;
-    --code:#1e2630;
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d0d1a; color: #f0f0f0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    height: 100vh; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
-  .deck{position:relative;width:100vw;height:100vh}
-  .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:4vh 6vw;animation:fade .35s ease}
-  .slide.active{display:flex}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.1;margin-bottom:1rem}
-  h2{font-size:clamp(1.8rem,3.6vw,3rem);margin-bottom:1.2rem;color:var(--coral)}
-  .sub{color:var(--muted);font-size:clamp(1rem,1.6vw,1.3rem);margin-bottom:2rem}
-  ul{list-style:none;display:grid;gap:1rem;font-size:clamp(1.1rem,1.8vw,1.6rem)}
-  ul li{padding-left:2.2rem;position:relative}
-  ul li::before{content:"→";position:absolute;left:0;color:var(--ambar);font-weight:700}
-  .tag{display:inline-block;padding:.3rem .9rem;border-radius:999px;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
-  .tag.reto{background:#3a1f1c;color:var(--coral)}
-  .tag.aprende{background:#3a2e12;color:var(--ambar)}
-  .tag.edp{background:#143528;color:var(--verde)}
-  .tag.entrega{background:#2a1d3f;color:var(--morado)}
-  .code{background:var(--code);border-left:4px solid var(--ambar);padding:1rem 1.4rem;font-family:"SF Mono",Consolas,monospace;font-size:clamp(1rem,1.5vw,1.3rem);color:#ffe8a8;border-radius:6px;margin:1rem 0;white-space:pre-wrap}
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1rem}
-  .card{background:var(--bg2);border-radius:12px;padding:1.4rem;border-top:4px solid var(--verde)}
-  .card h3{color:var(--verde);font-size:1.3rem;margin-bottom:.6rem}
-  .card p{color:var(--muted);font-size:1.05rem;line-height:1.5}
-  .card.e{border-top-color:var(--coral)} .card.e h3{color:var(--coral)}
-  .card.d{border-top-color:var(--ambar)} .card.d h3{color:var(--ambar)}
-  .card.p{border-top-color:var(--verde)} .card.p h3{color:var(--verde)}
-  .entrega-box{background:linear-gradient(135deg,#2a1d3f,#1a1228);border:2px solid var(--morado);border-radius:14px;padding:2rem;margin-top:1rem}
-  .entrega-box .url{display:inline-block;background:var(--morado);color:#0f1419;padding:.8rem 1.4rem;border-radius:8px;font-weight:700;margin-top:1rem;font-size:clamp(1rem,1.6vw,1.4rem);word-break:break-all}
-  footer{position:fixed;bottom:1.2rem;left:0;right:0;display:flex;justify-content:space-between;padding:0 2rem;color:var(--muted);font-size:.9rem;pointer-events:none}
-  .hint{position:fixed;top:1rem;right:1.5rem;color:var(--muted);font-size:.8rem;opacity:.6}
-  .dots{display:flex;gap:.5rem;justify-content:center}
-  .dots span{width:10px;height:10px;border-radius:50%;background:#2a3341;transition:background .2s}
-  .dots span.on{background:var(--coral)}
-  .titlecenter{justify-content:center;align-items:flex-start;gap:1rem}
+  .slide { display: none; width: 100vw; height: 100vh; padding: 5vh 6vw;
+    flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; position: absolute; top: 0; left: 0; }
+  .slide.active { display: flex; }
+
+  /* Slide 1 */
+  .slide-1 { background: radial-gradient(ellipse at center, #1a1a3e 0%, #0d0d1a 70%); }
+  .slide-1 .badge { background: #ff6b6b; color: #fff; font-size: clamp(0.7rem,1.5vw,0.9rem);
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    padding: 6px 18px; border-radius: 20px; margin-bottom: 2vh; }
+  .slide-1 .emoji-big { font-size: clamp(3rem,8vw,5rem); margin-bottom: 2vh; }
+  .slide-1 h1 { font-size: clamp(2rem,5vw,3.8rem); font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 1.5vh; }
+  .slide-1 h1 span { color: #ff6b6b; }
+  .slide-1 .subtitle { font-size: clamp(1rem,2.5vw,1.5rem); color: #aab4c8; margin-bottom: 3vh; }
+  .tag-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .tag { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 16px; border-radius: 12px; font-size: clamp(0.75rem,1.5vw,0.9rem); color: #c8d6f0; }
+
+  /* Slide 2 */
+  .slide-2 { background: #0d0d1a; text-align: left; align-items: flex-start; }
+  .slide-2 h2 { font-size: clamp(1.4rem,3.5vw,2.5rem); font-weight: 800; color: #ff6b6b; margin-bottom: 3vh; width: 100%; }
+  .if-box { background: rgba(255,107,107,0.1); border: 2px solid #ff6b6b;
+    border-radius: 16px; padding: clamp(18px,2.5vw,28px); max-width: 820px; width: 100%; margin-bottom: 2.5vh; }
+  .if-box .label { color: #ff8080; font-weight: 800; font-size: clamp(0.9rem,2vw,1.2rem); margin-bottom: 10px; }
+  .if-box p { font-size: clamp(0.85rem,1.8vw,1.1rem); color: #dde; line-height: 1.6; }
+  .analogy { background: rgba(255,255,255,0.05); border-left: 4px solid #f0c040;
+    border-radius: 8px; padding: clamp(12px,1.5vw,18px); max-width: 820px; width: 100%; }
+  .analogy p { font-size: clamp(0.85rem,1.8vw,1.05rem); color: #f0e0a0; line-height: 1.6; }
+
+  /* Slide 3 */
+  .slide-3 { background: #0d0d1a; text-align: left; align-items: flex-start; }
+  .slide-3 h2 { font-size: clamp(1.4rem,3.5vw,2.5rem); font-weight: 800; color: #fff; margin-bottom: 3vh; width: 100%; }
+  .slide-3 h2 span { color: #ff6b6b; }
+  .reto-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px; padding: clamp(18px,2.5vw,30px); max-width: 860px; width: 100%; margin-bottom: 2.5vh; }
+  .reto-card .reto-title { font-size: clamp(1rem,2.2vw,1.3rem); font-weight: 700; color: #ffcc00; margin-bottom: 12px; }
+  .reto-card p { font-size: clamp(0.85rem,1.8vw,1.05rem); color: #ccd; line-height: 1.7; }
+  .phases-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5vw; max-width: 860px; width: 100%; }
+  .phase { border-radius: 12px; padding: clamp(12px,1.5vw,20px); text-align: center; }
+  .phase.entender { background: rgba(255,107,107,0.15); border: 1.5px solid #ff6b6b; }
+  .phase.diseniar { background: rgba(251,188,4,0.12); border: 1.5px solid #fbbc04; }
+  .phase.programar { background: rgba(52,211,153,0.12); border: 1.5px solid #34d399; }
+  .phase .ph-icon { font-size: clamp(1.4rem,3vw,2rem); margin-bottom: 6px; }
+  .phase .ph-label { font-size: clamp(0.75rem,1.5vw,0.95rem); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .phase.entender .ph-label { color: #ff6b6b; }
+  .phase.diseniar .ph-label { color: #fbbc04; }
+  .phase.programar .ph-label { color: #34d399; }
+  .phase .ph-time { font-size: clamp(0.7rem,1.3vw,0.85rem); color: #aab; margin-top: 4px; }
+
+  /* Slide 4 */
+  .slide-4 { background: #0d0d1a; text-align: left; align-items: flex-start; }
+  .slide-4 h2 { font-size: clamp(1.4rem,3.5vw,2.5rem); font-weight: 800; color: #fff; margin-bottom: 2.5vh; width: 100%; }
+  .slide-4 h2 span { color: #ff6b6b; }
+  .two-col { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2vw; width: 100%; max-width: 900px; }
+  .code-block { background: #111827; border: 1px solid #2d3748; border-radius: 12px;
+    padding: clamp(14px,2vw,24px); font-family: 'Courier New', monospace;
+    font-size: clamp(0.75rem,1.5vw,0.95rem); line-height: 1.8; color: #e2e8f0; }
+  .code-block .kw { color: #f472b6; font-weight: 700; }
+  .code-block .str { color: #86efac; }
+  .code-block .i1 { margin-left: 1.5em; }
+  .code-block .i2 { margin-left: 3em; }
+  .entrega-panel { display: flex; flex-direction: column; gap: 1.5vh; }
+  .entrega-box { background: rgba(168,85,247,0.15); border: 2px solid #a855f7;
+    border-radius: 14px; padding: clamp(14px,2vw,22px); }
+  .entrega-box .ent-title { font-size: clamp(0.85rem,1.8vw,1.05rem); font-weight: 700; color: #c084fc; margin-bottom: 8px; }
+  .entrega-box p { font-size: clamp(0.75rem,1.5vw,0.9rem); color: #ccd; line-height: 1.6; }
+  .tip-box { background: rgba(251,188,4,0.1); border-left: 3px solid #fbbc04; border-radius: 8px;
+    padding: clamp(10px,1.5vw,16px); }
+  .tip-box p { font-size: clamp(0.75rem,1.5vw,0.9rem); color: #f0e0a0; line-height: 1.6; }
+
+  .nav { position: fixed; bottom: 3vh; right: 3vw; display: flex; gap: 10px; z-index: 100; }
+  .nav button { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+    color: #fff; width: 44px; height: 44px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; transition: background 0.2s; }
+  .nav button:hover { background: rgba(255,255,255,0.22); }
+  .nav button:disabled { opacity: 0.25; cursor: default; }
+  .counter { position: fixed; bottom: 3vh; left: 50%; transform: translateX(-50%);
+    font-size: 0.8rem; color: rgba(255,255,255,0.35); letter-spacing: 1px; }
 </style>
 </head>
 <body>
-<div class="deck">
 
-  <!-- 1. Portada -->
-  <section class="slide active titlecenter">
-    <span class="tag reto">Sesión 02 · 1.º ESO · CyR</span>
-    <h1>🛡️ El guardián de la puerta</h1>
-    <p class="sub">Aprendemos el bloque <b>«si &lt; &gt; entonces»</b> en Scratch.<br>Hoy: <b>condicionales (IF)</b>.</p>
-    <div style="margin-top:2rem">
-      <p style="color:var(--muted);font-size:1rem">DESAFÍO ROBÓTICA 2026 · IES Punta del Verde</p>
-    </div>
-  </section>
-
-  <!-- 2. El reto -->
-  <section class="slide">
-    <span class="tag reto">🎯 El reto</span>
-    <h2>Un guardián con reflejos</h2>
-    <p class="sub">Un intruso intenta colarse por una puerta. Tu misión:</p>
-    <ul>
-      <li>Haz que el intruso avance hacia la puerta al pulsar la bandera verde.</li>
-      <li><b>SI</b> el intruso toca al guardián → el guardián dice «¡Alto ahí!» y el intruso vuelve al inicio.</li>
-      <li>Hoy estrenamos el bloque amarillo:</li>
-    </ul>
-    <div class="code">si &lt; tocando Intruso? &gt; entonces
-    decir «¡Alto ahí!» durante 2 segundos
-fin</div>
-  </section>
-
-  <!-- 3. E/D/P -->
-  <section class="slide">
-    <span class="tag edp">🧠 Método E · D · P</span>
-    <h2>Pensar antes de programar</h2>
-    <div class="grid3">
-      <div class="card e"><h3>🧠 Entender</h3><p>¿Cuándo reacciona el guardián? ¿Qué es una condición? Rellena la frase «Mi guardián reacciona cuando ___».</p></div>
-      <div class="card d"><h3>✏️ Diseñar</h3><p>Dibuja el plan del guardián y del intruso con flechas. Elige qué sensor usarás: tocar sprite, tocar color o tecla pulsada.</p></div>
-      <div class="card p"><h3>💻 Programar</h3><p>Monta los sprites en Scratch, encaja el bloque «si &lt; &gt; entonces» y prueba. Ajusta la velocidad si la detección falla.</p></div>
-    </div>
-  </section>
-
-  <!-- 4. Entrega -->
-  <section class="slide">
-    <span class="tag entrega">📤 Entrega</span>
-    <h2>Cómo entregas el reto</h2>
-    <ul>
-      <li>Pulsa <b>«Compartir»</b> en tu proyecto Scratch y copia la URL.</li>
-      <li>Haz una captura del código del guardián (con el IF visible).</li>
-      <li>Responde las 3 preguntas de la fase ENTENDER.</li>
-    </ul>
-    <div class="entrega-box">
-      <p style="color:var(--morado);font-weight:700;letter-spacing:.1em;font-size:.95rem">🔗 INSTRUCCIONES PASO A PASO</p>
-      <span class="url">ffrumej917.github.io/desafio-robotica-2026/</span>
-      <p style="color:var(--muted);margin-top:.8rem;font-size:1rem">Abre el enlace, entra en 1.º ESO → S02.</p>
-    </div>
-  </section>
-
+<!-- SLIDE 1: Portada -->
+<div class="slide slide-1 active">
+  <div class="badge">🤖 Desafío Robótica 2026 · Sesión 2</div>
+  <div class="emoji-big">🛡️</div>
+  <h1>El <span>Guardián</span> de la Puerta</h1>
+  <p class="subtitle">Aprende IF: toma decisiones según una condición</p>
+  <div class="tag-row">
+    <span class="tag">🐱 Scratch</span>
+    <span class="tag">🔀 IF (si… entonces)</span>
+    <span class="tag">👾 Sensor tocar sprite</span>
+    <span class="tag">⏱ 55 min</span>
+  </div>
 </div>
 
-<div class="hint">← → navegar · F11 pantalla completa · ESC salir</div>
-<footer>
-  <div>IES Punta del Verde · CyR 1.º ESO · S02</div>
-  <div class="dots" id="dots"></div>
-  <div id="counter">1 / 4</div>
-</footer>
+<!-- SLIDE 2: ¿Qué es el IF? -->
+<div class="slide slide-2">
+  <h2>¿Qué es el IF?</h2>
+  <div class="if-box">
+    <div class="label">SI… ENTONCES (IF) 🔀</div>
+    <p>El bloque IF hace que el programa ejecute una acción <strong>solo cuando se cumple una condición</strong>. Si la condición es falsa, ese bloque se salta y no pasa nada.</p>
+  </div>
+  <div class="analogy">
+    <p>🎯 <strong>Analogía:</strong> Es como un detector de metales en el aeropuerto. <strong>Si suena la alarma → para al viajero.</strong> Si no suena → deja pasar sin hacer nada.</p>
+  </div>
+</div>
 
+<!-- SLIDE 3: El reto -->
+<div class="slide slide-3">
+  <h2>El reto de hoy 🎯 <span>El Guardián de la Puerta</span></h2>
+  <div class="reto-card">
+    <div class="reto-title">📋 ¿Qué tienes que hacer?</div>
+    <p>
+      Crea dos sprites en Scratch: un <strong>Guardián</strong> y un <strong>Intruso</strong>.<br>
+      El intruso avanza solo hacia la puerta. El guardián vigila.<br>
+      👉 <strong>SI el intruso toca al guardián → el guardián grita "¡Alto ahí!" y el intruso vuelve al inicio.</strong><br>
+      Si no lo toca → el guardián no hace nada.
+    </p>
+  </div>
+  <div class="phases-row">
+    <div class="phase entender"><div class="ph-icon">🧠</div><div class="ph-label">Entender</div><div class="ph-time">10 min</div></div>
+    <div class="phase diseniar"><div class="ph-icon">✏️</div><div class="ph-label">Diseñar</div><div class="ph-time">10 min</div></div>
+    <div class="phase programar"><div class="ph-icon">💻</div><div class="ph-label">Programar</div><div class="ph-time">30 min</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Pseudocódigo + Entrega -->
+<div class="slide slide-4">
+  <h2>Tu código en <span>pseudocódigo</span> 📝</h2>
+  <div class="two-col">
+    <div class="code-block">
+      <div><span class="kw">── GUARDIÁN ──</span></div>
+      <div><span class="kw">AL HACER CLIC</span> en la bandera</div>
+      <div class="i1"><span class="kw">REPETIR SIEMPRE</span></div>
+      <div class="i2"><span class="kw">SI</span> ¿tocando Intruso? <span class="kw">ENTONCES</span></div>
+      <div class="i2" style="margin-left:4.5em">decir <span class="str">"¡Alto ahí!"</span> 2 s</div>
+      <div style="margin-top:0.8em"><span class="kw">── INTRUSO ──</span></div>
+      <div><span class="kw">AL HACER CLIC</span> en la bandera</div>
+      <div class="i1">ir a posición inicial</div>
+      <div class="i1"><span class="kw">REPETIR SIEMPRE</span></div>
+      <div class="i2">mover 3 pasos</div>
+      <div class="i2"><span class="kw">SI</span> ¿tocando Guardián? <span class="kw">ENTONCES</span></div>
+      <div style="margin-left:4.5em">ir a posición inicial</div>
+    </div>
+    <div class="entrega-panel">
+      <div class="entrega-box">
+        <div class="ent-title">🟣 ¿Cómo entregar?</div>
+        <p>1. Guarda tu proyecto en Scratch.<br>2. Copia el enlace.<br>3. Pégalo en el recuadro de entrega de tu ficha.<br>4. Entrega la ficha en Google Classroom.</p>
+      </div>
+      <div class="tip-box">
+        <p>💡 <strong>Reto extra:</strong> ¿Puedes añadir un marcador de puntos que suba 1 cada vez que el guardián pille al intruso?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="cambiar(-1)" disabled>◀</button>
+  <button id="next" onclick="cambiar(1)">▶</button>
+</div>
+<div class="counter" id="counter">1 / 4</div>
 <script>
-  const slides=[...document.querySelectorAll('.slide')];
-  const dots=document.getElementById('dots');
-  const counter=document.getElementById('counter');
-  slides.forEach((_,i)=>{const d=document.createElement('span');if(i===0)d.classList.add('on');dots.appendChild(d)});
-  const dotsEls=[...dots.children];
-  let i=0;
-  function go(n){
-    i=Math.max(0,Math.min(slides.length-1,n));
-    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
-    dotsEls.forEach((d,k)=>d.classList.toggle('on',k===i));
-    counter.textContent=`${i+1} / ${slides.length}`;
+  let actual = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') cambiar(1);
+    if (e.key==='ArrowLeft'||e.key==='ArrowUp') cambiar(-1);
+  });
+  function cambiar(dir) {
+    slides[actual].classList.remove('active');
+    actual = Math.max(0, Math.min(slides.length-1, actual+dir));
+    slides[actual].classList.add('active');
+    document.getElementById('prev').disabled = actual===0;
+    document.getElementById('next').disabled = actual===slides.length-1;
+    document.getElementById('counter').textContent = `${actual+1} / ${slides.length}`;
   }
-  document.addEventListener('keydown',e=>{
-    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}
-    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
-    if(e.key==='Home')go(0);
-    if(e.key==='End')go(slides.length-1);
-  });
-  document.addEventListener('click',e=>{
-    if(e.target.closest('a'))return;
-    const x=e.clientX, w=window.innerWidth;
-    go(x > w/2 ? i+1 : i-1);
-  });
 </script>
 </body>
 </html>

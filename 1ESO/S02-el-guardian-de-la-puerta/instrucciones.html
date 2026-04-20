@@ -2,184 +2,186 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>S02 · Instrucciones · El guardián de la puerta</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrucciones – S02 El guardián de la puerta | 1º ESO</title>
 <style>
-  :root{
-    --bg:#f7f5f0; --fg:#1c1c1c; --muted:#555;
-    --coral:#ff6f61; --coral-bg:#ffe4e1;
-    --ambar:#d98c00; --ambar-bg:#fff2d6;
-    --verde:#2e8b57; --verde-bg:#dff2e4;
-    --morado:#6b3fa0; --morado-bg:#eadcfb;
-    --code:#1e2630; --code-fg:#ffe8a8;
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
-  .wrap{max-width:880px;margin:0 auto;padding:2rem 1.2rem 4rem}
-  header{text-align:center;padding:2rem 0 1rem;border-bottom:3px solid var(--coral);margin-bottom:2rem}
-  header .tag{display:inline-block;background:var(--coral);color:#fff;padding:.3rem 1rem;border-radius:999px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem}
-  h1{font-size:2.2rem;margin:.3rem 0}
-  header p{color:var(--muted);margin:.4rem 0}
-  .step{background:#fff;border-radius:14px;padding:1.6rem 1.8rem;margin-bottom:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:6px solid var(--ambar)}
-  .step h2{display:flex;align-items:center;gap:.8rem;font-size:1.4rem;margin:0 0 .8rem;color:var(--ambar)}
-  .step h2 .n{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;background:var(--ambar);color:#fff;border-radius:50%;font-size:1rem;font-weight:700}
-  .step p{margin:.5rem 0;color:#333}
-  .step ul{padding-left:1.4rem}
-  .step ul li{margin:.4rem 0}
-  .step.verde{border-left-color:var(--verde)} .step.verde h2{color:var(--verde)} .step.verde h2 .n{background:var(--verde)}
-  .step.coral{border-left-color:var(--coral)} .step.coral h2{color:var(--coral)} .step.coral h2 .n{background:var(--coral)}
-  .code{background:var(--code);color:var(--code-fg);padding:1rem 1.2rem;font-family:"SF Mono",Consolas,monospace;border-radius:8px;white-space:pre-wrap;font-size:.95rem;margin:.8rem 0}
-  .diagram{background:#fafafa;border-radius:10px;padding:1rem;text-align:center;margin:.8rem 0;border:1px dashed #ccc}
-  .diagram svg{max-width:100%;height:auto}
-  .diagram figcaption{font-size:.9rem;color:var(--muted);margin-top:.5rem;font-style:italic}
-  .tip{background:var(--ambar-bg);border-left:4px solid var(--ambar);padding:.9rem 1.1rem;border-radius:6px;margin:.8rem 0;font-size:.98rem}
-  .tip strong{color:var(--ambar)}
-  .entrega{background:linear-gradient(135deg,var(--morado-bg),#fff);border:2px solid var(--morado);border-radius:14px;padding:1.8rem;margin-top:2.5rem}
-  .entrega h2{color:var(--morado);margin-top:0}
-  .entrega .url{display:inline-block;background:var(--morado);color:#fff;padding:.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:700;margin-top:.6rem;word-break:break-all}
-  .pill{display:inline-block;background:#fff;border:1px solid #e0d8c8;padding:.15rem .6rem;border-radius:999px;font-size:.85rem;margin-right:.3rem;color:var(--muted)}
-  kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:.1rem .4rem;font-family:inherit;font-size:.9rem}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f0f1e; color:#e8eaf0; font-family:'Segoe UI',Arial,sans-serif; min-height:100vh; padding:40px 20px 60px; }
+  .page-header { max-width:860px; margin:0 auto 40px; text-align:center; }
+  .page-header .badge { display:inline-block; background:#ff6b6b; color:#fff; font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:20px; margin-bottom:14px; }
+  .page-header h1 { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; color:#fff; margin-bottom:8px; }
+  .page-header h1 span { color:#ff6b6b; }
+  .page-header p { font-size:clamp(0.9rem,2vw,1.05rem); color:#8899bb; }
+  .phases-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:860px; margin:0 auto 40px; }
+  .phase-pill { display:flex; align-items:center; gap:7px; padding:7px 18px; border-radius:20px; font-size:0.82rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+  .phase-pill.coral { background:rgba(255,107,107,0.18); border:1.5px solid #ff6b6b; color:#ff9090; }
+  .phase-pill.amber { background:rgba(251,188,4,0.13); border:1.5px solid #fbbc04; color:#fbcc44; }
+  .phase-pill.green { background:rgba(52,211,153,0.13); border:1.5px solid #34d399; color:#5de8b0; }
+  .container { max-width:860px; margin:0 auto; }
+  .section { border-radius:16px; padding:28px 30px; margin-bottom:24px; }
+  .section.entender { background:rgba(255,107,107,0.08); border:1.5px solid rgba(255,107,107,0.35); }
+  .section.diseniar { background:rgba(251,188,4,0.07); border:1.5px solid rgba(251,188,4,0.3); }
+  .section.programar { background:rgba(52,211,153,0.07); border:1.5px solid rgba(52,211,153,0.3); }
+  .section-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .section-icon { font-size:1.6rem; width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .entender .section-icon { background:rgba(255,107,107,0.2); }
+  .diseniar .section-icon { background:rgba(251,188,4,0.15); }
+  .programar .section-icon { background:rgba(52,211,153,0.15); }
+  .section-title { font-size:1.15rem; font-weight:800; }
+  .entender .section-title { color:#ff8080; }
+  .diseniar .section-title { color:#fbcc44; }
+  .programar .section-title { color:#5de8b0; }
+  .section-time { font-size:0.78rem; color:#667; margin-top:2px; }
+  .step { display:flex; gap:16px; margin-bottom:20px; align-items:flex-start; }
+  .step-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; flex-shrink:0; margin-top:2px; }
+  .entender .step-num { background:rgba(255,107,107,0.3); color:#ff8080; border:1.5px solid #ff6b6b; }
+  .diseniar .step-num { background:rgba(251,188,4,0.2); color:#fbcc44; border:1.5px solid #fbbc04; }
+  .programar .step-num { background:rgba(52,211,153,0.2); color:#5de8b0; border:1.5px solid #34d399; }
+  .step-body { flex:1; }
+  .step-body p { font-size:0.95rem; line-height:1.7; color:#ccd; }
+  .step-body p strong { color:#fff; }
+  .hint { margin-top:8px; background:rgba(255,255,255,0.05); border-left:3px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 14px; font-size:0.85rem; color:#99aabb; line-height:1.6; }
+  .scratch-block { margin:12px 0; display:flex; flex-direction:column; gap:3px; }
+  .sb { display:inline-flex; align-items:center; padding:6px 14px; border-radius:6px; font-size:0.82rem; font-weight:700; color:#fff; white-space:nowrap; }
+  .sb.control { background:#e6a020; border-bottom:3px solid #c78018; }
+  .sb.sensing { background:#5cb1d6; border-bottom:3px solid #3e8fa8; }
+  .sb.looks { background:#9966cc; border-bottom:3px solid #7744aa; }
+  .sb.motion { background:#4c97ff; border-bottom:3px solid #2a6fd6; }
+  .sb.i1 { margin-left:24px; }
+  .sb.i2 { margin-left:48px; }
+  .sb.i3 { margin-left:72px; }
+  .design-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:0.9rem; }
+  .design-table th { background:rgba(251,188,4,0.15); color:#fbcc44; padding:10px 14px; text-align:left; font-weight:700; border-bottom:1px solid rgba(251,188,4,0.25); }
+  .design-table td { padding:10px 14px; color:#ccd; border-bottom:1px solid rgba(255,255,255,0.07); vertical-align:top; }
+  .design-table .field { color:#fff; font-weight:600; }
+  .entrega-final { background:rgba(168,85,247,0.12); border:2px solid #a855f7; border-radius:16px; padding:24px 28px; margin-top:10px; max-width:860px; margin-left:auto; margin-right:auto; }
+  .entrega-final h3 { color:#c084fc; font-size:1.05rem; margin-bottom:12px; }
+  .entrega-final ol { margin-left:20px; }
+  .entrega-final li { color:#ccd; font-size:0.92rem; line-height:1.8; }
+  .entrega-final li strong { color:#fff; }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="page-header">
+  <div class="badge">🤖 Desafío Robótica 2026 · 1º ESO · Sesión 2</div>
+  <h1>🛡️ El <span>Guardián de la Puerta</span></h1>
+  <p>Guía paso a paso · IF en Scratch · 55 minutos</p>
+</div>
+<div class="phases-bar">
+  <div class="phase-pill coral">🧠 Entender · 10 min</div>
+  <div class="phase-pill amber">✏️ Diseñar · 10 min</div>
+  <div class="phase-pill green">💻 Programar · 30 min</div>
+</div>
+<div class="container">
 
-<header>
-  <span class="tag">Sesión 02 · 1.º ESO · CyR</span>
-  <h1>🛡️ El guardián de la puerta</h1>
-  <p>Aprende a usar el bloque <b>«si &lt; &gt; entonces»</b> de Scratch</p>
-  <p><span class="pill">55 min</span><span class="pill">Scratch online</span><span class="pill">Condicional IF</span></p>
-</header>
-
-<div class="step coral">
-  <h2><span class="n">0</span>Qué vas a aprender</h2>
-  <p>Hasta ahora tus programas <b>siempre</b> hacían lo mismo (S01: secuencias). Hoy vas a programar cosas que <b>solo pasan cuando se cumple una condición</b>. Eso se llama <b>estructura condicional</b>, o IF.</p>
-  <div class="diagram">
-    <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
-      </defs>
-      <!-- Entrada -->
-      <rect x="10" y="70" width="120" height="40" rx="8" fill="#fff2d6" stroke="#d98c00" stroke-width="2"/>
-      <text x="70" y="95" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333">¿Condición?</text>
-      <!-- Diamante -->
-      <polygon points="220,90 290,40 360,90 290,140" fill="#fff2d6" stroke="#d98c00" stroke-width="2"/>
-      <text x="290" y="95" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#333" font-weight="700">IF</text>
-      <!-- Sí -->
-      <rect x="420" y="30" width="170" height="40" rx="8" fill="#dff2e4" stroke="#2e8b57" stroke-width="2"/>
-      <text x="505" y="55" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#2e8b57">Sí → hace la acción</text>
-      <!-- No -->
-      <rect x="420" y="110" width="170" height="40" rx="8" fill="#ffe4e1" stroke="#ff6f61" stroke-width="2"/>
-      <text x="505" y="135" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#b84b40">No → no hace nada</text>
-      <!-- Flechas -->
-      <line x1="130" y1="90" x2="215" y2="90" stroke="#333" stroke-width="2" marker-end="url(#ar)"/>
-      <line x1="360" y1="70" x2="415" y2="45" stroke="#2e8b57" stroke-width="2" marker-end="url(#ar)"/>
-      <line x1="360" y1="110" x2="415" y2="130" stroke="#ff6f61" stroke-width="2" marker-end="url(#ar)"/>
-      <text x="385" y="55" font-family="sans-serif" font-size="13" fill="#2e8b57" font-weight="700">sí</text>
-      <text x="385" y="135" font-family="sans-serif" font-size="13" fill="#ff6f61" font-weight="700">no</text>
-    </svg>
-    <figcaption>Un IF es una pregunta: si la respuesta es «sí», se ejecuta lo de dentro. Si es «no», se salta.</figcaption>
+  <div class="section entender">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <div><div class="section-title">ENTENDER — ¿Qué es el IF?</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <p>El bloque <strong>«si… entonces»</strong> (IF) ejecuta una acción solo si se cumple una condición. Si la condición es falsa, el bloque se salta completamente.</p>
+        <div class="hint">📌 Diferencia clave: sin IF, el programa siempre hace lo mismo. Con IF, decide según lo que pase.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <p>El bloque IF en Scratch está en la sección <strong>Control</strong> (naranja). Tiene forma de boca con un hueco de rombo para la condición:</p>
+        <div class="scratch-block">
+          <div><div class="sb control">🟠 si &lt;condición&gt; entonces</div></div>
+          <div><div class="sb looks i1">💜 decir [¡Alto ahí!] durante 2 segundos</div></div>
+          <div><div class="sb control" style="border-radius:0 0 6px 6px">fin</div></div>
+        </div>
+        <div class="hint">💡 La condición va en el hueco con forma de rombo. Hoy usaremos <strong>«¿tocando [Intruso]?»</strong> de la sección Sensores (azul).</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<div class="step">
-  <h2><span class="n">1</span>Abre Scratch y prepara la escena</h2>
-  <ul>
-    <li>Ve a <b>scratch.mit.edu</b> y pulsa <b>Crear</b>.</li>
-    <li>Inicia sesión con tu cuenta (la del curso).</li>
-    <li>Elimina el gato (Sprite1) pulsando la papelera sobre su icono.</li>
-    <li>Añade 2 sprites desde la biblioteca: uno para el <b>Guardián</b> (por ejemplo «Knight») y otro para el <b>Intruso</b> (por ejemplo «Ghost» o «Ninja»).</li>
-    <li>Añade un fondo de escenario: pulsa el icono del paisaje (abajo a la derecha) y elige uno tipo «Castle» o «Door».</li>
-  </ul>
-  <div class="tip"><strong>💡 Tip:</strong> Si no te convence el sprite, siempre puedes cambiarlo después sin perder el código.</div>
-</div>
-
-<div class="step">
-  <h2><span class="n">2</span>Localiza el bloque IF (es amarillo)</h2>
-  <p>En el panel de bloques, entra en el grupo <b>Control</b> (color amarillo). Busca este bloque:</p>
-  <div class="diagram">
-    <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg">
-      <!-- Bloque amarillo Scratch con hueco de condición -->
-      <path d="M10 20 h40 l8 -8 h30 l8 8 h300 v20 h-8 l-8 8 h-30 l-8 -8 h-40 v40 h-284 l-8 -8 h-30 l-8 8 h-40 v-60 z"
-            fill="#ffbf00" stroke="#d99900" stroke-width="2"/>
-      <text x="30" y="46" font-family="sans-serif" font-size="16" fill="#333" font-weight="700">si</text>
-      <!-- Hueco rombo -->
-      <polygon points="75,38 120,25 165,38 120,51" fill="#fff" stroke="#c99" stroke-width="1"/>
-      <text x="120" y="43" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#bbb" font-style="italic">condición</text>
-      <text x="180" y="46" font-family="sans-serif" font-size="16" fill="#333" font-weight="700">entonces</text>
-      <text x="30" y="90" font-family="sans-serif" font-size="14" fill="#555" font-style="italic">    (aquí dentro va lo que pasa SI se cumple)</text>
-    </svg>
-    <figcaption>El bloque «si &lt; &gt; entonces» tiene un hueco con forma de rombo. Ahí solo encajan bloques de pregunta (azul sensor o verde operador).</figcaption>
+  <div class="section diseniar">
+    <div class="section-header">
+      <div class="section-icon">✏️</div>
+      <div><div class="section-title">DISEÑAR — Planifica tu guardián</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <p>Antes de programar, decide cómo será tu proyecto:</p>
+        <table class="design-table">
+          <thead><tr><th>Elemento</th><th>Tu decisión</th></tr></thead>
+          <tbody>
+            <tr><td class="field">🎭 Sprite guardián</td><td>Elige un personaje de la biblioteca de Scratch</td></tr>
+            <tr><td class="field">👾 Sprite intruso</td><td>Un segundo personaje distinto al guardián</td></tr>
+            <tr><td class="field">🏠 Fondo</td><td>Un escenario con puerta, castillo o similar</td></tr>
+            <tr><td class="field">🔀 Condición del IF</td><td><strong>«¿tocando [Intruso]?»</strong> (la recomendada)</td></tr>
+            <tr><td class="field">✅ Acción al detectar</td><td>Decir «¡Alto ahí!» + intruso vuelve al inicio</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  <p>Ese hueco con forma de rombo es la clave: <b>solo acepta bloques que devuelven «sí» o «no»</b>.</p>
-</div>
 
-<div class="step">
-  <h2><span class="n">3</span>Programa el guardián</h2>
-  <p>Selecciona el sprite del <b>Guardián</b> (clic en su icono). Monta este programa usando bloques:</p>
-  <div class="code">al hacer clic en 🟢 (bandera verde)
-  ir a x: 0  y: -50
-  por siempre
-    si &lt; ¿tocando a Intruso? &gt; entonces
-      decir «¡Alto ahí!» durante 2 segundos
-    fin
-  fin</div>
-  <p>Los bloques que necesitas están en:</p>
-  <ul>
-    <li><span class="pill" style="background:#ffbf0022;border-color:#d99900;color:#9a7500">Eventos</span> «al hacer clic en bandera verde»</li>
-    <li><span class="pill" style="background:#4c97ff22;border-color:#4c97ff;color:#2a5aa0">Movimiento</span> «ir a x: y:»</li>
-    <li><span class="pill" style="background:#ffbf0022;border-color:#d99900;color:#9a7500">Control</span> «por siempre» y «si &lt; &gt; entonces»</li>
-    <li><span class="pill" style="background:#4cbfe622;border-color:#4cbfe6;color:#1e6788">Sensores</span> «¿tocando a…?» (este va DENTRO del rombo del IF)</li>
-    <li><span class="pill" style="background:#9966ff22;border-color:#9966ff;color:#5c3db3">Apariencia</span> «decir … durante 2 s»</li>
-  </ul>
-</div>
+  <div class="section programar">
+    <div class="section-header">
+      <div class="section-icon">💻</div>
+      <div><div class="section-title">PROGRAMAR — Construye el proyecto</div><div class="section-time">⏱ 30 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body"><p>Abre <strong>scratch.mit.edu</strong>, inicia sesión y crea un proyecto nuevo. Añade dos sprites y un fondo.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <p>Selecciona el sprite <strong>Guardián</strong> y construye este código:</p>
+        <div class="scratch-block">
+          <div><div class="sb control">🟠 al hacer clic en 🚩</div></div>
+          <div><div class="sb control i1">🟠 repetir siempre</div></div>
+          <div><div class="sb control i2">🟠 si &lt;¿tocando [Intruso]?&gt; entonces</div></div>
+          <div><div class="sb looks i3">💜 decir [¡Alto ahí!] durante [2] segundos</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <p>Selecciona el sprite <strong>Intruso</strong> y construye este código:</p>
+        <div class="scratch-block">
+          <div><div class="sb control">🟠 al hacer clic en 🚩</div></div>
+          <div><div class="sb motion i1">🔷 ir a x: [-200] y: [0]</div></div>
+          <div><div class="sb control i1">🟠 repetir siempre</div></div>
+          <div><div class="sb motion i2">🔷 mover [3] pasos</div></div>
+          <div><div class="sb control i2">🟠 si &lt;¿tocando [Guardián]?&gt; entonces</div></div>
+          <div><div class="sb motion i3">🔷 ir a x: [-200] y: [0]</div></div>
+        </div>
+        <div class="hint">⚠️ Si el intruso va demasiado rápido, el guardián no lo detecta a tiempo. Ajusta el número de pasos hasta que funcione bien.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <p>Prueba el proyecto: haz clic en la bandera verde. El intruso debe avanzar y el guardián gritarle cuando lo toque. Ajusta y personaliza.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <p>Guarda el proyecto con el nombre <strong>"S02 – El guardián de la puerta – [tu nombre]"</strong> y asegúrate de que es público.</p>
+      </div>
+    </div>
+  </div>
 
-<div class="step">
-  <h2><span class="n">4</span>Programa el intruso</h2>
-  <p>Ahora selecciona el sprite del <b>Intruso</b>. Este también necesita IF, pero para volver al inicio cuando el guardián lo pilla:</p>
-  <div class="code">al hacer clic en 🟢 (bandera verde)
-  ir a x: -200  y: -50
-  por siempre
-    mover 2 pasos
-    si &lt; ¿tocando a Guardián? &gt; entonces
-      ir a x: -200  y: -50
-    fin
-  fin</div>
-  <div class="tip"><strong>⚠️ Importante:</strong> si pones «mover 10 pasos» el intruso va tan rápido que atraviesa al guardián sin que dé tiempo a detectarlo. Empieza con 2 pasos y sube si quieres más dificultad.</div>
-</div>
-
-<div class="step verde">
-  <h2><span class="n">5</span>Prueba y ajusta</h2>
-  <ul>
-    <li>Pulsa la bandera verde. El intruso debería avanzar hacia el guardián.</li>
-    <li>Cuando lo toque, el guardián dice «¡Alto ahí!» y el intruso vuelve al inicio.</li>
-    <li>Si algo no funciona: revisa que el <b>bloque azul de sensor</b> esté dentro del rombo del IF amarillo.</li>
-    <li>Prueba a cambiar la condición por «¿tocando color rojo?» o «¿tecla espacio pulsada?» y observa qué cambia.</li>
-  </ul>
-</div>
-
-<div class="step verde">
-  <h2><span class="n">6</span>Guarda y comparte</h2>
-  <ul>
-    <li>Ponle nombre al proyecto arriba a la izquierda: <b>S02 - El guardián de la puerta - TuNombre</b>.</li>
-    <li>Pulsa el botón <b>Compartir</b> (arriba en la barra naranja). Solo así otros pueden ver tu proyecto.</li>
-    <li>Copia la URL del navegador. Empieza por <code>https://scratch.mit.edu/projects/</code> seguida de un número.</li>
-    <li>Haz una <b>captura</b> del código del guardián (usa <kbd>Impr Pant</kbd> o la herramienta Recortes).</li>
-  </ul>
-</div>
-
-<div class="entrega">
-  <h2>📤 Entrega</h2>
-  <p>Sube a Google Classroom, en la tarea de esta sesión:</p>
-  <ol>
-    <li><b>Enlace</b> público de tu proyecto Scratch.</li>
-    <li><b>Captura</b> del código del guardián con el IF visible.</li>
-    <li><b>Respuestas</b> escritas a las 3 preguntas de ENTENDER (en tu cuaderno o en un documento).</li>
-  </ol>
-  <p style="margin-top:1rem"><b>Y si te pierdes en algún paso, vuelve aquí:</b></p>
-  <a class="url" href="https://ffrumej917.github.io/desafio-robotica-2026/">ffrumej917.github.io/desafio-robotica-2026/</a>
-</div>
-
+  <div class="entrega-final">
+    <h3>🟣 ENTREGA FINAL</h3>
+    <ol>
+      <li>Copia el <strong>enlace de tu proyecto</strong> en Scratch.</li>
+      <li>Pégalo en el <strong>recuadro de entrega</strong> de tu ficha.</li>
+      <li>Rellena también la tabla de Diseño en la ficha.</li>
+      <li>Sube la ficha en <strong>Google Classroom</strong>.</li>
+    </ol>
+  </div>
 </div>
 </body>
 </html>

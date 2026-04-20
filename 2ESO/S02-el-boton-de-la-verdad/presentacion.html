@@ -2,158 +2,173 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>S02 · 2.º ESO · El botón de la verdad</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S02 – El botón de la verdad | Desafío Robótica 2026</title>
 <style>
-  :root{
-    --bg:#0f1419;--bg2:#151c24;--fg:#f5f5f5;--muted:#9aa5b1;
-    --coral:#ff6f61;--ambar:#f1b043;--verde:#5dd39e;--morado:#b58cff;
-    --code:#1e2630;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
-  .deck{position:relative;width:100vw;height:100vh}
-  .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:4vh 6vw;animation:fade .35s ease}
-  .slide.active{display:flex}
-  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-  h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.1;margin-bottom:1rem}
-  h2{font-size:clamp(1.6rem,3vw,2.6rem);margin-bottom:1rem;color:var(--coral)}
-  .sub{color:var(--muted);font-size:clamp(1rem,1.6vw,1.3rem);margin-bottom:1.5rem}
-  .tag{display:inline-block;padding:.3rem .9rem;border-radius:999px;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.8rem}
-  .tag.reto{background:#3a1f1c;color:var(--coral)}
-  .tag.aprende{background:#3a2e12;color:var(--ambar)}
-  .tag.edp{background:#143528;color:var(--verde)}
-  .tag.entrega{background:#2a1d3f;color:var(--morado)}
-  ul{list-style:none;display:grid;gap:.8rem;font-size:clamp(1rem,1.6vw,1.4rem)}
-  ul li{padding-left:2rem;position:relative}
-  ul li::before{content:"→";position:absolute;left:0;color:var(--ambar);font-weight:700}
-  .code{background:var(--code);border-left:4px solid var(--ambar);padding:.9rem 1.2rem;font-family:"SF Mono",Consolas,monospace;font-size:clamp(.85rem,1.3vw,1.1rem);color:#ffe8a8;border-radius:6px;margin:.8rem 0;white-space:pre}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:.8rem;flex:1;min-height:0}
-  .card{background:var(--bg2);border-radius:12px;padding:1.2rem;border-top:4px solid var(--verde);overflow:auto}
-  .card h3{font-size:1.2rem;margin-bottom:.6rem}
-  .card.e{border-top-color:var(--coral)} .card.e h3{color:var(--coral)}
-  .card.d{border-top-color:var(--ambar)} .card.d h3{color:var(--ambar)}
-  .card.p{border-top-color:var(--verde)} .card.p h3{color:var(--verde)}
-  .card p,.card ul{font-size:clamp(.9rem,1.3vw,1.1rem);color:var(--muted);line-height:1.5}
-  .entrega-box{background:linear-gradient(135deg,#2a1d3f,#1a1228);border:2px solid var(--morado);border-radius:14px;padding:1.6rem;margin-top:.8rem}
-  .entrega-box .url{display:inline-block;background:var(--morado);color:#0f1419;padding:.7rem 1.2rem;border-radius:8px;font-weight:700;margin-top:.8rem;font-size:clamp(.9rem,1.4vw,1.2rem);word-break:break-all}
-  footer{position:fixed;bottom:1.2rem;left:0;right:0;display:flex;justify-content:space-between;padding:0 2rem;color:var(--muted);font-size:.85rem;pointer-events:none}
-  .hint{position:fixed;top:1rem;right:1.5rem;color:var(--muted);font-size:.75rem;opacity:.6}
-  .dots{display:flex;gap:.5rem;justify-content:center}
-  .dots span{width:10px;height:10px;border-radius:50%;background:#2a3341;transition:background .2s}
-  .dots span.on{background:var(--coral)}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0d1a; color:#f0f0f0; font-family:'Segoe UI',Arial,sans-serif; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .slide { display:none; width:100vw; height:100vh; padding:5vh 6vw; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:absolute; top:0; left:0; }
+  .slide.active { display:flex; }
+
+  .slide-1 { background:radial-gradient(ellipse at center,#0a1a2e 0%,#0d0d1a 70%); }
+  .badge { background:#4c97ff; color:#fff; font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 18px; border-radius:20px; margin-bottom:2vh; }
+  .emoji-big { font-size:clamp(3rem,8vw,5rem); margin-bottom:2vh; }
+  .slide-1 h1 { font-size:clamp(2rem,5vw,3.8rem); font-weight:900; color:#fff; line-height:1.1; margin-bottom:1.5vh; }
+  .slide-1 h1 span { color:#4c97ff; }
+  .subtitle { font-size:clamp(1rem,2.5vw,1.5rem); color:#aab4c8; margin-bottom:3vh; }
+  .tag-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .tag { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:6px 16px; border-radius:12px; font-size:clamp(0.75rem,1.5vw,0.9rem); color:#c8d6f0; }
+
+  .slide-2 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-2 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#4c97ff; margin-bottom:3vh; width:100%; }
+  .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:2vw; width:100%; max-width:900px; margin-bottom:2.5vh; }
+  .concept-box { border-radius:14px; padding:clamp(16px,2vw,24px); }
+  .concept-box.blue { background:rgba(76,151,255,0.1); border:2px solid #4c97ff; }
+  .concept-box.green { background:rgba(52,211,153,0.1); border:2px solid #34d399; }
+  .concept-box .cb-label { font-weight:800; font-size:clamp(0.9rem,1.8vw,1.1rem); margin-bottom:10px; }
+  .concept-box.blue .cb-label { color:#7ab8ff; }
+  .concept-box.green .cb-label { color:#5de8b0; }
+  .concept-box p { font-size:clamp(0.8rem,1.6vw,1rem); color:#ccd; line-height:1.6; }
+  .pulldown-note { background:rgba(255,255,255,0.05); border-left:4px solid #fbbc04; border-radius:8px; padding:clamp(12px,1.5vw,18px); max-width:900px; width:100%; }
+  .pulldown-note p { font-size:clamp(0.82rem,1.7vw,1rem); color:#f0e0a0; line-height:1.6; }
+
+  .slide-3 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-3 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#fff; margin-bottom:3vh; width:100%; }
+  .slide-3 h2 span { color:#4c97ff; }
+  .reto-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:clamp(18px,2.5vw,30px); max-width:860px; width:100%; margin-bottom:2.5vh; }
+  .reto-card .reto-title { font-size:clamp(1rem,2.2vw,1.3rem); font-weight:700; color:#ffcc00; margin-bottom:12px; }
+  .reto-card p { font-size:clamp(0.85rem,1.8vw,1.05rem); color:#ccd; line-height:1.7; }
+  .circuit-info { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5vw; max-width:860px; width:100%; }
+  .ci-box { background:rgba(76,151,255,0.1); border:1.5px solid rgba(76,151,255,0.4); border-radius:12px; padding:clamp(10px,1.5vw,18px); text-align:center; }
+  .ci-box .ci-comp { font-size:clamp(1.2rem,2.5vw,1.6rem); margin-bottom:6px; }
+  .ci-box .ci-label { font-size:clamp(0.75rem,1.4vw,0.9rem); font-weight:700; color:#7ab8ff; }
+  .ci-box .ci-pin { font-size:clamp(0.7rem,1.3vw,0.82rem); color:#aab; margin-top:4px; }
+
+  .slide-4 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-4 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#fff; margin-bottom:2.5vh; width:100%; }
+  .slide-4 h2 span { color:#4c97ff; }
+  .two-col { display:grid; grid-template-columns:1.2fr 0.8fr; gap:2vw; width:100%; max-width:900px; }
+  .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:clamp(14px,2vw,24px); font-family:'Courier New',monospace; font-size:clamp(0.72rem,1.4vw,0.92rem); line-height:1.9; color:#e2e8f0; }
+  .code-block .kw { color:#f472b6; font-weight:700; }
+  .code-block .cm { color:#6b7280; font-style:italic; }
+  .code-block .num { color:#fbbf24; }
+  .code-block .i1 { margin-left:1.5em; }
+  .code-block .i2 { margin-left:3em; }
+  .entrega-panel { display:flex; flex-direction:column; gap:1.5vh; }
+  .entrega-box { background:rgba(168,85,247,0.15); border:2px solid #a855f7; border-radius:14px; padding:clamp(14px,2vw,22px); }
+  .entrega-box .ent-title { font-size:clamp(0.85rem,1.8vw,1.05rem); font-weight:700; color:#c084fc; margin-bottom:8px; }
+  .entrega-box p { font-size:clamp(0.75rem,1.5vw,0.9rem); color:#ccd; line-height:1.6; }
+
+  .nav { position:fixed; bottom:3vh; right:3vw; display:flex; gap:10px; z-index:100; }
+  .nav button { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; width:44px; height:44px; border-radius:50%; font-size:1.1rem; cursor:pointer; transition:background 0.2s; }
+  .nav button:hover { background:rgba(255,255,255,0.22); }
+  .nav button:disabled { opacity:0.25; cursor:default; }
+  .counter { position:fixed; bottom:3vh; left:50%; transform:translateX(-50%); font-size:0.8rem; color:rgba(255,255,255,0.35); letter-spacing:1px; }
 </style>
 </head>
 <body>
-<div class="deck">
 
-  <!-- 1. Portada -->
-  <section class="slide active" style="justify-content:center;align-items:flex-start;gap:1rem">
-    <span class="tag reto">Sesión 02 · 2.º ESO · CyR</span>
-    <h1>🔘 El botón de la verdad</h1>
-    <p class="sub">Aprendemos a leer una <b>entrada digital</b> con <code style="background:#1e2630;padding:.1rem .4rem;border-radius:4px">digitalRead()</code> y a tomar decisiones con <b>IF</b>.</p>
-    <div style="margin-top:1.5rem">
-      <p style="color:var(--muted);font-size:.95rem">DESAFÍO ROBÓTICA 2026 · IES Punta del Verde</p>
-    </div>
-  </section>
-
-  <!-- 2. El circuito -->
-  <section class="slide">
-    <span class="tag reto">⚡ El circuito</span>
-    <h2>Componentes y conexiones</h2>
-    <div class="grid2" style="grid-template-columns:1.2fr 0.8fr">
-      <div style="background:var(--bg2);border-radius:12px;padding:.8rem;display:flex;align-items:center;justify-content:center">
-        <img id="circuito" style="max-width:100%;max-height:100%;border-radius:8px;object-fit:contain" alt="Circuito S02 2ESO">
-      </div>
-      <div style="display:flex;flex-direction:column;gap:.8rem">
-        <div class="card e"><h3>Pin 13 → LED</h3><p>Resistencia 220 Ω en serie. Salida digital (OUTPUT).</p></div>
-        <div class="card d"><h3>Pin 7 → Pulsador</h3><p>Entrada digital (INPUT). Pull-down 10 kΩ a GND.</p></div>
-        <div class="card p"><h3>Pull-down 10 kΩ</h3><p>Garantiza que pin 7 = LOW cuando el botón está suelto. Sin ella: estado flotante.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. El código -->
-  <section class="slide">
-    <span class="tag aprende">💻 El código</span>
-    <h2>Estructura IF en Arduino (C++)</h2>
-    <p class="sub">Dos IF independientes — sin ELSE todavía (eso es S03).</p>
-    <div class="code">const int PIN_LED   = 13;
-const int PIN_BOTON = 7;
-
-void setup() {
-  pinMode(PIN_LED,   OUTPUT);
-  pinMode(PIN_BOTON, INPUT);
-}
-
-void loop() {
-  if (digitalRead(PIN_BOTON) == HIGH) {
-    digitalWrite(PIN_LED, HIGH);  // pulso → LED ON
-  }
-  if (digitalRead(PIN_BOTON) == LOW) {
-    digitalWrite(PIN_LED, LOW);   // suelto → LED OFF
-  }
-}</div>
-  </section>
-
-  <!-- 4. E/D/P + Entrega -->
-  <section class="slide">
-    <span class="tag edp">🧠 Método E · D · P</span>
-    <h2>Fases y entrega</h2>
-    <div class="grid2">
-      <div style="display:flex;flex-direction:column;gap:.7rem">
-        <div class="card e"><h3>🧠 Entender</h3><p>¿Por qué necesitamos el pull-down? ¿Qué devuelve digitalRead() al pulsar y al soltar? Diagrama de flujo del IF.</p></div>
-        <div class="card d"><h3>✏️ Diseñar</h3><p>Dibuja el diagrama de flujo completo en el cuaderno antes de escribir el código.</p></div>
-        <div class="card p"><h3>💻 Programar</h3><p>Monta el circuito y el código en Tinkercad. Prueba. Captura con circuito + código visibles a la vez.</p></div>
-      </div>
-      <div class="entrega-box">
-        <p style="color:var(--morado);font-weight:700;letter-spacing:.08em;font-size:.9rem">📤 ENTREGA</p>
-        <ul style="margin-top:.6rem;font-size:1rem;color:var(--fg)">
-          <li>Enlace público Tinkercad</li>
-          <li>Captura circuito + código</li>
-          <li>Respuestas ENTENDER</li>
-        </ul>
-        <a class="url" href="https://ffrumej917.github.io/desafio-robotica-2026/">ffrumej917.github.io/desafio-robotica-2026/</a>
-        <p style="color:var(--muted);margin-top:.6rem;font-size:.9rem">Abre → 2.º ESO → S02</p>
-      </div>
-    </div>
-  </section>
-
+<!-- SLIDE 1 -->
+<div class="slide slide-1 active">
+  <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 2</div>
+  <div class="emoji-big">🔘</div>
+  <h1>El <span>Botón de la Verdad</span></h1>
+  <p class="subtitle">IF con pulsador real: el LED solo enciende si se cumple la condición</p>
+  <div class="tag-row">
+    <span class="tag">⚡ Tinkercad</span>
+    <span class="tag">🔀 IF (condicional)</span>
+    <span class="tag">🔘 Pulsador pin 7</span>
+    <span class="tag">💡 LED pin 13</span>
+    <span class="tag">⏱ 55 min</span>
+  </div>
 </div>
 
-<div class="hint">← → navegar · F11 pantalla completa</div>
-<footer>
-  <div>IES Punta del Verde · CyR 2.º ESO · S02</div>
-  <div class="dots" id="dots"></div>
-  <div id="counter">1 / 4</div>
-</footer>
+<!-- SLIDE 2: Concepto -->
+<div class="slide slide-2">
+  <h2>Concepto: IF + pulsador</h2>
+  <div class="concept-grid">
+    <div class="concept-box blue">
+      <div class="cb-label">🔘 Pulsador (entrada digital)</div>
+      <p>Un pulsador conectado al pin 7 con resistencia pull-down de 10 kΩ. Lee <strong>HIGH (1)</strong> cuando está pulsado, <strong>LOW (0)</strong> cuando no.</p>
+    </div>
+    <div class="concept-box green">
+      <div class="cb-label">💡 LED (salida digital)</div>
+      <p>Un LED en el pin 13 con resistencia de 220 Ω. Recibe <strong>HIGH</strong> para encender y <strong>LOW</strong> para apagar.</p>
+    </div>
+  </div>
+  <div class="pulldown-note">
+    <p>⚠️ <strong>Resistencia pull-down (10 kΩ):</strong> sin ella, el pin 7 flota entre 0 y 1 de forma aleatoria cuando el botón no está pulsado. La resistencia pull-down fuerza la lectura a LOW (0) cuando el botón está abierto, garantizando lecturas fiables.</p>
+  </div>
+</div>
 
+<!-- SLIDE 3: El reto -->
+<div class="slide slide-3">
+  <h2>El reto de hoy 🎯 <span>El Botón de la Verdad</span></h2>
+  <div class="reto-card">
+    <div class="reto-title">📋 ¿Qué tienes que hacer?</div>
+    <p>
+      Monta el circuito en Tinkercad con un pulsador y un LED. Programa el Arduino para que:<br>
+      👉 <strong>SI el pulsador está pulsado (pin 7 = HIGH) → enciende el LED (pin 13 = HIGH).</strong><br>
+      👉 <strong>Si no está pulsado → el LED permanece apagado.</strong><br>
+      Usa la estructura E/D/P: Entender, Diseñar, Programar.
+    </p>
+  </div>
+  <div class="circuit-info">
+    <div class="ci-box"><div class="ci-comp">🔘</div><div class="ci-label">Pulsador</div><div class="ci-pin">Pin 7 · pull-down 10 kΩ</div></div>
+    <div class="ci-box"><div class="ci-comp">💡</div><div class="ci-label">LED</div><div class="ci-pin">Pin 13 · resistencia 220 Ω</div></div>
+    <div class="ci-box"><div class="ci-comp">⚡</div><div class="ci-label">Alimentación</div><div class="ci-pin">5 V Arduino · GND común</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Código + Entrega -->
+<div class="slide slide-4">
+  <h2>El <span>código</span> que necesitas 💻</h2>
+  <div class="two-col">
+    <div class="code-block">
+      <div><span class="cm">// Definir pines</span></div>
+      <div><span class="kw">const int</span> pinBoton = <span class="num">7</span>;</div>
+      <div><span class="kw">const int</span> pinLed   = <span class="num">13</span>;</div>
+      <div>&nbsp;</div>
+      <div><span class="kw">void</span> setup() {</div>
+      <div class="i1">pinMode(pinBoton, <span class="kw">INPUT</span>);</div>
+      <div class="i1">pinMode(pinLed,   <span class="kw">OUTPUT</span>);</div>
+      <div>}</div>
+      <div>&nbsp;</div>
+      <div><span class="kw">void</span> loop() {</div>
+      <div class="i1"><span class="kw">if</span> (digitalRead(pinBoton) == <span class="kw">HIGH</span>) {</div>
+      <div class="i2">digitalWrite(pinLed, <span class="kw">HIGH</span>);</div>
+      <div class="i1">}</div>
+      <div>}</div>
+    </div>
+    <div class="entrega-panel">
+      <div class="entrega-box">
+        <div class="ent-title">🟣 ¿Cómo entregar?</div>
+        <p>1. Monta el circuito en Tinkercad.<br>2. Escribe el código y simula.<br>3. Comparte el proyecto (botón Compartir).<br>4. Copia el enlace y pégalo en tu ficha.<br>5. Entrega la ficha en Classroom.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="cambiar(-1)" disabled>◀</button>
+  <button id="next" onclick="cambiar(1)">▶</button>
+</div>
+<div class="counter" id="counter">1 / 4</div>
 <script>
-  // Imagen circuito en base64 (incrustada para evitar dependencias de ruta)
-  document.getElementById('circuito').src = 'circuito.png';
-
-  const slides=[...document.querySelectorAll('.slide')];
-  const dots=document.getElementById('dots');
-  const counter=document.getElementById('counter');
-  slides.forEach((_,i)=>{const d=document.createElement('span');if(i===0)d.classList.add('on');dots.appendChild(d)});
-  const dotsEls=[...dots.children];
-  let i=0;
-  function go(n){
-    i=Math.max(0,Math.min(slides.length-1,n));
-    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
-    dotsEls.forEach((d,k)=>d.classList.toggle('on',k===i));
-    counter.textContent=`${i+1} / ${slides.length}`;
+  let actual = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') cambiar(1);
+    if (e.key==='ArrowLeft'||e.key==='ArrowUp') cambiar(-1);
+  });
+  function cambiar(dir) {
+    slides[actual].classList.remove('active');
+    actual = Math.max(0, Math.min(slides.length-1, actual+dir));
+    slides[actual].classList.add('active');
+    document.getElementById('prev').disabled = actual===0;
+    document.getElementById('next').disabled = actual===slides.length-1;
+    document.getElementById('counter').textContent = `${actual+1} / ${slides.length}`;
   }
-  document.addEventListener('keydown',e=>{
-    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}
-    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
-    if(e.key==='Home')go(0);if(e.key==='End')go(slides.length-1);
-  });
-  document.addEventListener('click',e=>{
-    if(e.target.closest('a'))return;
-    const x=e.clientX,w=window.innerWidth;
-    go(x>w/2?i+1:i-1);
-  });
 </script>
 </body>
 </html>
