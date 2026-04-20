@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S02 · Instrucciones · El guardián de la puerta</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#f7f5f0; --fg:#1c1c1c; --muted:#555;
+    --coral:#ff6f61; --coral-bg:#ffe4e1;
+    --ambar:#d98c00; --ambar-bg:#fff2d6;
+    --verde:#2e8b57; --verde-bg:#dff2e4;
+    --morado:#6b3fa0; --morado-bg:#eadcfb;
+    --code:#1e2630; --code-fg:#ffe8a8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:2rem 1.2rem 4rem}
+  header{text-align:center;padding:2rem 0 1rem;border-bottom:3px solid var(--coral);margin-bottom:2rem}
+  header .tag{display:inline-block;background:var(--coral);color:#fff;padding:.3rem 1rem;border-radius:999px;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.8rem}
+  h1{font-size:2.2rem;margin:.3rem 0}
+  header p{color:var(--muted);margin:.4rem 0}
+  .step{background:#fff;border-radius:14px;padding:1.6rem 1.8rem;margin-bottom:1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.05);border-left:6px solid var(--ambar)}
+  .step h2{display:flex;align-items:center;gap:.8rem;font-size:1.4rem;margin:0 0 .8rem;color:var(--ambar)}
+  .step h2 .n{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;background:var(--ambar);color:#fff;border-radius:50%;font-size:1rem;font-weight:700}
+  .step p{margin:.5rem 0;color:#333}
+  .step ul{padding-left:1.4rem}
+  .step ul li{margin:.4rem 0}
+  .step.verde{border-left-color:var(--verde)} .step.verde h2{color:var(--verde)} .step.verde h2 .n{background:var(--verde)}
+  .step.coral{border-left-color:var(--coral)} .step.coral h2{color:var(--coral)} .step.coral h2 .n{background:var(--coral)}
+  .code{background:var(--code);color:var(--code-fg);padding:1rem 1.2rem;font-family:"SF Mono",Consolas,monospace;border-radius:8px;white-space:pre-wrap;font-size:.95rem;margin:.8rem 0}
+  .diagram{background:#fafafa;border-radius:10px;padding:1rem;text-align:center;margin:.8rem 0;border:1px dashed #ccc}
+  .diagram svg{max-width:100%;height:auto}
+  .diagram figcaption{font-size:.9rem;color:var(--muted);margin-top:.5rem;font-style:italic}
+  .tip{background:var(--ambar-bg);border-left:4px solid var(--ambar);padding:.9rem 1.1rem;border-radius:6px;margin:.8rem 0;font-size:.98rem}
+  .tip strong{color:var(--ambar)}
+  .entrega{background:linear-gradient(135deg,var(--morado-bg),#fff);border:2px solid var(--morado);border-radius:14px;padding:1.8rem;margin-top:2.5rem}
+  .entrega h2{color:var(--morado);margin-top:0}
+  .entrega .url{display:inline-block;background:var(--morado);color:#fff;padding:.8rem 1.2rem;border-radius:8px;text-decoration:none;font-weight:700;margin-top:.6rem;word-break:break-all}
+  .pill{display:inline-block;background:#fff;border:1px solid #e0d8c8;padding:.15rem .6rem;border-radius:999px;font-size:.85rem;margin-right:.3rem;color:var(--muted)}
+  kbd{background:#eee;border:1px solid #ccc;border-radius:4px;padding:.1rem .4rem;font-family:inherit;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <span class="tag">Sesión 02 · 1.º ESO · CyR</span>
+  <h1>🛡️ El guardián de la puerta</h1>
+  <p>Aprende a usar el bloque <b>«si &lt; &gt; entonces»</b> de Scratch</p>
+  <p><span class="pill">55 min</span><span class="pill">Scratch online</span><span class="pill">Condicional IF</span></p>
+</header>
+
+<div class="step coral">
+  <h2><span class="n">0</span>Qué vas a aprender</h2>
+  <p>Hasta ahora tus programas <b>siempre</b> hacían lo mismo (S01: secuencias). Hoy vas a programar cosas que <b>solo pasan cuando se cumple una condición</b>. Eso se llama <b>estructura condicional</b>, o IF.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#333"/></marker>
+      </defs>
+      <!-- Entrada -->
+      <rect x="10" y="70" width="120" height="40" rx="8" fill="#fff2d6" stroke="#d98c00" stroke-width="2"/>
+      <text x="70" y="95" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#333">¿Condición?</text>
+      <!-- Diamante -->
+      <polygon points="220,90 290,40 360,90 290,140" fill="#fff2d6" stroke="#d98c00" stroke-width="2"/>
+      <text x="290" y="95" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#333" font-weight="700">IF</text>
+      <!-- Sí -->
+      <rect x="420" y="30" width="170" height="40" rx="8" fill="#dff2e4" stroke="#2e8b57" stroke-width="2"/>
+      <text x="505" y="55" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#2e8b57">Sí → hace la acción</text>
+      <!-- No -->
+      <rect x="420" y="110" width="170" height="40" rx="8" fill="#ffe4e1" stroke="#ff6f61" stroke-width="2"/>
+      <text x="505" y="135" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#b84b40">No → no hace nada</text>
+      <!-- Flechas -->
+      <line x1="130" y1="90" x2="215" y2="90" stroke="#333" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="360" y1="70" x2="415" y2="45" stroke="#2e8b57" stroke-width="2" marker-end="url(#ar)"/>
+      <line x1="360" y1="110" x2="415" y2="130" stroke="#ff6f61" stroke-width="2" marker-end="url(#ar)"/>
+      <text x="385" y="55" font-family="sans-serif" font-size="13" fill="#2e8b57" font-weight="700">sí</text>
+      <text x="385" y="135" font-family="sans-serif" font-size="13" fill="#ff6f61" font-weight="700">no</text>
+    </svg>
+    <figcaption>Un IF es una pregunta: si la respuesta es «sí», se ejecuta lo de dentro. Si es «no», se salta.</figcaption>
+  </div>
+</div>
+
+<div class="step">
+  <h2><span class="n">1</span>Abre Scratch y prepara la escena</h2>
+  <ul>
+    <li>Ve a <b>scratch.mit.edu</b> y pulsa <b>Crear</b>.</li>
+    <li>Inicia sesión con tu cuenta (la del curso).</li>
+    <li>Elimina el gato (Sprite1) pulsando la papelera sobre su icono.</li>
+    <li>Añade 2 sprites desde la biblioteca: uno para el <b>Guardián</b> (por ejemplo «Knight») y otro para el <b>Intruso</b> (por ejemplo «Ghost» o «Ninja»).</li>
+    <li>Añade un fondo de escenario: pulsa el icono del paisaje (abajo a la derecha) y elige uno tipo «Castle» o «Door».</li>
+  </ul>
+  <div class="tip"><strong>💡 Tip:</strong> Si no te convence el sprite, siempre puedes cambiarlo después sin perder el código.</div>
+</div>
+
+<div class="step">
+  <h2><span class="n">2</span>Localiza el bloque IF (es amarillo)</h2>
+  <p>En el panel de bloques, entra en el grupo <b>Control</b> (color amarillo). Busca este bloque:</p>
+  <div class="diagram">
+    <svg viewBox="0 0 420 110" xmlns="http://www.w3.org/2000/svg">
+      <!-- Bloque amarillo Scratch con hueco de condición -->
+      <path d="M10 20 h40 l8 -8 h30 l8 8 h300 v20 h-8 l-8 8 h-30 l-8 -8 h-40 v40 h-284 l-8 -8 h-30 l-8 8 h-40 v-60 z"
+            fill="#ffbf00" stroke="#d99900" stroke-width="2"/>
+      <text x="30" y="46" font-family="sans-serif" font-size="16" fill="#333" font-weight="700">si</text>
+      <!-- Hueco rombo -->
+      <polygon points="75,38 120,25 165,38 120,51" fill="#fff" stroke="#c99" stroke-width="1"/>
+      <text x="120" y="43" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#bbb" font-style="italic">condición</text>
+      <text x="180" y="46" font-family="sans-serif" font-size="16" fill="#333" font-weight="700">entonces</text>
+      <text x="30" y="90" font-family="sans-serif" font-size="14" fill="#555" font-style="italic">    (aquí dentro va lo que pasa SI se cumple)</text>
+    </svg>
+    <figcaption>El bloque «si &lt; &gt; entonces» tiene un hueco con forma de rombo. Ahí solo encajan bloques de pregunta (azul sensor o verde operador).</figcaption>
+  </div>
+  <p>Ese hueco con forma de rombo es la clave: <b>solo acepta bloques que devuelven «sí» o «no»</b>.</p>
+</div>
+
+<div class="step">
+  <h2><span class="n">3</span>Programa el guardián</h2>
+  <p>Selecciona el sprite del <b>Guardián</b> (clic en su icono). Monta este programa usando bloques:</p>
+  <div class="code">al hacer clic en 🟢 (bandera verde)
+  ir a x: 0  y: -50
+  por siempre
+    si &lt; ¿tocando a Intruso? &gt; entonces
+      decir «¡Alto ahí!» durante 2 segundos
+    fin
+  fin</div>
+  <p>Los bloques que necesitas están en:</p>
+  <ul>
+    <li><span class="pill" style="background:#ffbf0022;border-color:#d99900;color:#9a7500">Eventos</span> «al hacer clic en bandera verde»</li>
+    <li><span class="pill" style="background:#4c97ff22;border-color:#4c97ff;color:#2a5aa0">Movimiento</span> «ir a x: y:»</li>
+    <li><span class="pill" style="background:#ffbf0022;border-color:#d99900;color:#9a7500">Control</span> «por siempre» y «si &lt; &gt; entonces»</li>
+    <li><span class="pill" style="background:#4cbfe622;border-color:#4cbfe6;color:#1e6788">Sensores</span> «¿tocando a…?» (este va DENTRO del rombo del IF)</li>
+    <li><span class="pill" style="background:#9966ff22;border-color:#9966ff;color:#5c3db3">Apariencia</span> «decir … durante 2 s»</li>
+  </ul>
+</div>
+
+<div class="step">
+  <h2><span class="n">4</span>Programa el intruso</h2>
+  <p>Ahora selecciona el sprite del <b>Intruso</b>. Este también necesita IF, pero para volver al inicio cuando el guardián lo pilla:</p>
+  <div class="code">al hacer clic en 🟢 (bandera verde)
+  ir a x: -200  y: -50
+  por siempre
+    mover 2 pasos
+    si &lt; ¿tocando a Guardián? &gt; entonces
+      ir a x: -200  y: -50
+    fin
+  fin</div>
+  <div class="tip"><strong>⚠️ Importante:</strong> si pones «mover 10 pasos» el intruso va tan rápido que atraviesa al guardián sin que dé tiempo a detectarlo. Empieza con 2 pasos y sube si quieres más dificultad.</div>
+</div>
+
+<div class="step verde">
+  <h2><span class="n">5</span>Prueba y ajusta</h2>
+  <ul>
+    <li>Pulsa la bandera verde. El intruso debería avanzar hacia el guardián.</li>
+    <li>Cuando lo toque, el guardián dice «¡Alto ahí!» y el intruso vuelve al inicio.</li>
+    <li>Si algo no funciona: revisa que el <b>bloque azul de sensor</b> esté dentro del rombo del IF amarillo.</li>
+    <li>Prueba a cambiar la condición por «¿tocando color rojo?» o «¿tecla espacio pulsada?» y observa qué cambia.</li>
+  </ul>
+</div>
+
+<div class="step verde">
+  <h2><span class="n">6</span>Guarda y comparte</h2>
+  <ul>
+    <li>Ponle nombre al proyecto arriba a la izquierda: <b>S02 - El guardián de la puerta - TuNombre</b>.</li>
+    <li>Pulsa el botón <b>Compartir</b> (arriba en la barra naranja). Solo así otros pueden ver tu proyecto.</li>
+    <li>Copia la URL del navegador. Empieza por <code>https://scratch.mit.edu/projects/</code> seguida de un número.</li>
+    <li>Haz una <b>captura</b> del código del guardián (usa <kbd>Impr Pant</kbd> o la herramienta Recortes).</li>
+  </ul>
+</div>
+
+<div class="entrega">
+  <h2>📤 Entrega</h2>
+  <p>Sube a Google Classroom, en la tarea de esta sesión:</p>
+  <ol>
+    <li><b>Enlace</b> público de tu proyecto Scratch.</li>
+    <li><b>Captura</b> del código del guardián con el IF visible.</li>
+    <li><b>Respuestas</b> escritas a las 3 preguntas de ENTENDER (en tu cuaderno o en un documento).</li>
+  </ol>
+  <p style="margin-top:1rem"><b>Y si te pierdes en algún paso, vuelve aquí:</b></p>
+  <a class="url" href="https://ffrumej917.github.io/desafio-robotica-2026/">ffrumej917.github.io/desafio-robotica-2026/</a>
+</div>
+
+</div>
+</body>
+</html>

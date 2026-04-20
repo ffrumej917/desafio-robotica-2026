@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S02 · 1.º ESO · El guardián de la puerta</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#0f1419; --bg2:#151c24; --fg:#f5f5f5; --muted:#9aa5b1;
+    --coral:#ff6f61; --ambar:#f1b043; --verde:#5dd39e; --morado:#b58cff;
+    --code:#1e2630;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow:hidden}
+  .deck{position:relative;width:100vw;height:100vh}
+  .slide{position:absolute;inset:0;display:none;flex-direction:column;padding:4vh 6vw;animation:fade .35s ease}
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.1;margin-bottom:1rem}
+  h2{font-size:clamp(1.8rem,3.6vw,3rem);margin-bottom:1.2rem;color:var(--coral)}
+  .sub{color:var(--muted);font-size:clamp(1rem,1.6vw,1.3rem);margin-bottom:2rem}
+  ul{list-style:none;display:grid;gap:1rem;font-size:clamp(1.1rem,1.8vw,1.6rem)}
+  ul li{padding-left:2.2rem;position:relative}
+  ul li::before{content:"→";position:absolute;left:0;color:var(--ambar);font-weight:700}
+  .tag{display:inline-block;padding:.3rem .9rem;border-radius:999px;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:1rem}
+  .tag.reto{background:#3a1f1c;color:var(--coral)}
+  .tag.aprende{background:#3a2e12;color:var(--ambar)}
+  .tag.edp{background:#143528;color:var(--verde)}
+  .tag.entrega{background:#2a1d3f;color:var(--morado)}
+  .code{background:var(--code);border-left:4px solid var(--ambar);padding:1rem 1.4rem;font-family:"SF Mono",Consolas,monospace;font-size:clamp(1rem,1.5vw,1.3rem);color:#ffe8a8;border-radius:6px;margin:1rem 0;white-space:pre-wrap}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:1rem}
+  .card{background:var(--bg2);border-radius:12px;padding:1.4rem;border-top:4px solid var(--verde)}
+  .card h3{color:var(--verde);font-size:1.3rem;margin-bottom:.6rem}
+  .card p{color:var(--muted);font-size:1.05rem;line-height:1.5}
+  .card.e{border-top-color:var(--coral)} .card.e h3{color:var(--coral)}
+  .card.d{border-top-color:var(--ambar)} .card.d h3{color:var(--ambar)}
+  .card.p{border-top-color:var(--verde)} .card.p h3{color:var(--verde)}
+  .entrega-box{background:linear-gradient(135deg,#2a1d3f,#1a1228);border:2px solid var(--morado);border-radius:14px;padding:2rem;margin-top:1rem}
+  .entrega-box .url{display:inline-block;background:var(--morado);color:#0f1419;padding:.8rem 1.4rem;border-radius:8px;font-weight:700;margin-top:1rem;font-size:clamp(1rem,1.6vw,1.4rem);word-break:break-all}
+  footer{position:fixed;bottom:1.2rem;left:0;right:0;display:flex;justify-content:space-between;padding:0 2rem;color:var(--muted);font-size:.9rem;pointer-events:none}
+  .hint{position:fixed;top:1rem;right:1.5rem;color:var(--muted);font-size:.8rem;opacity:.6}
+  .dots{display:flex;gap:.5rem;justify-content:center}
+  .dots span{width:10px;height:10px;border-radius:50%;background:#2a3341;transition:background .2s}
+  .dots span.on{background:var(--coral)}
+  .titlecenter{justify-content:center;align-items:flex-start;gap:1rem}
+</style>
+</head>
+<body>
+<div class="deck">
+
+  <!-- 1. Portada -->
+  <section class="slide active titlecenter">
+    <span class="tag reto">Sesión 02 · 1.º ESO · CyR</span>
+    <h1>🛡️ El guardián de la puerta</h1>
+    <p class="sub">Aprendemos el bloque <b>«si &lt; &gt; entonces»</b> en Scratch.<br>Hoy: <b>condicionales (IF)</b>.</p>
+    <div style="margin-top:2rem">
+      <p style="color:var(--muted);font-size:1rem">DESAFÍO ROBÓTICA 2026 · IES Punta del Verde</p>
+    </div>
+  </section>
+
+  <!-- 2. El reto -->
+  <section class="slide">
+    <span class="tag reto">🎯 El reto</span>
+    <h2>Un guardián con reflejos</h2>
+    <p class="sub">Un intruso intenta colarse por una puerta. Tu misión:</p>
+    <ul>
+      <li>Haz que el intruso avance hacia la puerta al pulsar la bandera verde.</li>
+      <li><b>SI</b> el intruso toca al guardián → el guardián dice «¡Alto ahí!» y el intruso vuelve al inicio.</li>
+      <li>Hoy estrenamos el bloque amarillo:</li>
+    </ul>
+    <div class="code">si &lt; tocando Intruso? &gt; entonces
+    decir «¡Alto ahí!» durante 2 segundos
+fin</div>
+  </section>
+
+  <!-- 3. E/D/P -->
+  <section class="slide">
+    <span class="tag edp">🧠 Método E · D · P</span>
+    <h2>Pensar antes de programar</h2>
+    <div class="grid3">
+      <div class="card e"><h3>🧠 Entender</h3><p>¿Cuándo reacciona el guardián? ¿Qué es una condición? Rellena la frase «Mi guardián reacciona cuando ___».</p></div>
+      <div class="card d"><h3>✏️ Diseñar</h3><p>Dibuja el plan del guardián y del intruso con flechas. Elige qué sensor usarás: tocar sprite, tocar color o tecla pulsada.</p></div>
+      <div class="card p"><h3>💻 Programar</h3><p>Monta los sprites en Scratch, encaja el bloque «si &lt; &gt; entonces» y prueba. Ajusta la velocidad si la detección falla.</p></div>
+    </div>
+  </section>
+
+  <!-- 4. Entrega -->
+  <section class="slide">
+    <span class="tag entrega">📤 Entrega</span>
+    <h2>Cómo entregas el reto</h2>
+    <ul>
+      <li>Pulsa <b>«Compartir»</b> en tu proyecto Scratch y copia la URL.</li>
+      <li>Haz una captura del código del guardián (con el IF visible).</li>
+      <li>Responde las 3 preguntas de la fase ENTENDER.</li>
+    </ul>
+    <div class="entrega-box">
+      <p style="color:var(--morado);font-weight:700;letter-spacing:.1em;font-size:.95rem">🔗 INSTRUCCIONES PASO A PASO</p>
+      <span class="url">ffrumej917.github.io/desafio-robotica-2026/</span>
+      <p style="color:var(--muted);margin-top:.8rem;font-size:1rem">Abre el enlace, entra en 1.º ESO → S02.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="hint">← → navegar · F11 pantalla completa · ESC salir</div>
+<footer>
+  <div>IES Punta del Verde · CyR 1.º ESO · S02</div>
+  <div class="dots" id="dots"></div>
+  <div id="counter">1 / 4</div>
+</footer>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const dots=document.getElementById('dots');
+  const counter=document.getElementById('counter');
+  slides.forEach((_,i)=>{const d=document.createElement('span');if(i===0)d.classList.add('on');dots.appendChild(d)});
+  const dotsEls=[...dots.children];
+  let i=0;
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dotsEls.forEach((d,k)=>d.classList.toggle('on',k===i));
+    counter.textContent=`${i+1} / ${slides.length}`;
+  }
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){e.preventDefault();go(i+1)}
+    if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(i-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+  });
+  document.addEventListener('click',e=>{
+    if(e.target.closest('a'))return;
+    const x=e.clientX, w=window.innerWidth;
+    go(x > w/2 ? i+1 : i-1);
+  });
+</script>
+</body>
+</html>
