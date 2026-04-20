@@ -1,0 +1,5 @@
+# Normalize line endings for text files; binaries unchanged.
+* text=auto eol=lf
+*.docx binary
+*.png binary
+*.svg text eol=lf
