@@ -15,18 +15,16 @@
   .reto-box{background:rgba(79,70,229,0.1);border:1.5px solid rgba(79,70,229,0.4);border-radius:12px;padding:20px 24px;margin-bottom:28px}
   .reto-box .reto-label{font-size:0.78rem;font-weight:700;color:#818cf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
   .reto-box p{font-size:0.95rem;color:#c7d2fe;line-height:1.7}
-  .warning{background:rgba(251,188,4,0.08);border-left:3px solid #fbbc04;border-radius:6px;padding:12px 16px;margin-bottom:24px;font-size:0.85rem;color:#f0e0a0;line-height:1.6}
   .code-wrap{background:#0a0a14;border:1px solid #1e293b;border-radius:12px;overflow:hidden}
   .code-header{background:#111827;padding:10px 18px;display:flex;align-items:center;gap:10px}
-  .code-header .dot{width:12px;height:12px;border-radius:50%}
-  .code-header .dot.r{background:#ff5f57}
-  .code-header .dot.y{background:#febc2e}
-  .code-header .dot.g{background:#28c840}
-  .code-header .lang{font-size:0.78rem;color:#4b5563;margin-left:auto;font-family:'Courier New',monospace}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .dot.r{background:#ff5f57} .dot.y{background:#febc2e} .dot.g{background:#28c840}
+  .lang{font-size:0.78rem;color:#4b5563;margin-left:auto;font-family:'Courier New',monospace}
   pre{padding:24px;font-family:'Courier New',monospace;font-size:clamp(0.78rem,1.8vw,0.9rem);line-height:1.9;overflow-x:auto;color:#e2e8f0}
   .kw{color:#f472b6;font-weight:700}
   .cm{color:#4b5563;font-style:italic}
   .num{color:#fbbf24}
+  .sec{color:#34d399;font-weight:700}
   .back{display:inline-flex;align-items:center;gap:6px;margin-top:28px;font-size:0.85rem;color:#4b5563;text-decoration:none}
   .back:hover{color:#818cf8}
 </style>
@@ -40,10 +38,6 @@
   <div class="reto-box">
     <div class="reto-label">El reto era…</div>
     <p>Al pulsar: el LED parpadea 3 veces rápido antes de quedarse encendido. Al soltar: se apaga con un destello lento en lugar de apagarse de golpe.</p>
-  </div>
-
-  <div class="warning">
-    ⚠️ <strong>Nota importante:</strong> el delay() dentro del loop bloquea la lectura del botón mientras espera. En este ejercicio es aceptable, pero en proyectos reales se usaría millis() para no bloquear el programa.
   </div>
 
   <div class="code-wrap">
@@ -61,22 +55,25 @@
 
 <span class="kw">void</span> loop() {
     <span class="kw">if</span> (digitalRead(pinBoton) == HIGH) {
-        <span class="cm">// 3 parpadeos rápidos de confirmación</span>
-        <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i < <span class="num">3</span>; i++) {
-            digitalWrite(pinLed, HIGH);
-            delay(<span class="num">80</span>);
-            digitalWrite(pinLed, LOW);
-            delay(<span class="num">80</span>);
-        }
-        <span class="cm">// queda encendido</span>
+
+        <span class="sec">// 3 parpadeos rápidos de confirmación</span>
+        digitalWrite(pinLed, HIGH); delay(<span class="num">80</span>);
+        digitalWrite(pinLed, LOW);  delay(<span class="num">80</span>);
+        digitalWrite(pinLed, HIGH); delay(<span class="num">80</span>);
+        digitalWrite(pinLed, LOW);  delay(<span class="num">80</span>);
+        digitalWrite(pinLed, HIGH); delay(<span class="num">80</span>);
+        digitalWrite(pinLed, LOW);  delay(<span class="num">80</span>);
+
+        <span class="sec">// queda encendido</span>
         digitalWrite(pinLed, HIGH);
         delay(<span class="num">200</span>);
+
     } <span class="kw">else</span> {
-        <span class="cm">// destello lento de apagado</span>
-        digitalWrite(pinLed, HIGH);
-        delay(<span class="num">300</span>);
-        digitalWrite(pinLed, LOW);
-        delay(<span class="num">100</span>);
+
+        <span class="sec">// destello lento de apagado</span>
+        digitalWrite(pinLed, HIGH); delay(<span class="num">300</span>);
+        digitalWrite(pinLed, LOW);  delay(<span class="num">100</span>);
+
     }
 }</pre>
   </div>
