@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S03 – El robot portero | Desafío Robótica 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0d0d1a;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    padding: 5vh 6vw;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .slide.active { display: flex; }
+
+  /* ── DIAPOSITIVA 1: Portada ── */
+  .slide-1 {
+    background: radial-gradient(ellipse at center, #1a1a3e 0%, #0d0d1a 70%);
+  }
+  .slide-1 .badge {
+    background: #ff6b6b;
+    color: #fff;
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 2vh;
+  }
+  .slide-1 .emoji-big { font-size: clamp(3rem, 8vw, 5rem); margin-bottom: 2vh; }
+  .slide-1 h1 {
+    font-size: clamp(2rem, 5vw, 3.8rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1.5vh;
+  }
+  .slide-1 h1 span { color: #ff6b6b; }
+  .slide-1 .subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: #aab4c8;
+    margin-bottom: 3vh;
+  }
+  .slide-1 .tag-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .slide-1 .tag {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 16px;
+    border-radius: 12px;
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    color: #c8d6f0;
+  }
+
+  /* ── DIAPOSITIVA 2: ¿Qué es IF-ELSE? ── */
+  .slide-2 {
+    background: #0d0d1a;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .slide-2 h2 {
+    font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: #ff6b6b;
+    margin-bottom: 3vh;
+    width: 100%;
+  }
+  .if-else-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2vw;
+    width: 100%;
+    max-width: 900px;
+  }
+  .if-box, .else-box {
+    border-radius: 16px;
+    padding: clamp(16px, 2.5vw, 28px);
+  }
+  .if-box {
+    background: rgba(255, 107, 107, 0.12);
+    border: 2px solid #ff6b6b;
+  }
+  .else-box {
+    background: rgba(100, 200, 120, 0.1);
+    border: 2px solid #64c878;
+  }
+  .if-box .label { color: #ff6b6b; font-weight: 800; font-size: clamp(0.9rem, 2vw, 1.2rem); letter-spacing: 1px; margin-bottom: 10px; }
+  .else-box .label { color: #64c878; font-weight: 800; font-size: clamp(0.9rem, 2vw, 1.2rem); letter-spacing: 1px; margin-bottom: 10px; }
+  .if-box p, .else-box p { font-size: clamp(0.85rem, 1.8vw, 1.1rem); color: #dde; line-height: 1.5; }
+  .analogy-box {
+    margin-top: 2.5vh;
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid #f0c040;
+    border-radius: 8px;
+    padding: clamp(12px, 1.5vw, 18px) clamp(14px, 2vw, 24px);
+    max-width: 900px;
+    width: 100%;
+  }
+  .analogy-box p { font-size: clamp(0.85rem, 1.8vw, 1.05rem); color: #f0e0a0; line-height: 1.6; }
+  .analogy-box span { font-weight: 700; }
+
+  /* ── DIAPOSITIVA 3: El reto de hoy ── */
+  .slide-3 {
+    background: #0d0d1a;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .slide-3 h2 {
+    font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 3vh;
+    width: 100%;
+  }
+  .slide-3 h2 span { color: #ff6b6b; }
+  .reto-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: clamp(18px, 2.5vw, 30px);
+    max-width: 860px;
+    width: 100%;
+    margin-bottom: 2.5vh;
+  }
+  .reto-card .reto-title {
+    font-size: clamp(1rem, 2.2vw, 1.3rem);
+    font-weight: 700;
+    color: #ffcc00;
+    margin-bottom: 12px;
+  }
+  .reto-card p {
+    font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+    color: #ccd;
+    line-height: 1.7;
+  }
+  .phases-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5vw;
+    max-width: 860px;
+    width: 100%;
+  }
+  .phase {
+    border-radius: 12px;
+    padding: clamp(12px, 1.5vw, 20px);
+    text-align: center;
+  }
+  .phase.entender { background: rgba(255, 107, 107, 0.15); border: 1.5px solid #ff6b6b; }
+  .phase.diseniar { background: rgba(251, 188, 4, 0.12); border: 1.5px solid #fbbc04; }
+  .phase.programar { background: rgba(52, 211, 153, 0.12); border: 1.5px solid #34d399; }
+  .phase .ph-icon { font-size: clamp(1.4rem, 3vw, 2rem); margin-bottom: 6px; }
+  .phase .ph-label { font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .phase.entender .ph-label { color: #ff6b6b; }
+  .phase.diseniar .ph-label { color: #fbbc04; }
+  .phase.programar .ph-label { color: #34d399; }
+  .phase .ph-time { font-size: clamp(0.7rem, 1.3vw, 0.85rem); color: #aab; margin-top: 4px; }
+
+  /* ── DIAPOSITIVA 4: Pseudocódigo + Entrega ── */
+  .slide-4 {
+    background: #0d0d1a;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .slide-4 h2 {
+    font-size: clamp(1.4rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 2.5vh;
+    width: 100%;
+  }
+  .slide-4 h2 span { color: #ff6b6b; }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2vw;
+    width: 100%;
+    max-width: 900px;
+  }
+  .code-block {
+    background: #111827;
+    border: 1px solid #2d3748;
+    border-radius: 12px;
+    padding: clamp(14px, 2vw, 24px);
+    font-family: 'Courier New', monospace;
+    font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+    line-height: 1.8;
+    color: #e2e8f0;
+  }
+  .code-block .kw { color: #f472b6; font-weight: 700; }
+  .code-block .str { color: #86efac; }
+  .code-block .comment { color: #6b7280; font-style: italic; }
+  .code-block .indent1 { margin-left: 1.5em; }
+  .code-block .indent2 { margin-left: 3em; }
+  .entrega-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5vh;
+  }
+  .entrega-box {
+    background: rgba(168, 85, 247, 0.15);
+    border: 2px solid #a855f7;
+    border-radius: 14px;
+    padding: clamp(14px, 2vw, 22px);
+  }
+  .entrega-box .ent-title { font-size: clamp(0.85rem, 1.8vw, 1.05rem); font-weight: 700; color: #c084fc; margin-bottom: 8px; }
+  .entrega-box p { font-size: clamp(0.75rem, 1.5vw, 0.9rem); color: #ccd; line-height: 1.6; }
+  .tip-box {
+    background: rgba(251, 188, 4, 0.1);
+    border-left: 3px solid #fbbc04;
+    border-radius: 8px;
+    padding: clamp(10px, 1.5vw, 16px) clamp(12px, 1.8vw, 20px);
+  }
+  .tip-box p { font-size: clamp(0.75rem, 1.5vw, 0.9rem); color: #f0e0a0; line-height: 1.6; }
+
+  /* Navegación */
+  .nav {
+    position: fixed;
+    bottom: 3vh;
+    right: 3vw;
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+  }
+  .nav button {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav button:hover { background: rgba(255,255,255,0.22); }
+  .nav button:disabled { opacity: 0.25; cursor: default; }
+
+  /* Contador */
+  .counter {
+    position: fixed;
+    bottom: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── DIAPOSITIVA 1: Portada ── -->
+<div class="slide slide-1 active">
+  <div class="badge">🤖 Desafío Robótica 2026 · Sesión 3</div>
+  <div class="emoji-big">🚪</div>
+  <h1>El <span>Robot Portero</span></h1>
+  <p class="subtitle">Aprende IF-ELSE: cuando hay DOS caminos posibles</p>
+  <div class="tag-row">
+    <span class="tag">🐱 Scratch</span>
+    <span class="tag">🔀 IF-ELSE</span>
+    <span class="tag">⌨️ Bloque preguntar</span>
+    <span class="tag">⏱ 55 min</span>
+  </div>
+</div>
+
+<!-- ── DIAPOSITIVA 2: ¿Qué es IF-ELSE? ── -->
+<div class="slide slide-2">
+  <h2>¿Qué es el IF-ELSE?</h2>
+  <div class="if-else-grid">
+    <div class="if-box">
+      <div class="label">SI (IF) ✅</div>
+      <p>Si la condición es <strong>verdadera</strong>, el programa ejecuta este bloque de instrucciones.</p>
+    </div>
+    <div class="else-box">
+      <div class="label">SI NO (ELSE) ❌</div>
+      <p>Si la condición es <strong>falsa</strong>, el programa ejecuta <em>este otro</em> bloque en su lugar.</p>
+    </div>
+  </div>
+  <div class="analogy-box">
+    <p>🎯 <span>Analogía real:</span> Tu teléfono te pide el PIN. <span>Si es correcto → desbloquea.</span> <span>Si no → te lo deniega.</span> ¡Eso mismo vas a programar tú hoy!</p>
+  </div>
+</div>
+
+<!-- ── DIAPOSITIVA 3: El reto de hoy ── -->
+<div class="slide slide-3">
+  <h2>El reto de hoy 🎯 <span>El Robot Portero</span></h2>
+  <div class="reto-card">
+    <div class="reto-title">📋 ¿Qué tienes que hacer?</div>
+    <p>
+      Crea un sprite en Scratch que actúe como portero. Al hacer clic, el robot pregunta una contraseña.<br>
+      👉 Si el usuario escribe <strong>"abre"</strong> → el sprite dice <strong>"¡Puedes pasar! ✅"</strong> y cambia de disfraz o fondo.<br>
+      👉 Si escribe <strong>cualquier otra cosa</strong> → dice <strong>"¡Acceso denegado! 🚫"</strong> y reacciona (giro, cambio de color…)
+    </p>
+  </div>
+  <div class="phases-row">
+    <div class="phase entender">
+      <div class="ph-icon">🧠</div>
+      <div class="ph-label">Entender</div>
+      <div class="ph-time">10 min</div>
+    </div>
+    <div class="phase diseniar">
+      <div class="ph-icon">✏️</div>
+      <div class="ph-label">Diseñar</div>
+      <div class="ph-time">10 min</div>
+    </div>
+    <div class="phase programar">
+      <div class="ph-icon">💻</div>
+      <div class="ph-label">Programar</div>
+      <div class="ph-time">30 min</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DIAPOSITIVA 4: Pseudocódigo + Entrega ── -->
+<div class="slide slide-4">
+  <h2>Tu código en <span>pseudocódigo</span> 📝</h2>
+  <div class="two-col">
+    <div class="code-block">
+      <div><span class="kw">AL HACER CLIC</span> en la bandera verde</div>
+      <div class="indent1"><span class="kw">PREGUNTAR</span> <span class="str">"¿Cuál es la contraseña?"</span></div>
+      <div class="indent1"><span class="kw">SI</span> respuesta = <span class="str">"abre"</span> <span class="kw">ENTONCES</span></div>
+      <div class="indent2">decir <span class="str">"¡Puedes pasar! ✅"</span></div>
+      <div class="indent2">cambiar disfraz / fondo</div>
+      <div class="indent1"><span class="kw">SI NO</span></div>
+      <div class="indent2">decir <span class="str">"¡Acceso denegado! 🚫"</span></div>
+      <div class="indent2">girar / cambiar color</div>
+      <div class="indent1"><span class="kw">FIN SI</span></div>
+    </div>
+    <div class="entrega-panel">
+      <div class="entrega-box">
+        <div class="ent-title">🟣 ¿Cómo entregar?</div>
+        <p>
+          1. Guarda tu proyecto en Scratch.<br>
+          2. Copia el enlace del proyecto.<br>
+          3. Pégalo en el <strong>recuadro de entrega</strong> de tu ficha.<br>
+          4. Entrega la ficha en Google Classroom.
+        </p>
+      </div>
+      <div class="tip-box">
+        <p>💡 <strong>Reto extra:</strong> ¿Puedes hacer que el portero dé una segunda oportunidad si fallas la primera vez?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navegación -->
+<div class="nav">
+  <button id="prev" onclick="cambiar(-1)" disabled>◀</button>
+  <button id="next" onclick="cambiar(1)">▶</button>
+</div>
+<div class="counter" id="counter">1 / 4</div>
+
+<script>
+  let actual = 0;
+  const slides = document.querySelectorAll('.slide');
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') cambiar(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') cambiar(-1);
+  });
+
+  function cambiar(dir) {
+    slides[actual].classList.remove('active');
+    actual = Math.max(0, Math.min(slides.length - 1, actual + dir));
+    slides[actual].classList.add('active');
+    document.getElementById('prev').disabled = actual === 0;
+    document.getElementById('next').disabled = actual === slides.length - 1;
+    document.getElementById('counter').textContent = `${actual + 1} / ${slides.length}`;
+  }
+</script>
+</body>
+</html>
