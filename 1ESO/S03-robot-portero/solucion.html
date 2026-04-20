@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solución ampliación — S03 El robot portero</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d0d1a;color:#f0f0f0;font-family:'Segoe UI',Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+  .card{max-width:700px;width:100%}
+  .top-badge{display:inline-block;background:#ff6b6b;color:#fff;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px}
+  h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;color:#fff;margin-bottom:6px}
+  h1 span{color:#ff6b6b}
+  .meta{font-size:0.85rem;color:#667;margin-bottom:32px}
+  .reto-box{background:rgba(79,70,229,0.1);border:1.5px solid rgba(79,70,229,0.4);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+  .reto-box .reto-label{font-size:0.78rem;font-weight:700;color:#818cf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+  .reto-box p{font-size:0.95rem;color:#c7d2fe;line-height:1.7}
+  .code-wrap{background:#0a0a14;border:1px solid #1e293b;border-radius:12px;overflow:hidden}
+  .code-header{background:#111827;padding:10px 18px;display:flex;align-items:center;gap:10px}
+  .code-header .dot{width:12px;height:12px;border-radius:50%}
+  .code-header .dot.r{background:#ff5f57}
+  .code-header .dot.y{background:#febc2e}
+  .code-header .dot.g{background:#28c840}
+  .code-header .lang{font-size:0.78rem;color:#4b5563;margin-left:auto;font-family:'Courier New',monospace}
+  pre{padding:24px;font-family:'Courier New',monospace;font-size:clamp(0.78rem,1.8vw,0.9rem);line-height:1.9;overflow-x:auto;color:#e2e8f0}
+  .kw{color:#f472b6;font-weight:700}
+  .cm{color:#4b5563;font-style:italic}
+  .num{color:#fbbf24}
+  .str{color:#86efac}
+  .back{display:inline-flex;align-items:center;gap:6px;margin-top:28px;font-size:0.85rem;color:#4b5563;text-decoration:none}
+  .back:hover{color:#818cf8}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top-badge">🚀 Solución ampliación</div>
+  <h1>S03 — <span>El robot portero</span></h1>
+  <p class="meta">1º ESO · Scratch · Portero con 3 intentos y bloqueo</p>
+
+  <div class="reto-box">
+    <div class="reto-label">El reto era…</div>
+    <p>Dar al usuario 3 intentos para acertar la contraseña. Si falla los tres, el portero bloquea el acceso definitivamente.</p>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="lang">Scratch — bloques</span>
+    </div>
+    <pre><span class="kw">al hacer clic en</span> 🚩
+    fijar [Intentos] a [<span class="num">0</span>]
+    <span class="kw">repetir</span> [<span class="num">3</span>]                    <span class="cm">// máximo 3 intentos</span>
+        preguntar [¿Cuál es la contraseña?] y esperar
+        <span class="kw">si</span> &lt;(respuesta) = [<span class="str">abre</span>]&gt; <span class="kw">entonces</span>
+            decir [¡Puedes pasar! ✅] durante [<span class="num">2</span>] segundos
+            cambiar fondo a [fondo abierto]
+            detener [este programa]    <span class="cm">// sale del bucle si acierta</span>
+        <span class="kw">si no</span>
+            cambiar [Intentos] en [<span class="num">1</span>]
+            decir (unir [Intento fallido. Quedan: ]
+                   ((<span class="num">3</span>) - (Intentos))) durante [<span class="num">2</span>] segundos
+    <span class="cm">// Si llega aquí, agotó los 3 intentos</span>
+    decir [Acceso bloqueado. 🔒] durante [<span class="num">99</span>] segundos</pre>
+  </div>
+
+  <a href="presentacion.html" class="back">← Volver a la presentación</a>
+</div>
+</body>
+</html>
