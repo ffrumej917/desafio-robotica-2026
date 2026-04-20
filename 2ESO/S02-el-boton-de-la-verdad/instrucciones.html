@@ -41,18 +41,14 @@
   .step-body p { font-size:0.95rem; line-height:1.7; color:#ccd; }
   .step-body p strong { color:#fff; }
   .hint { margin-top:8px; background:rgba(255,255,255,0.05); border-left:3px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 14px; font-size:0.85rem; color:#99aabb; line-height:1.6; }
-  .circuit-placeholder { background:rgba(76,151,255,0.08); border:2px dashed rgba(76,151,255,0.4); border-radius:12px; padding:30px; margin:14px 0; text-align:center; }
-  .circuit-placeholder p { color:#7ab8ff; font-size:0.9rem; line-height:1.6; }
+  .circuit-img { width:100%; border-radius:10px; border:1px solid rgba(76,151,255,0.3); display:block; margin:14px 0; }
+  .circuit-caption { font-size:0.78rem; color:#667; text-align:center; margin-bottom:8px; }
   .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:18px 22px; font-family:'Courier New',monospace; font-size:0.88rem; line-height:1.9; color:#e2e8f0; margin:12px 0; }
   .code-block .kw { color:#f472b6; font-weight:700; }
   .code-block .cm { color:#6b7280; font-style:italic; }
   .code-block .num { color:#fbbf24; }
   .code-block .i1 { margin-left:1.5em; }
   .code-block .i2 { margin-left:3em; }
-  .design-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:0.9rem; }
-  .design-table th { background:rgba(251,188,4,0.15); color:#fbcc44; padding:10px 14px; text-align:left; font-weight:700; border-bottom:1px solid rgba(251,188,4,0.25); }
-  .design-table td { padding:10px 14px; color:#ccd; border-bottom:1px solid rgba(255,255,255,0.07); vertical-align:top; }
-  .design-table .field { color:#fff; font-weight:600; }
   .entrega-final { background:rgba(168,85,247,0.12); border:2px solid #a855f7; border-radius:16px; padding:24px 28px; margin-top:10px; max-width:860px; margin-left:auto; margin-right:auto; }
   .entrega-final h3 { color:#c084fc; font-size:1.05rem; margin-bottom:12px; }
   .entrega-final ol { margin-left:20px; }
@@ -64,7 +60,7 @@
 <div class="page-header">
   <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 2</div>
   <h1>🔘 El <span>Botón de la Verdad</span></h1>
-  <p>Guía paso a paso · IF con pulsador en Tinkercad · 55 minutos</p>
+  <p>Guía paso a paso · IF-ELSE con pulsador en Tinkercad · 55 minutos</p>
 </div>
 <div class="phases-bar">
   <div class="phase-pill coral">🧠 Entender · 10 min</div>
@@ -76,20 +72,19 @@
   <div class="section entender">
     <div class="section-header">
       <div class="section-icon">🧠</div>
-      <div><div class="section-title">ENTENDER — IF con entrada digital</div><div class="section-time">⏱ 10 minutos</div></div>
+      <div><div class="section-title">ENTENDER — IF-ELSE con entrada digital</div><div class="section-time">⏱ 10 minutos</div></div>
     </div>
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <p>El bloque <strong>IF</strong> en Arduino funciona igual que en Scratch: ejecuta un bloque de código solo si la condición es verdadera. Aquí la condición es leer el estado del pulsador.</p>
-        <div class="hint">📌 <code>digitalRead(pin)</code> devuelve <strong>HIGH (1)</strong> si hay tensión en el pin, y <strong>LOW (0)</strong> si no la hay.</div>
+        <p>El IF-ELSE garantiza que el programa <strong>siempre hace algo</strong>, pase lo que pase. Si la condición es verdadera ejecuta el bloque IF; si es falsa ejecuta el bloque ELSE. No hay caso sin respuesta.</p>
+        <div class="hint">📌 Con IF simple: si el botón no se pulsa, el programa no hace nada → el LED queda en el último estado. Con IF-ELSE: si no se pulsa, el ELSE apaga el LED activamente.</div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <p><strong>¿Por qué la resistencia pull-down de 10 kΩ?</strong> Sin ella, el pin 7 flota entre 0 y 1 aleatoriamente cuando el botón está abierto. La resistencia pull-down conecta el pin a GND y fuerza la lectura a LOW cuando no se pulsa, garantizando lecturas fiables.</p>
-        <div class="hint">⚡ Conexión: un extremo del pulsador a 5V, el otro al pin 7 y a GND a través de 10 kΩ.</div>
+        <p>La <strong>resistencia pull-down (10 kΩ)</strong> conecta el pin 7 a GND cuando el botón está abierto, forzando una lectura LOW limpia. Sin ella el pin flota y el ELSE recibe señales aleatorias.</p>
       </div>
     </div>
   </div>
@@ -102,29 +97,23 @@
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-body">
-        <p>Antes de montar nada, completa la tabla de diseño en tu ficha:</p>
-        <table class="design-table">
-          <thead><tr><th>Elemento</th><th>Especificación</th></tr></thead>
-          <tbody>
-            <tr><td class="field">🔘 Entrada: pulsador</td><td>Pin 7 · configurado como INPUT · pull-down 10 kΩ a GND</td></tr>
-            <tr><td class="field">💡 Salida: LED</td><td>Pin 13 · configurado como OUTPUT · resistencia 220 Ω en serie</td></tr>
-            <tr><td class="field">🔀 Condición IF</td><td>digitalRead(7) == HIGH</td></tr>
-            <tr><td class="field">✅ Acción si verdad</td><td>digitalWrite(13, HIGH) → LED encendido</td></tr>
-            <tr><td class="field">❌ Sin ELSE</td><td>Si no se pulsa, el LED no cambia de estado</td></tr>
-          </tbody>
-        </table>
-        <div class="hint">⚠️ Nota: al no tener ELSE, si el LED estaba encendido y sueltas el botón, permanece encendido. Lo resolveremos en S03 con IF-ELSE.</div>
+        <p>El circuito es el mismo que S01. Identifica cada componente en la imagen antes de montarlo:</p>
+        <img src="circuito.png" alt="Circuito: pulsador pin 7 pull-down 10 kΩ y LED pin 13 resistencia 220 Ω" class="circuit-img">
+        <p class="circuit-caption">Pulsador pin 7 · pull-down 10 kΩ · LED pin 13 · resistencia 220 Ω</p>
+        <div class="hint">
+          🔘 <strong>Pulsador:</strong> un extremo a 5 V, el otro al pin 7 y a GND a través de 10 kΩ.<br>
+          💡 <strong>LED:</strong> ánodo → resistencia 220 Ω → pin 13 · cátodo → GND.
+        </div>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <p>El circuito que deberás montar en Tinkercad. Tu profesor te mostrará la captura del circuito real.</p>
-        <img
-          src="circuito.png"
-          alt="Circuito: pulsador en pin 7 con pull-down 10 kΩ y LED en pin 13 con resistencia 220 Ω"
-          style="max-width:100%; border-radius:10px; border:1px solid rgba(76,151,255,0.3); margin:14px 0; display:block;"
-        >
+        <p>Escribe en tu ficha qué debe ocurrir en cada caso antes de tocar el código:</p>
+        <div class="hint">
+          ✅ <strong>Condición verdadera</strong> (botón pulsado, pin 7 = HIGH) → LED encendido.<br>
+          ❌ <strong>Condición falsa</strong> (botón suelto, pin 7 = LOW) → LED apagado.
+        </div>
       </div>
     </div>
   </div>
@@ -136,26 +125,13 @@
     </div>
     <div class="step">
       <div class="step-num">5</div>
-      <div class="step-body">
-        <p>Abre <strong>tinkercad.com</strong>, entra en Circuits y crea un nuevo circuito. Añade: Arduino UNO, 1 pulsador, 1 LED, 1 resistencia 220 Ω, 1 resistencia 10 kΩ.</p>
-      </div>
+      <div class="step-body"><p>Abre <strong>tinkercad.com</strong> → Circuits → nuevo circuito. Monta el circuito según la imagen del paso 3.</p></div>
     </div>
     <div class="step">
       <div class="step-num">6</div>
       <div class="step-body">
-        <p>Realiza las conexiones siguiendo el esquema:</p>
-        <div class="hint">
-          🔘 <strong>Pulsador:</strong> pin superior-izquierdo → 5V · pin inferior-izquierdo → pin 7 Arduino y también a GND a través de resistencia 10 kΩ.<br>
-          💡 <strong>LED:</strong> ánodo (+, pata larga) → resistencia 220 Ω → pin 13 Arduino · cátodo (-, pata corta) → GND.
-        </div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">7</div>
-      <div class="step-body">
-        <p>Abre el editor de código (botón <strong>Código</strong>) y escribe el siguiente programa:</p>
+        <p>Abre el editor de código y escribe el programa con IF-ELSE:</p>
         <div class="code-block">
-          <div><span class="cm">// Pines</span></div>
           <div><span class="kw">const int</span> pinBoton = <span class="num">7</span>;</div>
           <div><span class="kw">const int</span> pinLed   = <span class="num">13</span>;</div>
           <div>&nbsp;</div>
@@ -167,20 +143,22 @@
           <div><span class="kw">void</span> loop() {</div>
           <div class="i1"><span class="kw">if</span> (digitalRead(pinBoton) == <span class="kw">HIGH</span>) {</div>
           <div class="i2">digitalWrite(pinLed, <span class="kw">HIGH</span>); <span class="cm">// LED encendido</span></div>
+          <div class="i1">} <span class="kw">else</span> {</div>
+          <div class="i2">digitalWrite(pinLed, <span class="kw">LOW</span>);  <span class="cm">// LED apagado</span></div>
           <div class="i1">}</div>
           <div>}</div>
         </div>
+        <div class="hint">💡 Fíjate en la diferencia con S01: ahora el ELSE garantiza que el LED se apaga activamente cuando sueltas el botón. Antes simplemente no pasaba nada.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <p>Inicia la simulación. Comprueba los dos casos: <strong>pulsar → LED ON</strong>, <strong>soltar → LED OFF</strong>. Si alguno falla, revisa las conexiones del pulsador y la resistencia pull-down.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">8</div>
-      <div class="step-body">
-        <p>Haz clic en <strong>Iniciar simulación</strong>. Pulsa el botón → el LED debe encenderse. Suelta → el LED permanece encendido (sin ELSE por ahora). Esto es correcto.</p>
-        <div class="hint">💡 Observa que al no tener ELSE, el LED no se apaga al soltar. En S03 añadiremos esa segunda rama.</div>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">9</div>
       <div class="step-body">
         <p>Haz clic en <strong>Compartir</strong> en Tinkercad y copia el enlace público del proyecto.</p>
       </div>
