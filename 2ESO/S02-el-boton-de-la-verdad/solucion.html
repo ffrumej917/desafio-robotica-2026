@@ -20,7 +20,7 @@
   .dot{width:12px;height:12px;border-radius:50%}
   .dot.r{background:#ff5f57} .dot.y{background:#febc2e} .dot.g{background:#28c840}
   .lang{font-size:0.78rem;color:#4b5563;margin-left:auto;font-family:'Courier New',monospace}
-  pre{padding:24px;font-family:'Courier New',monospace;font-size:clamp(0.78rem,1.8vw,0.9rem);line-height:1.9;overflow-x:auto;color:#e2e8f0}
+  pre{padding:24px;font-family:'Courier New',monospace;font-size:clamp(0.78rem,1.6vw,0.9rem);line-height:1.85;overflow-x:auto;color:#e2e8f0;white-space:pre}
   .kw{color:#f472b6;font-weight:700}
   .cm{color:#4b5563;font-style:italic}
   .num{color:#fbbf24}
@@ -33,11 +33,11 @@
 <div class="card">
   <div class="top-badge">🚀 Solución ampliación</div>
   <h1>S02 — <span>El botón de la verdad</span></h1>
-  <p class="meta">2º ESO · Tinkercad · LED con parpadeo de confirmación</p>
+  <p class="meta">2º ESO · Tinkercad · Pulsado = parpadeo continuo · Suelto = apagado</p>
 
   <div class="reto-box">
     <div class="reto-label">El reto era…</div>
-    <p>Al pulsar: el LED parpadea 3 veces rápido antes de quedarse encendido. Al soltar: se apaga con un destello lento en lugar de apagarse de golpe.</p>
+    <p>Cuando el botón está pulsado, el LED debe parpadear rápidamente sin parar mientras lo mantengas. Cuando sueltes, el LED se queda apagado fijo (sin parpadeos).</p>
   </div>
 
   <div class="code-wrap">
@@ -55,25 +55,14 @@
 
 <span class="kw">void</span> loop() {
     <span class="kw">if</span> (digitalRead(pinBoton) == HIGH) {
-
-        <span class="sec">// 3 parpadeos rápidos de confirmación</span>
-        digitalWrite(pinLed, HIGH); delay(<span class="num">80</span>);
-        digitalWrite(pinLed, LOW);  delay(<span class="num">80</span>);
-        digitalWrite(pinLed, HIGH); delay(<span class="num">80</span>);
-        digitalWrite(pinLed, LOW);  delay(<span class="num">80</span>);
-        digitalWrite(pinLed, HIGH); delay(<span class="num">80</span>);
-        digitalWrite(pinLed, LOW);  delay(<span class="num">80</span>);
-
-        <span class="sec">// queda encendido</span>
+        <span class="sec">// Pulsado: parpadeo</span>
         digitalWrite(pinLed, HIGH);
-        delay(<span class="num">200</span>);
-
+        delay(<span class="num">100</span>);
+        digitalWrite(pinLed, LOW);
+        delay(<span class="num">100</span>);
     } <span class="kw">else</span> {
-
-        <span class="sec">// destello lento de apagado</span>
-        digitalWrite(pinLed, HIGH); delay(<span class="num">300</span>);
-        digitalWrite(pinLed, LOW);  delay(<span class="num">100</span>);
-
+        <span class="sec">// Suelto: apagado fijo</span>
+        digitalWrite(pinLed, LOW);
     }
 }</pre>
   </div>
