@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S03 – Control de semáforo inteligente | Desafío Robótica 2026</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0d1a; color:#f0f0f0; font-family:'Segoe UI',Arial,sans-serif; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .slide { display:none; width:100vw; height:100vh; padding:5vh 6vw; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:absolute; top:0; left:0; }
+  .slide.active { display:flex; }
+
+  /* Slide 1 */
+  .slide-1 { background:radial-gradient(ellipse at center,#0a1a2e 0%,#0d0d1a 70%); }
+  .badge { background:#4c97ff; color:#fff; font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 18px; border-radius:20px; margin-bottom:2vh; display:inline-block; }
+  .emoji-big { font-size:clamp(3rem,8vw,5rem); margin-bottom:2vh; }
+  .slide-1 h1 { font-size:clamp(2rem,5vw,3.8rem); font-weight:900; color:#fff; line-height:1.1; margin-bottom:1.5vh; }
+  .slide-1 h1 span { color:#4c97ff; }
+  .subtitle { font-size:clamp(1rem,2.5vw,1.5rem); color:#aab4c8; margin-bottom:3vh; }
+  .tag-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .tag { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:6px 16px; border-radius:12px; font-size:clamp(0.75rem,1.5vw,0.9rem); color:#c8d6f0; }
+
+  /* Slide 2 - concepto + bool */
+  .slide-2 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-2 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#4c97ff; margin-bottom:2.5vh; width:100%; }
+  .concept-grid { display:grid; grid-template-columns:1fr 1fr; gap:2vw; width:100%; max-width:980px; margin-bottom:2vh; }
+  .concept-box { border-radius:14px; padding:clamp(14px,1.8vw,22px); }
+  .concept-box.blue { background:rgba(76,151,255,0.1); border:2px solid #4c97ff; }
+  .concept-box.purple { background:rgba(168,85,247,0.1); border:2px solid #a855f7; }
+  .concept-box .cb-label { font-weight:800; font-size:clamp(0.85rem,1.7vw,1.05rem); margin-bottom:8px; }
+  .concept-box.blue .cb-label { color:#7ab8ff; }
+  .concept-box.purple .cb-label { color:#c084fc; }
+  .concept-box p { font-size:clamp(0.78rem,1.5vw,0.95rem); color:#ccd; line-height:1.6; }
+  .bool-explain { background:rgba(251,188,4,0.08); border-left:4px solid #fbbc04; border-radius:8px; padding:clamp(12px,1.5vw,18px); max-width:980px; width:100%; }
+  .bool-explain p { font-size:clamp(0.78rem,1.5vw,0.95rem); color:#f0e0a0; line-height:1.6; }
+  .bool-explain code { background:rgba(0,0,0,0.3); padding:1px 6px; border-radius:3px; color:#fff; font-family:'Courier New',monospace; }
+
+  /* Slide 3 - reto + circuito */
+  .slide-3 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-3 h2 { font-size:clamp(1.3rem,3vw,2.1rem); font-weight:800; color:#fff; margin-bottom:1.5vh; width:100%; }
+  .slide-3 h2 span { color:#4c97ff; }
+  .reto-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:clamp(12px,1.5vw,18px); max-width:920px; width:100%; margin-bottom:1.5vh; }
+  .reto-card .reto-title { font-size:clamp(0.9rem,1.7vw,1.05rem); font-weight:700; color:#ffcc00; margin-bottom:6px; }
+  .reto-card p { font-size:clamp(0.75rem,1.4vw,0.92rem); color:#ccd; line-height:1.5; }
+  .reto-card p strong { color:#fff; }
+  .circuit-wrap { max-width:760px; width:100%; }
+  .circuit-wrap img { width:100%; border-radius:10px; border:1px solid rgba(76,151,255,0.3); display:block; }
+  .circuit-caption { font-size:clamp(0.65rem,1.1vw,0.78rem); color:#667; margin-top:5px; text-align:center; }
+
+  /* Slide 4 - código + entrega */
+  .slide-4 { background:#0d0d1a; text-align:left; align-items:flex-start; padding:3vh 6vw; }
+  .slide-4 h2 { font-size:clamp(1.3rem,3vw,2.1rem); font-weight:800; color:#fff; margin-bottom:2vh; width:100%; }
+  .slide-4 h2 span { color:#4c97ff; }
+  .two-col { display:grid; grid-template-columns:1.5fr 0.5fr; gap:2vw; width:100%; max-width:1100px; }
+  .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:clamp(10px,1.3vw,16px); font-family:'Courier New',monospace; font-size:clamp(0.55rem,1vw,0.7rem); line-height:1.65; color:#e2e8f0; max-height:80vh; overflow-y:auto; }
+  .code-block .kw { color:#f472b6; font-weight:700; }
+  .code-block .cm { color:#6b7280; font-style:italic; }
+  .code-block .num { color:#fbbf24; }
+  .code-block .bool { color:#60a5fa; }
+  .code-block .i1 { margin-left:1.2em; }
+  .code-block .i2 { margin-left:2.4em; }
+  .code-block .i3 { margin-left:3.6em; }
+  .entrega-panel { display:flex; flex-direction:column; gap:1.5vh; }
+  .entrega-box { background:rgba(168,85,247,0.15); border:2px solid #a855f7; border-radius:14px; padding:clamp(14px,2vw,22px); }
+  .entrega-box .ent-title { font-size:clamp(0.8rem,1.6vw,0.95rem); font-weight:700; color:#c084fc; margin-bottom:8px; }
+  .entrega-box p { font-size:clamp(0.7rem,1.3vw,0.82rem); color:#ccd; line-height:1.6; }
+
+  .nav { position:fixed; bottom:3vh; right:3vw; display:flex; gap:10px; z-index:100; }
+  .nav button { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; width:44px; height:44px; border-radius:50%; font-size:1.1rem; cursor:pointer; transition:background 0.2s; }
+  .nav button:hover { background:rgba(255,255,255,0.22); }
+  .nav button:disabled { opacity:0.25; cursor:default; }
+  .counter { position:fixed; bottom:3vh; left:50%; transform:translateX(-50%); font-size:0.8rem; color:rgba(255,255,255,0.35); letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<div class="slide slide-1 active">
+  <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 3</div>
+  <div class="emoji-big">🚦</div>
+  <h1>Control de <span>Semáforo Inteligente</span></h1>
+  <p class="subtitle">IF-ELSE anidado con interruptor, pulsador y variable bool</p>
+  <div class="tag-row">
+    <span class="tag">⚡ Tinkercad</span>
+    <span class="tag">🔀 IF-ELSE anidado</span>
+    <span class="tag">🚦 3 LEDs</span>
+    <span class="tag">🎚 Interruptor + pulsador</span>
+    <span class="tag">📌 Variable bool</span>
+    <span class="tag">⏱ 55 min</span>
+  </div>
+</div>
+
+<!-- SLIDE 2: dos componentes nuevos + bool -->
+<div class="slide slide-2">
+  <h2>Dos componentes y una variable nueva</h2>
+  <div class="concept-grid">
+    <div class="concept-box blue">
+      <div class="cb-label">🎚 Interruptor (pin 6)</div>
+      <p>Encendido/apagado del semáforo. <strong>Mantiene</strong> su estado físico (HIGH o LOW estable). No hay que mantenerlo pulsado: lo dejas en una posición y se queda ahí.</p>
+    </div>
+    <div class="concept-box purple">
+      <div class="cb-label">🔘 Pulsador (pin 7)</div>
+      <p>Activa la secuencia de emergencia. Solo está en HIGH <strong>mientras lo aprietas</strong>. Al soltar vuelve a LOW.</p>
+    </div>
+  </div>
+  <div class="bool-explain">
+    <p>📌 <strong>Variable <code>bool</code> (booleana):</strong> guarda solo dos valores posibles, <code>true</code> o <code>false</code>. La usaremos como un post-it: "¿se ha pulsado el botón en algún momento del ciclo?". Mientras dura el delay, vamos comprobando el pulsador y, si se pulsa, escribimos <code>true</code> en la variable. Al final del ciclo miramos el post-it para decidir si activamos la emergencia.</p>
+  </div>
+</div>
+
+<!-- SLIDE 3: reto + circuito -->
+<div class="slide slide-3">
+  <h2>El reto 🎯 <span>Control de Semáforo Inteligente</span></h2>
+  <div class="reto-card">
+    <div class="reto-title">📋 Comportamiento esperado</div>
+    <p>
+      <strong>Interruptor (pin 6) en OFF:</strong> los 3 LEDs apagados.<br>
+      <strong>Interruptor en ON:</strong> ciclo verde (1 s) → amarillo (1 s) → rojo (1 s) → repite.<br>
+      <strong>Pulsador (pin 7):</strong> si lo pulsas en cualquier momento del ciclo, al terminar el rojo se activa la secuencia de emergencia: amarillo durante 2 s. Después vuelve al ciclo normal.
+    </p>
+  </div>
+  <div class="circuit-wrap">
+    <img src="circuito.png" alt="Circuito: 3 LEDs (rojo pin 11, amarillo pin 12, verde pin 13), interruptor pin 6 e interruptor pin 7 con pull-down 10 kΩ">
+    <p class="circuit-caption">3 LEDs (verde·pin 13 / amarillo·pin 12 / rojo·pin 11) · interruptor·pin 6 · pulsador·pin 7 · pull-downs 10 kΩ · resistencias 220 Ω</p>
+  </div>
+</div>
+
+<!-- SLIDE 4: código + entrega -->
+<div class="slide slide-4">
+  <h2>El <span>código</span> 💻</h2>
+  <div class="two-col">
+    <div class="code-block">
+      <div><span class="kw">void</span> setup() {</div>
+      <div class="i1">pinMode(<span class="num">13</span>, <span class="kw">OUTPUT</span>);  <span class="cm">// LED verde</span></div>
+      <div class="i1">pinMode(<span class="num">12</span>, <span class="kw">OUTPUT</span>);  <span class="cm">// LED amarillo</span></div>
+      <div class="i1">pinMode(<span class="num">11</span>, <span class="kw">OUTPUT</span>);  <span class="cm">// LED rojo</span></div>
+      <div class="i1">pinMode(<span class="num">6</span>,  <span class="kw">INPUT</span>);   <span class="cm">// interruptor</span></div>
+      <div class="i1">pinMode(<span class="num">7</span>,  <span class="kw">INPUT</span>);   <span class="cm">// pulsador</span></div>
+      <div>}</div>
+      <div>&nbsp;</div>
+      <div><span class="kw">void</span> loop() {</div>
+      <div class="i1"><span class="kw">if</span> (digitalRead(<span class="num">6</span>) == <span class="kw">HIGH</span>) {</div>
+      <div class="i2"><span class="kw">bool</span> emergencia = <span class="bool">false</span>;</div>
+      <div class="i2">&nbsp;</div>
+      <div class="i2"><span class="cm">// Verde 1 s</span></div>
+      <div class="i2">digitalWrite(<span class="num">13</span>, <span class="kw">HIGH</span>);</div>
+      <div class="i2"><span class="kw">if</span> (digitalRead(<span class="num">7</span>) == <span class="kw">HIGH</span>) emergencia = <span class="bool">true</span>;</div>
+      <div class="i2">delay(<span class="num">1000</span>);</div>
+      <div class="i2">digitalWrite(<span class="num">13</span>, <span class="kw">LOW</span>);</div>
+      <div class="i2">&nbsp;</div>
+      <div class="i2"><span class="cm">// Amarillo 1 s</span></div>
+      <div class="i2">digitalWrite(<span class="num">12</span>, <span class="kw">HIGH</span>);</div>
+      <div class="i2"><span class="kw">if</span> (digitalRead(<span class="num">7</span>) == <span class="kw">HIGH</span>) emergencia = <span class="bool">true</span>;</div>
+      <div class="i2">delay(<span class="num">1000</span>);</div>
+      <div class="i2">digitalWrite(<span class="num">12</span>, <span class="kw">LOW</span>);</div>
+      <div class="i2">&nbsp;</div>
+      <div class="i2"><span class="cm">// Rojo 1 s</span></div>
+      <div class="i2">digitalWrite(<span class="num">11</span>, <span class="kw">HIGH</span>);</div>
+      <div class="i2"><span class="kw">if</span> (digitalRead(<span class="num">7</span>) == <span class="kw">HIGH</span>) emergencia = <span class="bool">true</span>;</div>
+      <div class="i2">delay(<span class="num">1000</span>);</div>
+      <div class="i2">digitalWrite(<span class="num">11</span>, <span class="kw">LOW</span>);</div>
+      <div class="i2">&nbsp;</div>
+      <div class="i2"><span class="cm">// IF anidado</span></div>
+      <div class="i2"><span class="kw">if</span> (emergencia == <span class="bool">true</span>) {</div>
+      <div class="i3">digitalWrite(<span class="num">12</span>, <span class="kw">HIGH</span>);</div>
+      <div class="i3">delay(<span class="num">2000</span>);</div>
+      <div class="i3">digitalWrite(<span class="num">12</span>, <span class="kw">LOW</span>);</div>
+      <div class="i2">}</div>
+      <div class="i1">} <span class="kw">else</span> {</div>
+      <div class="i2">digitalWrite(<span class="num">13</span>, <span class="kw">LOW</span>);</div>
+      <div class="i2">digitalWrite(<span class="num">12</span>, <span class="kw">LOW</span>);</div>
+      <div class="i2">digitalWrite(<span class="num">11</span>, <span class="kw">LOW</span>);</div>
+      <div class="i1">}</div>
+      <div>}</div>
+    </div>
+    <div class="entrega-panel">
+      <div class="entrega-box">
+        <div class="ent-title">🟣 ¿Cómo entregar?</div>
+        <p>1. Monta el circuito en Tinkercad.<br>2. Escribe y simula el código.<br>3. Comparte el proyecto.<br>4. Pega el enlace en tu ficha.<br>5. Entrega en Classroom.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="cambiar(-1)" disabled>◀</button>
+  <button id="next" onclick="cambiar(1)">▶</button>
+</div>
+<div class="counter" id="counter">1 / 4</div>
+<script>
+  let actual = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') cambiar(1);
+    if (e.key==='ArrowLeft'||e.key==='ArrowUp') cambiar(-1);
+  });
+  function cambiar(dir) {
+    slides[actual].classList.remove('active');
+    actual = Math.max(0, Math.min(slides.length-1, actual+dir));
+    slides[actual].classList.add('active');
+    document.getElementById('prev').disabled = actual===0;
+    document.getElementById('next').disabled = actual===slides.length-1;
+    document.getElementById('counter').textContent = `${actual+1} / ${slides.length}`;
+  }
+</script>
+</body>
+</html>

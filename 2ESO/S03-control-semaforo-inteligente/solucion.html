@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solución ampliación — S03 Control de semáforo inteligente</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d0d1a;color:#f0f0f0;font-family:'Segoe UI',Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+  .card{max-width:780px;width:100%}
+  .top-badge{display:inline-block;background:#4c97ff;color:#fff;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px}
+  h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;color:#fff;margin-bottom:6px}
+  h1 span{color:#4c97ff}
+  .meta{font-size:0.85rem;color:#667;margin-bottom:32px}
+  .reto-box{background:rgba(79,70,229,0.1);border:1.5px solid rgba(79,70,229,0.4);border-radius:12px;padding:20px 24px;margin-bottom:28px}
+  .reto-box .reto-label{font-size:0.78rem;font-weight:700;color:#818cf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+  .reto-box p{font-size:0.95rem;color:#c7d2fe;line-height:1.7}
+  .code-wrap{background:#0a0a14;border:1px solid #1e293b;border-radius:12px;overflow:hidden}
+  .code-header{background:#111827;padding:10px 18px;display:flex;align-items:center;gap:10px}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .dot.r{background:#ff5f57} .dot.y{background:#febc2e} .dot.g{background:#28c840}
+  .lang{font-size:0.78rem;color:#4b5563;margin-left:auto;font-family:'Courier New',monospace}
+  pre{padding:24px;font-family:'Courier New',monospace;font-size:clamp(0.72rem,1.4vw,0.82rem);line-height:1.75;overflow-x:auto;color:#e2e8f0;white-space:pre}
+  .kw{color:#f472b6;font-weight:700}
+  .cm{color:#4b5563;font-style:italic}
+  .num{color:#fbbf24}
+  .bool{color:#60a5fa}
+  .sec{color:#34d399;font-weight:700}
+  .back{display:inline-flex;align-items:center;gap:6px;margin-top:28px;font-size:0.85rem;color:#4b5563;text-decoration:none}
+  .back:hover{color:#818cf8}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top-badge">🚀 Solución ampliación</div>
+  <h1>S03 — <span>Control de semáforo inteligente</span></h1>
+  <p class="meta">2º ESO · Tinkercad · Emergencia con parpadeo + amarillo fijo</p>
+
+  <div class="reto-box">
+    <div class="reto-label">El reto era…</div>
+    <p>Cuando se detecte emergencia: amarillo parpadeando rápido (0,25 s ON + 0,25 s OFF) durante 4 segundos exactos (8 parpadeos completos), seguido de amarillo fijo durante 4 segundos más. Después vuelve al ciclo normal.</p>
+  </div>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="lang">Arduino C++</span>
+    </div>
+    <pre><span class="kw">void</span> setup() {
+    pinMode(<span class="num">13</span>, OUTPUT);  <span class="cm">// LED verde</span>
+    pinMode(<span class="num">12</span>, OUTPUT);  <span class="cm">// LED amarillo</span>
+    pinMode(<span class="num">11</span>, OUTPUT);  <span class="cm">// LED rojo</span>
+    pinMode(<span class="num">6</span>,  INPUT);   <span class="cm">// interruptor</span>
+    pinMode(<span class="num">7</span>,  INPUT);   <span class="cm">// pulsador</span>
+}
+
+<span class="kw">void</span> loop() {
+    <span class="kw">if</span> (digitalRead(<span class="num">6</span>) == HIGH) {
+        <span class="kw">bool</span> emergencia = <span class="bool">false</span>;
+
+        <span class="cm">// Verde 1 s</span>
+        digitalWrite(<span class="num">13</span>, HIGH);
+        <span class="kw">if</span> (digitalRead(<span class="num">7</span>) == HIGH) emergencia = <span class="bool">true</span>;
+        delay(<span class="num">1000</span>);
+        digitalWrite(<span class="num">13</span>, LOW);
+
+        <span class="cm">// Amarillo 1 s</span>
+        digitalWrite(<span class="num">12</span>, HIGH);
+        <span class="kw">if</span> (digitalRead(<span class="num">7</span>) == HIGH) emergencia = <span class="bool">true</span>;
+        delay(<span class="num">1000</span>);
+        digitalWrite(<span class="num">12</span>, LOW);
+
+        <span class="cm">// Rojo 1 s</span>
+        digitalWrite(<span class="num">11</span>, HIGH);
+        <span class="kw">if</span> (digitalRead(<span class="num">7</span>) == HIGH) emergencia = <span class="bool">true</span>;
+        delay(<span class="num">1000</span>);
+        digitalWrite(<span class="num">11</span>, LOW);
+
+        <span class="kw">if</span> (emergencia == <span class="bool">true</span>) {
+            <span class="sec">// 8 parpadeos rapidos = 4 s exactos</span>
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, HIGH); delay(<span class="num">250</span>);
+            digitalWrite(<span class="num">12</span>, LOW);  delay(<span class="num">250</span>);
+
+            <span class="sec">// Amarillo fijo 4 s</span>
+            digitalWrite(<span class="num">12</span>, HIGH);
+            delay(<span class="num">4000</span>);
+            digitalWrite(<span class="num">12</span>, LOW);
+        }
+
+    } <span class="kw">else</span> {
+        digitalWrite(<span class="num">13</span>, LOW);
+        digitalWrite(<span class="num">12</span>, LOW);
+        digitalWrite(<span class="num">11</span>, LOW);
+    }
+}</pre>
+  </div>
+
+  <a href="presentacion.html" class="back">← Volver a la presentación</a>
+</div>
+</body>
+</html>

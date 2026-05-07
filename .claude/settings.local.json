@@ -7,7 +7,10 @@
       "Read(//c/Users/user/OneDrive/Escritorio/parche-s01-2eso/**)",
       "Read(//c/Users/user/OneDrive/Escritorio/**)",
       "Bash(cp -r parche-s01-2eso/2ESO/S01-mision-led desafio-robotica-2026/2ESO/)",
-      "Bash(cp parche-s01-2eso/index.html desafio-robotica-2026/index.html)"
+      "Bash(cp parche-s01-2eso/index.html desafio-robotica-2026/index.html)",
+      "Bash(curl -kLo /dev/null -s -w '%{http_code}\\\\n' https://ffrumej917.github.io/desafio-robotica-2026/__TRACKED_VAR__)",
+      "Read(//c/Users/user/Downloads/**)",
+      "Bash(unzip -o s03-2eso-control-semaforo_3.zip -d s03-2eso-extract/)"
     ]
   }
 }

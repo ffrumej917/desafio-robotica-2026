@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrucciones – S03 Control de semáforo inteligente | 2º ESO</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f0f1e; color:#e8eaf0; font-family:'Segoe UI',Arial,sans-serif; min-height:100vh; padding:40px 20px 60px; }
+  .page-header { max-width:860px; margin:0 auto 40px; text-align:center; }
+  .page-header .badge { display:inline-block; background:#4c97ff; color:#fff; font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:20px; margin-bottom:14px; }
+  .page-header h1 { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; color:#fff; margin-bottom:8px; }
+  .page-header h1 span { color:#4c97ff; }
+  .page-header p { font-size:clamp(0.9rem,2vw,1.05rem); color:#8899bb; }
+  .phases-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:860px; margin:0 auto 40px; }
+  .phase-pill { display:flex; align-items:center; gap:7px; padding:7px 18px; border-radius:20px; font-size:0.82rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+  .phase-pill.coral { background:rgba(255,107,107,0.18); border:1.5px solid #ff6b6b; color:#ff9090; }
+  .phase-pill.amber { background:rgba(251,188,4,0.13); border:1.5px solid #fbbc04; color:#fbcc44; }
+  .phase-pill.green { background:rgba(52,211,153,0.13); border:1.5px solid #34d399; color:#5de8b0; }
+  .container { max-width:860px; margin:0 auto; }
+  .section { border-radius:16px; padding:28px 30px; margin-bottom:24px; }
+  .section.entender { background:rgba(255,107,107,0.08); border:1.5px solid rgba(255,107,107,0.35); }
+  .section.diseniar { background:rgba(251,188,4,0.07); border:1.5px solid rgba(251,188,4,0.3); }
+  .section.programar { background:rgba(52,211,153,0.07); border:1.5px solid rgba(52,211,153,0.3); }
+  .section-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .section-icon { font-size:1.6rem; width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .entender .section-icon { background:rgba(255,107,107,0.2); }
+  .diseniar .section-icon { background:rgba(251,188,4,0.15); }
+  .programar .section-icon { background:rgba(52,211,153,0.15); }
+  .section-title { font-size:1.15rem; font-weight:800; }
+  .entender .section-title { color:#ff8080; }
+  .diseniar .section-title { color:#fbcc44; }
+  .programar .section-title { color:#5de8b0; }
+  .section-time { font-size:0.78rem; color:#667; margin-top:2px; }
+  .step { display:flex; gap:16px; margin-bottom:20px; align-items:flex-start; }
+  .step-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; flex-shrink:0; margin-top:2px; }
+  .entender .step-num { background:rgba(255,107,107,0.3); color:#ff8080; border:1.5px solid #ff6b6b; }
+  .diseniar .step-num { background:rgba(251,188,4,0.2); color:#fbcc44; border:1.5px solid #fbbc04; }
+  .programar .step-num { background:rgba(52,211,153,0.2); color:#5de8b0; border:1.5px solid #34d399; }
+  .step-body { flex:1; }
+  .step-body p { font-size:0.95rem; line-height:1.7; color:#ccd; }
+  .step-body p strong { color:#fff; }
+  .step-body code { background:rgba(0,0,0,0.3); padding:1px 6px; border-radius:3px; color:#fff; font-family:'Courier New',monospace; font-size:0.88em; }
+  .hint { margin-top:8px; background:rgba(255,255,255,0.05); border-left:3px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 14px; font-size:0.85rem; color:#99aabb; line-height:1.6; }
+  .circuit-img { width:100%; border-radius:10px; border:1px solid rgba(76,151,255,0.3); display:block; margin:14px 0; }
+  .circuit-caption { font-size:0.78rem; color:#667; text-align:center; margin-bottom:8px; }
+  .pinout-table { width:100%; border-collapse:collapse; margin-top:12px; font-size:0.88rem; }
+  .pinout-table th { background:rgba(76,151,255,0.15); color:#7ab8ff; padding:9px 14px; text-align:left; font-weight:700; }
+  .pinout-table td { padding:9px 14px; color:#ccd; border-bottom:1px solid rgba(255,255,255,0.07); }
+  .pinout-table .field { color:#fff; font-weight:600; }
+  .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:18px 22px; font-family:'Courier New',monospace; font-size:0.83rem; line-height:1.85; color:#e2e8f0; margin:12px 0; overflow-x:auto; white-space:pre; }
+  .code-block .kw { color:#f472b6; font-weight:700; }
+  .code-block .cm { color:#6b7280; font-style:italic; }
+  .code-block .num { color:#fbbf24; }
+  .code-block .bool { color:#60a5fa; }
+  .entrega-final { background:rgba(168,85,247,0.12); border:2px solid #a855f7; border-radius:16px; padding:24px 28px; margin-top:10px; max-width:860px; margin-left:auto; margin-right:auto; }
+  .entrega-final h3 { color:#c084fc; font-size:1.05rem; margin-bottom:12px; }
+  .entrega-final ol { margin-left:20px; }
+  .entrega-final li { color:#ccd; font-size:0.92rem; line-height:1.8; }
+  .entrega-final li strong { color:#fff; }
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 3</div>
+  <h1>🚦 Control de <span>Semáforo Inteligente</span></h1>
+  <p>Guía paso a paso · IF-ELSE anidado con bool · 55 minutos</p>
+</div>
+<div class="phases-bar">
+  <div class="phase-pill coral">🧠 Entender · 10 min</div>
+  <div class="phase-pill amber">✏️ Diseñar · 10 min</div>
+  <div class="phase-pill green">💻 Programar · 30 min</div>
+</div>
+<div class="container">
+
+  <div class="section entender">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <div><div class="section-title">ENTENDER — IF anidado y variable bool</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <p>Hoy hay tres conceptos nuevos. Léelos despacio antes de seguir:</p>
+        <div class="hint">
+          🎚 <strong>Interruptor</strong>: como el de la luz de tu casa. Cuando lo cambias de posición, queda fijo en HIGH o en LOW. No hay que mantenerlo pulsado.<br>
+          🔘 <strong>Pulsador</strong>: como el timbre. Solo está en HIGH <em>mientras lo aprietas</em>. Al soltar vuelve a LOW.<br>
+          📌 <strong>Variable <code>bool</code></strong>: una variable que solo guarda dos valores: <code>true</code> (verdadero) o <code>false</code> (falso).
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <p>El programa tiene <strong>dos decisiones encadenadas</strong> (IF-ELSE anidado):</p>
+        <div class="hint">
+          🔵 <strong>Decisión 1 (exterior):</strong> ¿está el interruptor en ON?<br>
+          → Si NO: todos los LEDs apagados.<br>
+          → Si SÍ: ejecuta el ciclo del semáforo, vigila el pulsador y comprueba la decisión 2.<br>
+          🟣 <strong>Decisión 2 (interior):</strong> ¿se ha pulsado el botón en algún momento durante el ciclo?<br>
+          → Si NO: continúa con el ciclo normal.<br>
+          → Si SÍ: activa la secuencia de emergencia (amarillo 2 s).
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <p>⚠️ <strong>El truco del bool:</strong> mientras el Arduino está esperando con <code>delay()</code>, no puede leer el pulsador. Si el alumno pulsa el botón mientras el verde está encendido, ese instante se pierde a menos que lo "guardemos".</p>
+        <p style="margin-top:8px;">La solución es leer el pulsador <strong>antes de cada delay</strong> y guardar el resultado en una variable booleana llamada <code>emergencia</code>. Si en algún instante del ciclo se detecta que el pulsador está en HIGH, escribimos <code>true</code> en la variable. Al final del ciclo, comprobamos si está a <code>true</code> y entonces activamos la emergencia.</p>
+        <div class="hint">📌 Es como un post-it: "¿alguien ha pulsado durante el ciclo?". Si sí, lo apuntamos. Al final del ciclo miramos el post-it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section diseniar">
+    <div class="section-header">
+      <div class="section-icon">✏️</div>
+      <div><div class="section-title">DISEÑAR — Planifica el circuito y la lógica</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <p>Estudia el circuito antes de montarlo. Identifica cada componente y a qué pin va conectado:</p>
+        <img src="circuito.png" alt="Circuito: 3 LEDs, interruptor y pulsador" class="circuit-img">
+        <p class="circuit-caption">Circuito en Tinkercad — 3 LEDs (verde·pin 13 / amarillo·pin 12 / rojo·pin 11) · interruptor·pin 6 · pulsador·pin 7</p>
+        <table class="pinout-table">
+          <tr><th>Componente</th><th>Pin</th><th>Resistencia</th></tr>
+          <tr><td class="field">🟢 LED verde</td><td>13</td><td>220 Ω en serie</td></tr>
+          <tr><td class="field">🟡 LED amarillo</td><td>12</td><td>220 Ω en serie</td></tr>
+          <tr><td class="field">🔴 LED rojo</td><td>11</td><td>220 Ω en serie</td></tr>
+          <tr><td class="field">🎚 Interruptor</td><td>6</td><td>pull-down 10 kΩ</td></tr>
+          <tr><td class="field">🔘 Pulsador</td><td>7</td><td>pull-down 10 kΩ</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <p>En tu ficha, escribe el pseudocódigo del programa en español. Esto te ayudará a tener clara la estructura antes de tocar Arduino.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section programar">
+    <div class="section-header">
+      <div class="section-icon">💻</div>
+      <div><div class="section-title">PROGRAMAR — Monta y codifica en Tinkercad</div><div class="section-time">⏱ 30 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <p>Abre <strong>tinkercad.com</strong> → Circuits → nuevo proyecto. Monta el circuito siguiendo la imagen del paso 4. <strong>Importante:</strong> el primer botón es un <em>slide switch</em> (interruptor deslizante), no un pulsador. Búscalo en el panel de componentes.</p>
+        <div class="hint">⚠️ No te saltes ninguna resistencia: los 220 Ω en cada LED y los 10 kΩ pull-down en interruptor y pulsador son imprescindibles.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <p>Comprueba el circuito antes de programar: 5 V y GND distribuidos por los carriles de la breadboard. Cada componente correctamente conectado.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <p>Escribe el siguiente programa en el editor de código de Tinkercad:</p>
+        <div class="code-block"><span class="kw">void</span> setup() {
+    pinMode(<span class="num">13</span>, <span class="kw">OUTPUT</span>);  <span class="cm">// LED verde</span>
+    pinMode(<span class="num">12</span>, <span class="kw">OUTPUT</span>);  <span class="cm">// LED amarillo</span>
+    pinMode(<span class="num">11</span>, <span class="kw">OUTPUT</span>);  <span class="cm">// LED rojo</span>
+    pinMode(<span class="num">6</span>,  <span class="kw">INPUT</span>);   <span class="cm">// interruptor (ON/OFF)</span>
+    pinMode(<span class="num">7</span>,  <span class="kw">INPUT</span>);   <span class="cm">// pulsador (emergencia)</span>
+}
+
+<span class="kw">void</span> loop() {
+    <span class="kw">if</span> (digitalRead(<span class="num">6</span>) == <span class="kw">HIGH</span>) {
+        <span class="kw">bool</span> emergencia = <span class="bool">false</span>;
+
+        <span class="cm">// Verde 1 s</span>
+        digitalWrite(<span class="num">13</span>, <span class="kw">HIGH</span>);
+        <span class="kw">if</span> (digitalRead(<span class="num">7</span>) == <span class="kw">HIGH</span>) emergencia = <span class="bool">true</span>;
+        delay(<span class="num">1000</span>);
+        digitalWrite(<span class="num">13</span>, <span class="kw">LOW</span>);
+
+        <span class="cm">// Amarillo 1 s</span>
+        digitalWrite(<span class="num">12</span>, <span class="kw">HIGH</span>);
+        <span class="kw">if</span> (digitalRead(<span class="num">7</span>) == <span class="kw">HIGH</span>) emergencia = <span class="bool">true</span>;
+        delay(<span class="num">1000</span>);
+        digitalWrite(<span class="num">12</span>, <span class="kw">LOW</span>);
+
+        <span class="cm">// Rojo 1 s</span>
+        digitalWrite(<span class="num">11</span>, <span class="kw">HIGH</span>);
+        <span class="kw">if</span> (digitalRead(<span class="num">7</span>) == <span class="kw">HIGH</span>) emergencia = <span class="bool">true</span>;
+        delay(<span class="num">1000</span>);
+        digitalWrite(<span class="num">11</span>, <span class="kw">LOW</span>);
+
+        <span class="cm">// IF anidado: ¿se pulsó en algún momento?</span>
+        <span class="kw">if</span> (emergencia == <span class="bool">true</span>) {
+            digitalWrite(<span class="num">12</span>, <span class="kw">HIGH</span>);
+            delay(<span class="num">2000</span>);
+            digitalWrite(<span class="num">12</span>, <span class="kw">LOW</span>);
+        }
+    } <span class="kw">else</span> {
+        digitalWrite(<span class="num">13</span>, <span class="kw">LOW</span>);
+        digitalWrite(<span class="num">12</span>, <span class="kw">LOW</span>);
+        digitalWrite(<span class="num">11</span>, <span class="kw">LOW</span>);
+    }
+}</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <p>Inicia la simulación. Comprueba los tres comportamientos:</p>
+        <div class="hint">
+          ✅ <strong>Interruptor en OFF:</strong> los 3 LEDs apagados.<br>
+          ✅ <strong>Interruptor en ON:</strong> ciclo verde → amarillo → rojo → verde → ... cada 1 s.<br>
+          ✅ <strong>Interruptor en ON + pulsar el botón en cualquier momento del ciclo:</strong> tras el rojo se enciende el amarillo durante 2 s (modo emergencia) y vuelve al ciclo.
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">10</div>
+      <div class="step-body">
+        <p>Comparte el proyecto en Tinkercad y copia el enlace público.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="entrega-final">
+    <h3>🟣 ENTREGA FINAL</h3>
+    <ol>
+      <li>Copia el <strong>enlace público</strong> de tu circuito en Tinkercad.</li>
+      <li>Pégalo en el <strong>recuadro de entrega</strong> de tu ficha.</li>
+      <li>Rellena el pseudocódigo en la sección Diseñar de la ficha.</li>
+      <li>Sube la ficha en <strong>Google Classroom</strong>.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>
