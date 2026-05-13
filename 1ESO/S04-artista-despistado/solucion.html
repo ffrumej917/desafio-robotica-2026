@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S04 1º ESO — 🔑 Solución ampliación: rosa de polígonos</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0e1a; color: #e0e6f0; line-height: 1.6; padding: 2rem; min-height: 100vh; }
+  .container { max-width: 900px; margin: 0 auto; background: #131829; padding: 3rem; border-radius: 1rem; box-shadow: 0 4px 30px rgba(0,229,255,0.1); border: 1px solid #1f2940; }
+  .badge { display: inline-block; background: #00e5ff; color: #0a0e1a; padding: 0.4rem 1.2rem; border-radius: 999px; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .badge-prof { background: #7c4dff; color: #fff; margin-left: 0.5rem; }
+  h1 { font-size: 2.2rem; color: #00e5ff; margin-bottom: 0.5rem; }
+  .subtitulo { color: #a0a8bf; font-size: 1.1rem; margin-bottom: 2rem; }
+  h2 { color: #7c4dff; margin: 2.5rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #1f2940; font-size: 1.5rem; }
+  h3 { color: #69f0ae; margin: 1.5rem 0 0.8rem 0; font-size: 1.2rem; }
+  p { margin-bottom: 1rem; }
+  ul, ol { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.5rem; }
+  code { background: #1f2940; padding: 0.15rem 0.5rem; border-radius: 0.3rem; color: #ffab19; font-family: 'Consolas', monospace; font-size: 0.95rem; }
+  .codigo-bloques { background: #0a0e1a; padding: 1.5rem; border-radius: 0.75rem; margin: 1rem 0; border: 1px solid #1f2940; }
+  .bloque { display: flex; align-items: center; padding: 0.55rem 1rem; border-radius: 0.4rem; color: #fff; font-family: 'Consolas', monospace; font-size: 0.95rem; margin-bottom: 0.3rem; width: fit-content; font-weight: 600; }
+  .bloque.evt { background: #ffbf00; color: #1a202c; }
+  .bloque.mov { background: #4c97ff; }
+  .bloque.lap { background: #0fbd8c; }
+  .bloque.ctrl { background: #ffab19; }
+  .bloque.indent-1 { margin-left: 1.5rem; }
+  .bloque.indent-2 { margin-left: 3rem; }
+  .bloque.indent-3 { margin-left: 4.5rem; }
+  .bloque .input-num { background: #fff; color: #1a202c; padding: 0.1rem 0.5rem; border-radius: 0.3rem; margin: 0 0.3rem; font-weight: 700; }
+  .nota-prof { background: #1a1633; border-left: 4px solid #7c4dff; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .nota-prof strong { color: #b39dff; }
+  .razonamiento { background: #0f1f1a; border-left: 4px solid #69f0ae; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .razonamiento strong { color: #69f0ae; }
+  .destacado { color: #00e5ff; font-weight: 700; }
+  .destacado-morado { color: #b39dff; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: #0a0e1a; border-radius: 0.5rem; overflow: hidden; }
+  th, td { padding: 0.7rem 1rem; text-align: left; border-bottom: 1px solid #1f2940; }
+  th { background: #1f2940; color: #00e5ff; }
+  td code { background: transparent; padding: 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="badge">S04 · 1º ESO</div>
+  <span class="badge badge-prof">🔑 SOLUCIÓN PROFESOR</span>
+
+  <h1 style="margin-top: 1rem;">🌹 La rosa de polígonos</h1>
+  <p class="subtitulo">Solución de la ampliación: dibujar una flor formada por cuadrados girados.</p>
+
+  <h2>🧠 Idea de la solución</h2>
+
+  <p>La rosa de polígonos se construye con la idea de <strong>repetir el cuadrado entero varias veces</strong>, girando un poco entre uno y otro. Esto se hace metiendo un <code>repetir</code> dentro de otro <code>repetir</code>.</p>
+
+  <div class="razonamiento">
+    <strong>🎯 La pregunta clave:</strong> ¿cuántos cuadrados giro y cuántos grados giro entre cada uno?
+    <br><br>
+    Como una vuelta entera son <strong>360°</strong>, si quiero hacer <span class="destacado">12 cuadrados</span> repartidos por igual, entre cada uno tengo que girar <code>360 ÷ 12 = 30 grados</code>. Y si quisiera 8 cuadrados, giraría 45 grados entre cada uno. La idea es que <em>el total de giros sume 360</em>.
+  </div>
+
+  <h2>💻 Código completo</h2>
+
+  <div class="codigo-bloques">
+    <div class="bloque evt">🚩 al hacer clic en bandera verde</div>
+    <div class="bloque lap indent-1">🖋 borrar todo</div>
+    <div class="bloque mov indent-1">ir a x:<span class="input-num">0</span> y:<span class="input-num">0</span></div>
+    <div class="bloque mov indent-1">apuntar en dirección <span class="input-num">90</span></div>
+    <div class="bloque lap indent-1">🖋 bajar lápiz</div>
+    <div class="bloque ctrl indent-1">repetir <span class="input-num">12</span> veces</div>
+    <div class="bloque ctrl indent-2">repetir <span class="input-num">4</span> veces</div>
+    <div class="bloque mov indent-3">mover <span class="input-num">80</span> pasos</div>
+    <div class="bloque mov indent-3">girar ↻ <span class="input-num">90</span> grados</div>
+    <div class="bloque mov indent-2">girar ↻ <span class="input-num">30</span> grados</div>
+    <div class="bloque lap indent-1">🖋 subir lápiz</div>
+  </div>
+
+  <h2>🔍 Cómo se lee el código</h2>
+
+  <ul>
+    <li>El <span class="destacado">repetir interior (de 4 veces)</span> es exactamente el cuadrado del reto base, pero con lados de 80 pasos en vez de 100 para que la rosa quepa en el escenario.</li>
+    <li>El <span class="destacado-morado">repetir exterior (de 12 veces)</span> hace que ese cuadrado entero se dibuje 12 veces.</li>
+    <li>Después de cada cuadrado, el sprite <code>gira 30 grados</code> antes de volver a empezar el siguiente. Por eso cada cuadrado sale girado respecto al anterior.</li>
+    <li>12 × 30 = 360, así que al acabar el último cuadrado el sprite ha dado la vuelta completa. La rosa está cerrada.</li>
+  </ul>
+
+  <h2>🧮 Variantes válidas que pueden traer los alumnos</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Repetir exterior</th>
+        <th>Giro entre cuadrados</th>
+        <th>Aspecto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>6 veces</td><td>60°</td><td>Rosa con menos pétalos, más "abierta"</td></tr>
+      <tr><td>8 veces</td><td>45°</td><td>Rosa de 8 cuadrados, muy típica</td></tr>
+      <tr><td>12 veces</td><td>30°</td><td>Rosa densa (la solución mostrada)</td></tr>
+      <tr><td>18 veces</td><td>20°</td><td>Rosa muy tupida, casi un círculo de bordes</td></tr>
+    </tbody>
+  </table>
+
+  <p>Cualquier combinación donde <code>nº de cuadrados × grados = 360</code> es válida. Si un alumno trae otros valores y le sale una rosa cerrada, perfecto.</p>
+
+  <h2>⚠️ Errores típicos del alumnado</h2>
+
+  <ul>
+    <li><strong>Olvidan <code>apuntar en dirección 90</code> al inicio:</strong> el sprite empieza mirando en una dirección rara (porque el repetir anterior lo dejó así) y la rosa sale descentrada. Solución: añadir <code>apuntar en dirección 90</code> antes del primer <code>bajar lápiz</code>.</li>
+    <li><strong>El giro entre cuadrados no divide bien 360:</strong> por ejemplo, ponen 10 cuadrados y un giro de 35°. La rosa no cierra y se monta sobre sí misma de forma rara. Hay que llevarles a la idea de "los giros deben sumar 360".</li>
+    <li><strong>Meten el "girar 30 grados" dentro del repetir interior</strong>, no entre los dos. Entonces cada lado del cuadrado gira de más y no sale ninguna figura reconocible. Hay que mirar bien en qué "boca" está cada cosa.</li>
+    <li><strong>No borran al inicio:</strong> al pulsar la bandera varias veces se va acumulando rastro encima. Asegurarse de que <code>borrar todo</code> está al principio.</li>
+  </ul>
+
+  <h2>🎓 Estructuras usadas en esta solución</h2>
+
+  <div class="nota-prof">
+    <strong>📌 Verificación pedagógica:</strong> esta solución usa <strong>solo</strong> bloques ya vistos en sesiones anteriores (S01-S03) más el bloque protagonista de esta sesión (<code>repetir N veces</code>). En concreto:
+    <ul style="margin-top: 0.5rem;">
+      <li>Eventos: <code>al hacer clic en bandera verde</code> (S01)</li>
+      <li>Movimiento: <code>ir a x y</code>, <code>apuntar en dirección</code>, <code>mover N pasos</code>, <code>girar ↻ N grados</code> (S01)</li>
+      <li>Lápiz: <code>borrar todo</code>, <code>bajar lápiz</code>, <code>subir lápiz</code> (introducidos en esta sesión, S04, junto con el for)</li>
+      <li>Control: <code>repetir N veces</code> (concepto principal S04)</li>
+    </ul>
+    <strong>No</strong> se han adelantado funciones, variables, condicionales ni ningún otro concepto pendiente.
+  </div>
+
+  <p style="margin-top: 2rem; text-align: center; color: #4a5680; font-size: 0.9rem; padding-top: 2rem; border-top: 1px solid #1f2940;">
+    DESAFÍO ROBÓTICA 2026 · IES Punta del Verde · 🔑 Material exclusivo del profesor
+  </p>
+
+</div>
+
+</body>
+</html>

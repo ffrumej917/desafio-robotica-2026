@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S04 1º ESO — El artista despistado</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: #0a0e1a; font-family: 'Segoe UI', system-ui, sans-serif; color: #e0e6f0; }
+  .slide { position: absolute; inset: 0; display: none; padding: 4vh 6vw; flex-direction: column; justify-content: center; }
+  .slide.active { display: flex; }
+  h1 { font-size: clamp(2.5rem, 6vw, 5rem); color: #00e5ff; margin-bottom: 2vh; line-height: 1.1; }
+  h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); color: #7c4dff; margin-bottom: 3vh; }
+  p, li { font-size: clamp(1.1rem, 2vw, 1.8rem); line-height: 1.6; margin-bottom: 1.5vh; }
+  ul { margin-left: 2.5rem; }
+  .emoji { font-size: clamp(3rem, 8vw, 6rem); }
+  .badge { display: inline-block; background: #00e5ff; color: #0a0e1a; padding: 0.5rem 1.5rem; border-radius: 999px; font-weight: 700; font-size: clamp(0.9rem, 1.5vw, 1.3rem); margin-bottom: 2vh; letter-spacing: 0.05em; }
+  .grid-comparativa { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; margin-top: 2vh; }
+  .col { background: #131829; border-radius: 1rem; padding: 2vh 2vw; border: 2px solid #1f2940; }
+  .col.malo { border-color: #ff5252; }
+  .col.bueno { border-color: #69f0ae; }
+  .col-titulo { font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: 700; margin-bottom: 1.5vh; }
+  .col.malo .col-titulo { color: #ff5252; }
+  .col.bueno .col-titulo { color: #69f0ae; }
+  .bloque { display: block; padding: 0.6rem 1rem; border-radius: 0.5rem; font-family: 'Consolas', monospace; font-size: clamp(0.75rem, 1.2vw, 1rem); margin-bottom: 0.4rem; color: #fff; }
+  .bloque.mov { background: #4c97ff; }
+  .bloque.giro { background: #4c97ff; }
+  .bloque.ctrl { background: #ffab19; }
+  .bloque.evt { background: #ffbf00; color: #0a0e1a; }
+  .nav { position: fixed; bottom: 2vh; right: 2vw; display: flex; gap: 1rem; align-items: center; }
+  .nav button { background: #1f2940; color: #00e5ff; border: none; padding: 0.8rem 1.2rem; border-radius: 0.5rem; font-size: 1.5rem; cursor: pointer; transition: background 0.2s; }
+  .nav button:hover { background: #2a3650; }
+  .counter { color: #7c4dff; font-weight: 700; font-size: 1.2rem; }
+  .pista-f11 { position: fixed; top: 2vh; right: 2vw; color: #4a5680; font-size: 0.9rem; }
+  .destacado { color: #00e5ff; font-weight: 700; }
+  .destacado-morado { color: #7c4dff; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="slide active">
+  <div class="badge">S04 · 1º ESO · DESAFÍO ROBÓTICA</div>
+  <h1>El artista despistado <span class="emoji">🎨</span></h1>
+  <p style="font-size: clamp(1.3rem, 2.5vw, 2.2rem); color: #a0a8bf; margin-top: 2vh;">
+    Hay un lápiz que quiere dibujar figuras geométricas… pero se cansa de poner el mismo bloque una y otra vez.
+  </p>
+  <p style="margin-top: 3vh; color: #69f0ae; font-size: clamp(1.2rem, 2.2vw, 2rem);">
+    Vamos a enseñarle a <span class="destacado">repetir</span> sin agotarse.
+  </p>
+</div>
+
+<div class="slide">
+  <h2>¿Qué hace un cuadrado, en bloques? 🤔</h2>
+  <p>Para dibujar un cuadrado, el lápiz tiene que repetir <span class="destacado">cuatro veces</span> lo mismo: avanzar y girar 90 grados.</p>
+  <div class="grid-comparativa">
+    <div class="col malo">
+      <div class="col-titulo">😩 Sin repetir</div>
+      <span class="bloque mov">mover 100 pasos</span>
+      <span class="bloque giro">girar 90 grados</span>
+      <span class="bloque mov">mover 100 pasos</span>
+      <span class="bloque giro">girar 90 grados</span>
+      <span class="bloque mov">mover 100 pasos</span>
+      <span class="bloque giro">girar 90 grados</span>
+      <span class="bloque mov">mover 100 pasos</span>
+      <span class="bloque giro">girar 90 grados</span>
+    </div>
+    <div class="col bueno">
+      <div class="col-titulo">😎 Con repetir</div>
+      <span class="bloque ctrl">repetir 4 veces</span>
+      <span class="bloque mov" style="margin-left: 1.5rem;">mover 100 pasos</span>
+      <span class="bloque giro" style="margin-left: 1.5rem;">girar 90 grados</span>
+      <p style="margin-top: 2vh; color: #69f0ae; font-size: clamp(0.95rem, 1.6vw, 1.3rem);">
+        ¡Hacen <span class="destacado">exactamente</span> lo mismo!
+      </p>
+      <p style="color: #69f0ae; font-size: clamp(0.95rem, 1.6vw, 1.3rem);">
+        Pero uno es elegante… y el otro agotador.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h2>El bloque mágico de hoy ✨</h2>
+  <div style="display: flex; gap: 4vw; align-items: center;">
+    <div style="flex: 1;">
+      <span class="bloque ctrl" style="font-size: clamp(1.2rem, 2.5vw, 2rem); padding: 1.5rem 2rem;">repetir <strong style="background:#fff; color:#0a0e1a; padding: 0.2rem 0.6rem; border-radius: 0.3rem;">N</strong> veces</span>
+      <p style="margin-top: 3vh;">
+        Pones <span class="destacado-morado">N</span> = cuántas veces quieres que se repita lo de dentro.
+      </p>
+      <p>
+        Los bloques que metes <span class="destacado">dentro</span> del repetir son los que se ejecutarán esa cantidad de veces.
+      </p>
+    </div>
+    <div style="flex: 1; text-align: center;">
+      <p style="color: #ffab19; font-size: clamp(1.1rem, 2vw, 1.6rem); margin-bottom: 2vh;">📍 Está en la categoría:</p>
+      <div style="background: #ffab19; color: #0a0e1a; padding: 1rem 2rem; border-radius: 0.8rem; font-weight: 700; font-size: clamp(1.3rem, 2.5vw, 2rem); display: inline-block;">
+        Control
+      </div>
+      <p style="margin-top: 3vh; color: #a0a8bf;">
+        🟡 (la naranja)
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h2>El reto de hoy 🎯</h2>
+  <ul>
+    <li>🖌️ Tu sprite usa el <span class="destacado">Lápiz</span> (extensión).</li>
+    <li>⬜ Dibuja <span class="destacado">un cuadrado</span> usando <span class="bloque ctrl" style="display: inline-block; padding: 0.3rem 0.8rem;">repetir 4 veces</span>.</li>
+    <li>📝 Antes de programar, rellena la <span class="destacado-morado">ficha de diseño</span> con tu pareja.</li>
+    <li>🚀 Si terminas: <span style="color: #5c6bc0; font-weight: 700;">ampliación → la rosa de polígonos</span>.</li>
+  </ul>
+  <p style="margin-top: 4vh; color: #69f0ae; font-size: clamp(1.2rem, 2.2vw, 1.8rem);">
+    Recuerda: <span class="destacado">Entender → Diseñar → Programar</span>. En ese orden. 🧠✏️💻
+  </p>
+</div>
+
+<div class="nav">
+  <span class="counter" id="counter">1 / 4</span>
+  <button onclick="prev()">←</button>
+  <button onclick="next()">→</button>
+</div>
+
+<div class="pista-f11">Pulsa F11 para pantalla completa</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+</script>
+
+</body>
+</html>
