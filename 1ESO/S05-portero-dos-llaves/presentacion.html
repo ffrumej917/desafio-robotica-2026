@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S05 1º ESO — El portero con dos llaves</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: #0a0e1a; font-family: 'Segoe UI', system-ui, sans-serif; color: #e0e6f0; }
+  .slide { position: absolute; inset: 0; display: none; padding: 4vh 6vw; flex-direction: column; justify-content: center; }
+  .slide.active { display: flex; }
+  h1 { font-size: clamp(2.5rem, 6vw, 5rem); color: #ff6b6b; margin-bottom: 2vh; line-height: 1.1; }
+  h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); color: #ff6b6b; margin-bottom: 3vh; }
+  p, li { font-size: clamp(1.1rem, 2vw, 1.8rem); line-height: 1.6; margin-bottom: 1.5vh; }
+  ul { margin-left: 2.5rem; }
+  .emoji { font-size: clamp(3rem, 8vw, 6rem); }
+  .badge { display: inline-block; background: #ff6b6b; color: #0a0e1a; padding: 0.5rem 1.5rem; border-radius: 999px; font-weight: 700; font-size: clamp(0.9rem, 1.5vw, 1.3rem); margin-bottom: 2vh; letter-spacing: 0.05em; }
+  .tabla-verdad { width: 90%; max-width: 700px; margin: 2vh auto; border-collapse: collapse; font-size: clamp(1rem, 1.8vw, 1.5rem); }
+  .tabla-verdad th, .tabla-verdad td { border: 2px solid #1f2940; padding: 1vh 2vw; text-align: center; }
+  .tabla-verdad th { background: #ff6b6b; color: #0a0e1a; font-weight: 700; }
+  .tabla-verdad td.si { color: #69f0ae; font-weight: 700; }
+  .tabla-verdad td.no { color: #ff5252; font-weight: 700; }
+  .tabla-verdad td.abrir { color: #69f0ae; font-weight: 700; }
+  .tabla-verdad td.cerrar { color: #ff5252; font-weight: 700; }
+  .bloque { display: inline-flex; align-items: center; padding: 0.4rem 0.9rem; border-radius: 0.4rem; color: #fff; font-family: 'Consolas', monospace; font-size: clamp(0.85rem, 1.4vw, 1.2rem); margin: 0.2rem; font-weight: 600; }
+  .bloque.op { background: #59c059; }
+  .bloque.sens { background: #4cbfe6; }
+  .nav { position: fixed; bottom: 2vh; right: 2vw; display: flex; gap: 1rem; align-items: center; }
+  .nav button { background: #1f2940; color: #ff6b6b; border: none; padding: 0.8rem 1.2rem; border-radius: 0.5rem; font-size: 1.5rem; cursor: pointer; transition: background 0.2s; }
+  .nav button:hover { background: #2a3650; }
+  .counter { color: #ff6b6b; font-weight: 700; font-size: 1.2rem; }
+  .pista-f11 { position: fixed; top: 2vh; right: 2vw; color: #4a5680; font-size: 0.9rem; }
+  .destacado { color: #ff6b6b; font-weight: 700; }
+  .destacado-verde { color: #69f0ae; font-weight: 700; }
+  .destacado-rojo { color: #ff5252; font-weight: 700; }
+  .destacado-morado { color: #b39dff; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="slide active">
+  <div class="badge">S05 · 1º ESO · DESAFÍO ROBÓTICA</div>
+  <h1>El portero con dos llaves <span class="emoji">🔑🔑</span></h1>
+  <p style="font-size: clamp(1.3rem, 2.5vw, 2.2rem); color: #a0a8bf; margin-top: 2vh;">
+    Hay un portero muy estricto que solo deja pasar si llevas <span class="destacado">DOS llaves</span> a la vez.
+  </p>
+  <p style="margin-top: 3vh; color: #ff6b6b; font-size: clamp(1.2rem, 2.2vw, 2rem);">
+    Hoy aprendemos a programar condiciones <span class="destacado">combinadas</span>.
+  </p>
+</div>
+
+<div class="slide">
+  <h2>El operador Y 🔑🔑</h2>
+  <p>Para programar al portero, necesitamos un bloque nuevo: el operador <span class="destacado">Y</span> (en inglés <em>AND</em>).</p>
+  <p style="margin-top: 2vh;">Combina <span class="destacado">dos condiciones</span> y solo es VERDADERO si <span class="destacado-verde">las dos</span> son verdaderas a la vez:</p>
+
+  <table class="tabla-verdad">
+    <thead>
+      <tr><th>Tecla A</th><th>Tecla B</th><th>Tecla A <strong>Y</strong> Tecla B</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="si">Pulsada</td><td class="si">Pulsada</td><td class="abrir">✅ VERDADERO</td></tr>
+      <tr><td class="si">Pulsada</td><td class="no">Suelta</td><td class="cerrar">❌ FALSO</td></tr>
+      <tr><td class="no">Suelta</td><td class="si">Pulsada</td><td class="cerrar">❌ FALSO</td></tr>
+      <tr><td class="no">Suelta</td><td class="no">Suelta</td><td class="cerrar">❌ FALSO</td></tr>
+    </tbody>
+  </table>
+
+  <p style="margin-top: 2vh; color: #a0a8bf; text-align: center;">
+    Solo una de las cuatro combinaciones es verdadera. <span class="destacado">Las dos a la vez.</span>
+  </p>
+</div>
+
+<div class="slide">
+  <h2>¿Dónde está el bloque Y? 📍</h2>
+  <div style="display: flex; gap: 4vw; align-items: center; margin-top: 2vh;">
+    <div style="flex: 1;">
+      <p style="margin-bottom: 1vh;">📚 Está en la categoría:</p>
+      <div style="background: #59c059; color: #fff; padding: 1rem 1.5rem; border-radius: 0.8rem; font-weight: 700; font-size: clamp(1.2rem, 2.2vw, 1.8rem); display: inline-block;">
+        Operadores
+      </div>
+      <p style="margin-top: 1.5vh; color: #a0a8bf;">(verde oscuro)</p>
+
+      <p style="margin-top: 4vh;">Y dentro de cada hueco va un bloque:</p>
+      <div style="margin-top: 1vh;">
+        <span class="bloque sens">&lt;tecla a pulsada&gt;</span>
+      </div>
+      <p style="margin-top: 1.5vh; color: #a0a8bf;">de la categoría <span style="color: #4cbfe6; font-weight: 700;">Sensores</span> (azul).</p>
+    </div>
+    <div style="flex: 1; text-align: center;">
+      <p style="color: #a0a8bf; font-size: clamp(1rem, 1.6vw, 1.4rem); margin-bottom: 2vh;">Así se ve el bloque:</p>
+      <div style="background: #131829; padding: 2rem; border-radius: 1rem; border: 2px solid #1f2940;">
+        <span class="bloque sens">&lt;tecla a pulsada&gt;</span>
+        <span class="bloque op">Y</span>
+        <span class="bloque sens">&lt;tecla b pulsada&gt;</span>
+      </div>
+      <p style="margin-top: 2vh; color: #69f0ae; font-size: clamp(1rem, 1.6vw, 1.3rem);">
+        Hexágono con dos huecos. <br>Encajas las dos condiciones.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h2>El reto de hoy 🎯</h2>
+  <ul>
+    <li>🚪 <span class="destacado">Reto base:</span> el portero dice "¡Pasa!" solo si pulsas <span class="destacado-verde">A Y B</span>. Si no, dice "Acceso denegado".</li>
+    <li>📝 Antes de programar, completa la <span class="destacado-morado">tabla de diseño</span> de la ficha con tu pareja.</li>
+    <li>🚀 Si terminas: <span style="color: #5c6bc0; font-weight: 700;">ampliación → la puerta de emergencia con el operador O</span>.</li>
+  </ul>
+  <p style="margin-top: 3vh; color: #a0a8bf; font-size: clamp(1rem, 1.6vw, 1.4rem);">
+    Y existe un tercer operador, el <strong>NO</strong>, que invierte cualquier condición. Lo usarás más adelante. 🔄
+  </p>
+  <p style="margin-top: 3vh; color: #ff6b6b; font-size: clamp(1.2rem, 2.2vw, 1.8rem);">
+    Recuerda: <span class="destacado">Entender → Diseñar → Programar</span>. 🧠✏️💻
+  </p>
+</div>
+
+<div class="nav">
+  <span class="counter" id="counter">1 / 4</span>
+  <button onclick="prev()">←</button>
+  <button onclick="next()">→</button>
+</div>
+
+<div class="pista-f11">Pulsa F11 para pantalla completa</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+</script>
+
+</body>
+</html>

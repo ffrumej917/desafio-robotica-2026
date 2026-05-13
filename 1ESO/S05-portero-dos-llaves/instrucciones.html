@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S05 1º ESO — Instrucciones: El portero con dos llaves</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f7fb; color: #1a202c; line-height: 1.6; padding: 2rem; }
+  .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 0 0 2rem 0; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; }
+  .banner { background: #1A1A2E; color: #fff; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .banner-left .label { color: #AABBDD; font-size: 0.9rem; }
+  .banner-left .title { color: #fff; font-weight: 700; font-size: 1.8rem; margin: 0.2rem 0; }
+  .banner-left .sub { color: #8899BB; font-size: 0.9rem; }
+  .banner-right { background: #FF6B6B; padding: 1rem 1.4rem; border-radius: 0.6rem; text-align: center; color: #fff; min-width: 180px; }
+  .banner-right .icon { font-size: 2.5rem; line-height: 1; }
+  .banner-right .name { font-weight: 700; font-size: 1.1rem; margin-top: 0.3rem; }
+  .banner-right .platform { font-size: 0.85rem; color: #FFD0D0; }
+  .content { padding: 2rem; }
+
+  .seccion-banda { color: #fff; padding: 0.7rem 1.2rem; border-radius: 0.4rem; font-weight: 700; font-size: 1.2rem; margin: 1.8rem 0 1rem 0; }
+  .banda-entender   { background: #FF6B6B; }
+  .banda-disenar    { background: #FBBC04; }
+  .banda-programar  { background: #34D399; }
+  .banda-ampliacion { background: #4F46E5; }
+
+  h3 { color: #1a202c; margin: 1.2rem 0 0.6rem 0; font-size: 1.1rem; }
+  p { margin-bottom: 0.8rem; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.4rem; }
+  code { background: #f1f5f9; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-family: 'Consolas', monospace; font-size: 0.9rem; color: #475569; }
+
+  .codigo-bloques { background: #1e293b; padding: 1.2rem; border-radius: 0.6rem; margin: 1rem 0; }
+  .bloque { display: flex; align-items: center; padding: 0.5rem 0.9rem; border-radius: 0.35rem; color: #fff; font-family: 'Consolas', monospace; font-size: 0.92rem; margin-bottom: 0.3rem; width: fit-content; font-weight: 600; }
+  .bloque-inline { display: inline-flex; vertical-align: middle; padding: 0.2rem 0.6rem; border-radius: 0.3rem; color: #fff; font-family: 'Consolas', monospace; font-size: 0.88rem; font-weight: 600; margin: 0 0.15rem; }
+  .bloque.evt, .bloque-inline.evt { background: #ffbf00; color: #1a202c; }
+  .bloque.ctrl, .bloque-inline.ctrl { background: #ffab19; }
+  .bloque.op, .bloque-inline.op { background: #59c059; }
+  .bloque.sens, .bloque-inline.sens { background: #4cbfe6; }
+  .bloque.look, .bloque-inline.look { background: #9966ff; }
+  .bloque.indent-1 { margin-left: 1.5rem; }
+  .bloque .input { background: #fff; color: #1a202c; padding: 0.1rem 0.5rem; border-radius: 0.3rem; margin: 0 0.3rem; font-weight: 700; }
+  .hueco { background: #fef9c3; color: #713f12; padding: 0.1rem 0.6rem; border-radius: 0.3rem; margin: 0 0.2rem; font-weight: 700; border: 1px dashed #ca8a04; }
+
+  .tip { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; }
+  .tip strong { color: #92400e; }
+  .aviso { background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; }
+  .aviso strong { color: #991b1b; }
+  .check { background: #ecfdf5; border-left: 4px solid #10b981; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; }
+  .check strong { color: #065f46; }
+  .entrega-morado { background: #F9F0FF; border-left: 4px solid #7B2FBE; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; color: #7B2FBE; font-weight: 700; }
+  .entrega-azul { background: #EEF2FF; border-left: 4px solid #3730A3; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; color: #3730A3; font-weight: 700; }
+  .footer { text-align: center; color: #718096; font-size: 0.85rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="banner">
+    <div class="banner-left">
+      <div class="label">🤖 DESAFÍO ROBÓTICA 2026</div>
+      <div class="title">S05 — El portero con dos llaves</div>
+      <div class="sub">1º ESO · IES Punta del Verde · CyR</div>
+    </div>
+    <div class="banner-right">
+      <div class="icon">🔑</div>
+      <div class="name">Operadores Y / O</div>
+      <div class="platform">Scratch · 1º ESO</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="seccion-banda banda-entender">🧠  ENTENDER — ¿De qué va el reto?</div>
+
+    <p>Hoy tienes que programar a un <strong>portero muy estricto</strong>. Este portero solo deja pasar si llevas <strong>dos llaves a la vez</strong>: la tecla A y la tecla B. Si solo pulsas una de ellas, no te deja entrar.</p>
+
+    <p>Para hacer esto, necesitamos un bloque nuevo de Scratch: el operador <strong>Y</strong> (que en inglés se llama <em>AND</em>). Está en la categoría <strong>Operadores</strong> (la verde oscuro). Sirve para combinar <strong>dos condiciones</strong> y solo es verdadero si <strong>las dos</strong> son verdaderas.</p>
+
+    <p>Antes de empezar a programar, abre tu <strong>ficha del reto</strong> y rellena las preguntas de la sección ENTENDER con tu pareja.</p>
+
+    <div class="seccion-banda banda-disenar">✏️  DISEÑAR — Planifica antes de tocar el teclado</div>
+
+    <p>En la ficha tenéis una <strong>tabla de verdad</strong> con todas las combinaciones posibles de las dos teclas (las dos pulsadas, una sí y otra no, ninguna...). Vuestra tarea es decidir qué dirá el portero en cada caso. La primera fila la tenéis hecha como ejemplo: cuando A y B están pulsadas, dice "¡Pasa!".</p>
+
+    <ul>
+      <li>Solo <strong>una combinación</strong> debe abrir la puerta.</li>
+      <li>En las otras <strong>tres</strong>, el portero rechaza la entrada con algún mensaje tipo "Acceso denegado".</li>
+    </ul>
+
+    <div class="tip">
+      <strong>🔍 Pista:</strong> piensa en el portero de verdad. Si te pide DOS llaves y solo llevas una, ¿te deja pasar? No. ¿Y si no llevas ninguna? Tampoco. Solo con las dos.
+    </div>
+
+    <div class="aviso">
+      <strong>⛔ Importante:</strong> hasta que no tengáis rellenas las secciones ENTENDER y DISEÑAR de la ficha, <strong>no abrís Scratch</strong>. Primero pensar, después teclear.
+    </div>
+
+    <div class="seccion-banda banda-programar">💻  PROGRAMAR — ¡Al ordenador!</div>
+
+    <h3>1. Abrir Scratch y preparar el escenario</h3>
+    <ol>
+      <li>Abre <strong><a href="https://scratch.mit.edu" target="_blank">scratch.mit.edu</a></strong>, inicia sesión y pulsa <strong>Crear</strong>.</li>
+      <li>Guarda el proyecto con el nombre <strong>S05 - Portero dos llaves - PAREJA</strong>.</li>
+      <li>Borra el sprite del gato y elige uno que parezca un portero (Gobo, un guardia, o cualquiera que os guste).</li>
+    </ol>
+
+    <h3>2. Conocer el bloque Y</h3>
+
+    <p>El bloque que vamos a usar está en la categoría <strong>Operadores</strong> (verde oscuro). Tiene esta forma:</p>
+
+    <div class="codigo-bloques" style="text-align: center;">
+      <span class="bloque-inline sens">&lt;tecla a pulsada&gt;</span><span class="bloque-inline op">Y</span><span class="bloque-inline sens">&lt;tecla b pulsada&gt;</span>
+    </div>
+
+    <p>Es un hexágono con <strong>dos huecos</strong>. En cada hueco encajas un bloque <code>&lt;tecla pulsada&gt;</code> de la categoría <strong>Sensores</strong> (azul claro). El resultado completo se mete dentro del rombo de un bloque <code>si</code>, igual que ya hacíais en S02 y S03.</p>
+
+    <h3>3. Construir el código del reto base</h3>
+
+    <p>Monta este código en tu sprite portero, rellenando los huecos según vuestro diseño:</p>
+
+    <div class="codigo-bloques">
+      <div class="bloque evt">🚩 al hacer clic en bandera verde</div>
+      <div class="bloque ctrl indent-1">por siempre</div>
+      <div class="bloque ctrl" style="margin-left: 3rem;">si  <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla <span class="hueco">___</span> pulsada&gt;</span> <span class="bloque-inline op" style="margin: 0 0.3rem;">Y</span> <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla <span class="hueco">___</span> pulsada&gt;</span></div>
+      <div class="bloque look" style="margin-left: 4.5rem;">decir <span class="hueco">___________</span> durante 2 segundos</div>
+      <div class="bloque ctrl" style="margin-left: 3rem;">si no</div>
+      <div class="bloque look" style="margin-left: 4.5rem;">decir <span class="hueco">___________</span> durante 2 segundos</div>
+    </div>
+
+    <p>Las categorías de bloques que necesitas:</p>
+    <ul>
+      <li><strong>Eventos</strong> (amarillo): <code>al hacer clic en bandera verde</code>.</li>
+      <li><strong>Control</strong> (naranja): <code>por siempre</code>, <code>si</code> con la opción <code>si no</code>.</li>
+      <li><strong>Operadores</strong> (verde oscuro): <code>Y</code>.</li>
+      <li><strong>Sensores</strong> (azul claro): <code>&lt;tecla pulsada&gt;</code>. Lo pones dos veces, una para cada tecla.</li>
+      <li><strong>Apariencia</strong> (morado): <code>decir... durante N segundos</code>.</li>
+    </ul>
+
+    <h3>4. Probarlo</h3>
+    <ol>
+      <li>Pulsa la <strong>bandera verde</strong>.</li>
+      <li>Sin pulsar nada → el portero dice "Acceso denegado".</li>
+      <li>Pulsa solo la A → sigue diciendo "Acceso denegado".</li>
+      <li>Pulsa solo la B → igual, "Acceso denegado".</li>
+      <li>Pulsa <strong>A y B a la vez</strong> → el portero dice "¡Pasa!".</li>
+    </ol>
+
+    <div class="check">
+      <strong>🎯 ¿Cómo sé que está bien?</strong> Solo con las dos teclas pulsadas a la vez se abre la puerta. Si suelto una, vuelve a "Acceso denegado".
+    </div>
+
+    <h3>5. Entregar el reto base</h3>
+    <ol>
+      <li>Guarda el proyecto.</li>
+      <li>Pulsa <strong>Compartir</strong> arriba a la derecha para obtener el enlace público.</li>
+      <li>Pega el enlace en el <strong>recuadro morado</strong> de tu ficha.</li>
+      <li>Sube la ficha a Google Classroom.</li>
+    </ol>
+
+    <div class="entrega-morado">🟣 Enlace de entrega del reto base → recuadro morado de la ficha.</div>
+
+    <div class="seccion-banda banda-ampliacion">🚀  AMPLIACIÓN — La puerta de emergencia</div>
+
+    <p>Si tu portero ya funciona, lánzate a la ampliación: <strong>la puerta de emergencia</strong>.</p>
+
+    <p>Esta puerta es más permisiva. No exige dos cosas a la vez como la principal: <strong>se abre si pulsas espacio O flecha arriba</strong> (cualquiera de las dos vale, e incluso las dos a la vez). Como una salida de emergencia real: vale cualquier botón.</p>
+
+    <p>Para esto usamos el operador <strong>O</strong> (en inglés <em>OR</em>), también en la categoría Operadores. Funciona igual que el Y pero con la lógica al revés: con que UNA de las dos sea verdadera, ya es verdadero.</p>
+
+    <div class="codigo-bloques">
+      <div class="bloque ctrl">si  <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla <span class="hueco">___</span> pulsada&gt;</span> <span class="bloque-inline op" style="margin: 0 0.3rem;">O</span> <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla <span class="hueco">___</span> pulsada&gt;</span></div>
+      <div class="bloque look" style="margin-left: 1.5rem;">decir <span class="hueco">_______________________</span> durante 2 segundos</div>
+    </div>
+
+    <div class="tip">
+      <strong>💡 ¿Dónde meto este nuevo si?</strong> Dentro del mismo <code>por siempre</code>, debajo del primer bloque <code>si - si no</code> de las dos llaves. Así el portero comprueba en cada vuelta: primero las dos llaves, después la puerta de emergencia.
+    </div>
+
+    <p><strong>Diferencia clave entre Y y O:</strong></p>
+    <ul>
+      <li><strong>Y</strong> (AND): exige las dos condiciones a la vez. Como las dos llaves del portero.</li>
+      <li><strong>O</strong> (OR): basta con una de las dos (o las dos). Como una salida de emergencia: cualquier botón vale.</li>
+    </ul>
+
+    <div class="entrega-azul">🔵 Enlace de entrega de la ampliación → recuadro azul de la ficha.</div>
+
+    <div class="footer">
+      DESAFÍO ROBÓTICA 2026 · IES Punta del Verde
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

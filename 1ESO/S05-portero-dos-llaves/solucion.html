@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S05 1º ESO — 🔑 Solución: El portero con dos llaves</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0e1a; color: #e0e6f0; line-height: 1.6; padding: 2rem; min-height: 100vh; }
+  .container { max-width: 900px; margin: 0 auto; background: #131829; padding: 3rem; border-radius: 1rem; box-shadow: 0 4px 30px rgba(255,107,107,0.1); border: 1px solid #1f2940; }
+  .badge { display: inline-block; background: #ff6b6b; color: #0a0e1a; padding: 0.4rem 1.2rem; border-radius: 999px; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .badge-prof { background: #7c4dff; color: #fff; margin-left: 0.5rem; }
+  h1 { font-size: 2.2rem; color: #ff6b6b; margin-bottom: 0.5rem; }
+  .subtitulo { color: #a0a8bf; font-size: 1.1rem; margin-bottom: 2rem; }
+  h2 { color: #7c4dff; margin: 2.5rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #1f2940; font-size: 1.5rem; }
+  h3 { color: #69f0ae; margin: 1.5rem 0 0.8rem 0; font-size: 1.2rem; }
+  p { margin-bottom: 1rem; }
+  ul, ol { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.5rem; }
+  code { background: #1f2940; padding: 0.15rem 0.5rem; border-radius: 0.3rem; color: #fbbf24; font-family: 'Consolas', monospace; font-size: 0.95rem; }
+
+  .codigo-bloques { background: #0a0e1a; padding: 1.5rem; border-radius: 0.75rem; margin: 1rem 0; border: 1px solid #1f2940; }
+  .bloque { display: flex; align-items: center; padding: 0.5rem 0.9rem; border-radius: 0.35rem; color: #fff; font-family: 'Consolas', monospace; font-size: 0.92rem; margin-bottom: 0.3rem; width: fit-content; font-weight: 600; }
+  .bloque-inline { display: inline-flex; padding: 0.2rem 0.6rem; border-radius: 0.3rem; color: #fff; font-family: 'Consolas', monospace; font-size: 0.88rem; font-weight: 600; margin: 0 0.15rem; }
+  .bloque.evt, .bloque-inline.evt { background: #ffbf00; color: #1a202c; }
+  .bloque.ctrl, .bloque-inline.ctrl { background: #ffab19; }
+  .bloque.op, .bloque-inline.op { background: #59c059; }
+  .bloque.sens, .bloque-inline.sens { background: #4cbfe6; }
+  .bloque.look, .bloque-inline.look { background: #9966ff; }
+  .bloque.indent-1 { margin-left: 1.5rem; }
+
+  .nota-prof { background: #1a1633; border-left: 4px solid #7c4dff; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .nota-prof strong { color: #b39dff; }
+  .razonamiento { background: #0f1f1a; border-left: 4px solid #69f0ae; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .razonamiento strong { color: #69f0ae; }
+  .destacado { color: #ff6b6b; font-weight: 700; }
+  .destacado-morado { color: #b39dff; font-weight: 700; }
+
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: #0a0e1a; border-radius: 0.5rem; overflow: hidden; }
+  th, td { padding: 0.7rem 1rem; text-align: left; border-bottom: 1px solid #1f2940; }
+  th { background: #1f2940; color: #ff6b6b; }
+  td code { background: transparent; padding: 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="badge">S05 · 1º ESO</div>
+  <span class="badge badge-prof">🔑 SOLUCIÓN PROFESOR</span>
+
+  <h1 style="margin-top: 1rem;">🔑🔑 El portero con dos llaves</h1>
+  <p class="subtitulo">Solución completa: reto base (operador Y) + ampliación (operador O).</p>
+
+  <h2>🧠 Idea de la solución</h2>
+
+  <p>La sesión introduce los operadores lógicos <strong>Y</strong> y <strong>O</strong>. Conceptualmente, el alumno aprende a <em>combinar</em> condiciones simples para crear condiciones más complejas. Hasta aquí solo había visto condiciones aisladas (<code>si &lt;tecla espacio pulsada&gt;</code> en S02-S03); ahora aprende a juntar varias.</p>
+
+  <div class="razonamiento">
+    <strong>🎯 Estructura clave:</strong> el reto base usa <code>si - si no</code> (S03) para responder con dos mensajes distintos. La ampliación añade un <strong>segundo</strong> <code>si</code> dentro del mismo <code>por siempre</code>, no anidado. Esto enseña que se pueden encadenar varias comprobaciones independientes en cada vuelta del bucle infinito.
+  </div>
+
+  <h2>💻 Reto base — Código completo</h2>
+
+  <div class="codigo-bloques">
+    <div class="bloque evt">🚩 al hacer clic en bandera verde</div>
+    <div class="bloque ctrl indent-1">por siempre</div>
+    <div class="bloque ctrl" style="margin-left: 3rem;">si <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla a pulsada&gt;</span> <span class="bloque-inline op" style="margin: 0 0.3rem;">Y</span> <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla b pulsada&gt;</span></div>
+    <div class="bloque look" style="margin-left: 4.5rem;">decir ¡Pasa! durante 2 segundos</div>
+    <div class="bloque ctrl" style="margin-left: 3rem;">si no</div>
+    <div class="bloque look" style="margin-left: 4.5rem;">decir Acceso denegado durante 2 segundos</div>
+  </div>
+
+  <p>El <code>por siempre</code> hace que la comprobación se repita en cada instante. Cuando las dos teclas están pulsadas a la vez, el bloque <code>Y</code> devuelve verdadero y se ejecuta el "¡Pasa!". En cualquier otra combinación (00, 01, 10) el resultado es falso y se ejecuta "Acceso denegado".</p>
+
+  <h2>💻 Ampliación — Código completo</h2>
+
+  <p>El bloque del reto base se mantiene tal cual. Se añade un <strong>segundo <code>si</code></strong> dentro del mismo <code>por siempre</code>, justo debajo:</p>
+
+  <div class="codigo-bloques">
+    <div class="bloque evt">🚩 al hacer clic en bandera verde</div>
+    <div class="bloque ctrl indent-1">por siempre</div>
+    <div class="bloque ctrl" style="margin-left: 3rem;">si <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla a pulsada&gt;</span> <span class="bloque-inline op" style="margin: 0 0.3rem;">Y</span> <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla b pulsada&gt;</span></div>
+    <div class="bloque look" style="margin-left: 4.5rem;">decir ¡Pasa! durante 2 segundos</div>
+    <div class="bloque ctrl" style="margin-left: 3rem;">si no</div>
+    <div class="bloque look" style="margin-left: 4.5rem;">decir Acceso denegado durante 2 segundos</div>
+    <div class="bloque ctrl" style="margin-left: 3rem;">si <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla espacio pulsada&gt;</span> <span class="bloque-inline op" style="margin: 0 0.3rem;">O</span> <span class="bloque-inline sens" style="margin: 0 0.3rem;">&lt;tecla flecha arriba pulsada&gt;</span></div>
+    <div class="bloque look" style="margin-left: 4.5rem;">decir ¡Salida de emergencia! durante 2 segundos</div>
+  </div>
+
+  <h2>🔍 Cómo se lee el código</h2>
+
+  <ul>
+    <li>En cada vuelta del <code>por siempre</code>, Scratch comprueba <strong>las dos condiciones</strong> (la del Y y la del O), una detrás de otra.</li>
+    <li>El <code>si - si no</code> de las dos llaves siempre genera UNA respuesta (¡Pasa! o Acceso denegado), porque la condición o se cumple o no se cumple.</li>
+    <li>El segundo <code>si</code> de la emergencia solo genera respuesta cuando se cumple. Si no, no dice nada (no tiene "si no").</li>
+    <li>Cuando se cumplen las dos cosas a la vez (por ejemplo, A+B+espacio pulsados), el portero dirá los dos mensajes en sucesión, no a la vez. Los <code>decir durante 2 segundos</code> son bloqueantes y se ejecutan uno tras otro.</li>
+  </ul>
+
+  <h2>⚠️ Errores típicos del alumnado</h2>
+
+  <ul>
+    <li><strong>Buscar el bloque Y/O en la categoría equivocada:</strong> al ser bloques que aceptan condiciones, los alumnos suelen buscar en Sensores o Control. Recordarles que está en <strong>Operadores</strong> (verde oscuro), abajo del todo.</li>
+    <li><strong>Confundir Y y O:</strong> es el error más típico. Cuando programan la ampliación, usan Y por inercia y entonces la puerta de emergencia exige las dos teclas a la vez, perdiendo el sentido. Hacerles probar y descubrir el fallo es muy didáctico.</li>
+    <li><strong>Olvidar el <code>por siempre</code>:</strong> sin el bucle infinito, el programa hace UNA sola comprobación al pulsar la bandera y se queda parado. El portero "no reacciona" a las teclas. Insistir en que las condiciones que dependen del usuario van casi siempre dentro de un <code>por siempre</code>.</li>
+    <li><strong>Meter el segundo si DENTRO del si-si no del reto base:</strong> algunos lo anidan dentro de "si no". Funciona parcialmente (solo comprueba emergencia cuando no se cumplen las dos llaves), pero conceptualmente es más complicado y menos limpio. Mejor enseñarles a poner los dos <code>si</code> al mismo nivel.</li>
+    <li><strong>Pulsar las teclas mientras Scratch tiene foco en otra cosa:</strong> a veces el escenario "pierde el foco" del teclado. Hay que recordar que Scratch escucha el teclado cuando el escenario está activo (cuando se ha hecho clic en él).</li>
+  </ul>
+
+  <h2>🎓 Variantes válidas que pueden traer los alumnos</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variante</th>
+        <th>Validez</th>
+        <th>Comentario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Otras teclas para el reto base (X+Y, 1+2…)</td>
+        <td style="color: #69f0ae;">✅ Válido</td>
+        <td>Mientras el código use el operador Y, perfecto.</td>
+      </tr>
+      <tr>
+        <td>Otros mensajes ("Bienvenido", "Vete", "Pasa pa'lante"…)</td>
+        <td style="color: #69f0ae;">✅ Válido</td>
+        <td>Solo controlar que el mensaje sea apropiado.</td>
+      </tr>
+      <tr>
+        <td>Cambiar disfraz en vez de "decir"</td>
+        <td style="color: #69f0ae;">✅ Válido y creativo</td>
+        <td>Si el alumno avanzado se busca un sprite con varios disfraces (sonriente / serio) y los alterna, perfecto.</td>
+      </tr>
+      <tr>
+        <td>Usar el operador NO para combinar con Y/O</td>
+        <td style="color: #fbbf24;">⚠️ Avanzado</td>
+        <td>Algunos curiosos descubrirán el NO. Aceptable mientras la lógica sea coherente.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>🎓 Estructuras usadas en esta solución</h2>
+
+  <div class="nota-prof">
+    <strong>📌 Verificación pedagógica:</strong> esta solución usa <strong>solo</strong> bloques ya vistos hasta esta sesión:
+    <ul style="margin-top: 0.5rem;">
+      <li>Eventos: <code>al hacer clic en bandera verde</code> (S01)</li>
+      <li>Control: <code>por siempre</code> (S01), <code>si - si no</code> (S03)</li>
+      <li>Sensores: <code>&lt;tecla pulsada&gt;</code> (S02-S03)</li>
+      <li>Apariencia: <code>decir durante N segundos</code> (S01)</li>
+      <li>Operadores: <code>Y</code> y <code>O</code> (conceptos principales de S05)</li>
+    </ul>
+    <strong>No</strong> se han adelantado: <code>repetir N veces</code> (que sí se vio en S04 pero no se necesita aquí), variables, listas, ni clones. El operador <code>NO</code> se menciona pero no se usa en el reto.
+  </div>
+
+  <p style="margin-top: 2rem; text-align: center; color: #4a5680; font-size: 0.9rem; padding-top: 2rem; border-top: 1px solid #1f2940;">
+    DESAFÍO ROBÓTICA 2026 · IES Punta del Verde · 🔑 Material exclusivo del profesor
+  </p>
+
+</div>
+
+</body>
+</html>
