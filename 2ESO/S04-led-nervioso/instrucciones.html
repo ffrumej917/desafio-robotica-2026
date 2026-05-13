@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S04 2º ESO — Instrucciones: El LED nervioso</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f7fb; color: #1a202c; line-height: 1.6; padding: 2rem; }
+  .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 0 0 2rem 0; border-radius: 1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; }
+  .banner { background: #1A1A2E; color: #fff; padding: 1.5rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+  .banner-left .label { color: #AABBDD; font-size: 0.9rem; }
+  .banner-left .title { color: #fff; font-weight: 700; font-size: 1.8rem; margin: 0.2rem 0; }
+  .banner-left .sub { color: #8899BB; font-size: 0.9rem; }
+  .banner-right { background: #34D399; padding: 1rem 1.4rem; border-radius: 0.6rem; text-align: center; color: #fff; min-width: 180px; }
+  .banner-right .icon { font-size: 2.5rem; line-height: 1; }
+  .banner-right .name { font-weight: 700; font-size: 1.1rem; margin-top: 0.3rem; }
+  .banner-right .platform { font-size: 0.85rem; color: #C8F0DE; }
+  .content { padding: 2rem; }
+
+  .seccion-banda { color: #fff; padding: 0.7rem 1.2rem; border-radius: 0.4rem; font-weight: 700; font-size: 1.2rem; margin: 1.8rem 0 1rem 0; }
+  .banda-entender   { background: #FF6B6B; }
+  .banda-disenar    { background: #FBBC04; }
+  .banda-programar  { background: #34D399; }
+  .banda-ampliacion { background: #4F46E5; }
+
+  h3 { color: #1a202c; margin: 1.2rem 0 0.6rem 0; font-size: 1.1rem; }
+  p { margin-bottom: 0.8rem; }
+  ol, ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.4rem; }
+  code { background: #f1f5f9; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-family: 'Consolas', monospace; font-size: 0.9rem; color: #475569; }
+
+  .codigo { background: #1e293b; padding: 1.2rem; border-radius: 0.6rem; margin: 1rem 0; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.9rem; color: #e2e8f0; line-height: 1.5; white-space: pre; overflow-x: auto; }
+  .codigo .kw { color: #c084fc; }
+  .codigo .fn { color: #60a5fa; }
+  .codigo .num { color: #fbbf24; }
+  .codigo .cmt { color: #94a3b8; font-style: italic; }
+
+  .tip { background: #fffbeb; border-left: 4px solid #f59e0b; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; }
+  .tip strong { color: #92400e; }
+  .aviso { background: #fef2f2; border-left: 4px solid #ef4444; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; }
+  .aviso strong { color: #991b1b; }
+  .check { background: #ecfdf5; border-left: 4px solid #10b981; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; }
+  .check strong { color: #065f46; }
+  .entrega-morado { background: #F9F0FF; border-left: 4px solid #7B2FBE; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; color: #7B2FBE; font-weight: 700; }
+  .entrega-azul { background: #EEF2FF; border-left: 4px solid #3730A3; padding: 0.9rem 1.2rem; margin: 1rem 0; border-radius: 0 0.4rem 0.4rem 0; color: #3730A3; font-weight: 700; }
+  .circuito-img { display: block; width: 100%; max-width: 100%; height: auto; border: 1px solid #e2e8f0; border-radius: 0.5rem; margin: 1rem 0; }
+  .footer { text-align: center; color: #718096; font-size: 0.85rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; margin-top: 2rem; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="banner">
+    <div class="banner-left">
+      <div class="label">🤖 DESAFÍO ROBÓTICA 2026</div>
+      <div class="title">S04 — El LED nervioso</div>
+      <div class="sub">2º ESO · IES Punta del Verde · CyR</div>
+    </div>
+    <div class="banner-right">
+      <div class="icon">💡</div>
+      <div class="name">Bucle for</div>
+      <div class="platform">Arduino · 2º ESO</div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="seccion-banda banda-entender">🧠  ENTENDER — ¿De qué va el reto?</div>
+
+    <p>Hoy queremos que un <strong>LED parpadee 5 veces seguidas</strong>, espere 2 segundos, y vuelva a parpadear otras 5 veces. Una y otra vez, infinitamente.</p>
+
+    <p>Hasta ahora, para conseguir 5 parpadeos tendrías que copiar y pegar el bloque <code>digitalWrite + delay + digitalWrite + delay</code> cinco veces. ¿Y si fueran 50 parpadeos? ¿Y 500?</p>
+
+    <p>Hoy aprendemos a usar el <strong>bucle <code>for</code></strong>, una estructura que repite el código que pongas dentro las veces que tú le digas. Cambiando un solo número, repites 5, 50 o 500 veces.</p>
+
+    <p>Antes de empezar a programar, abre tu <strong>ficha del reto</strong> y rellena las preguntas de la sección ENTENDER con tu pareja.</p>
+
+    <div class="seccion-banda banda-disenar">✏️  DISEÑAR — Planifica antes de tocar el teclado</div>
+
+    <p>En la ficha tenéis una tabla con los pasos del programa. Algunos están rellenados como ejemplo; vuestra tarea es completar los huecos:</p>
+    <ul>
+      <li><strong>¿Cuántas veces</strong> se repiten los pasos 1-4 dentro del <code>for</code>?</li>
+      <li><strong>¿Cuánto dura</strong> la pausa larga entre tandas?</li>
+    </ul>
+
+    <div class="tip">
+      <strong>🔍 Pista:</strong> un parpadeo completo son cuatro pasos: encender, esperar, apagar, esperar. Esos cuatro son los que el <code>for</code> repite.
+    </div>
+
+    <div class="aviso">
+      <strong>⛔ Importante:</strong> hasta que no tengáis rellenas las secciones ENTENDER y DISEÑAR de la ficha, <strong>no abrís el IDE</strong>. Primero pensar, después teclear.
+    </div>
+
+    <div class="seccion-banda banda-programar">💻  PROGRAMAR — ¡Al ordenador!</div>
+
+    <h3>1. Montar el circuito en Tinkercad</h3>
+    <p>Abre <strong><a href="https://www.tinkercad.com" target="_blank">tinkercad.com</a></strong>, inicia sesión y crea un nuevo circuito. Monta este montaje: <strong>LED en pin 13</strong> con su resistencia de <strong>220Ω</strong> y cierre del circuito a GND.</p>
+
+    <img src="circuito-base.png" alt="Circuito del reto base: LED en pin 13 con resistencia 220Ω y GND" class="circuito-img">
+
+    <div class="tip">
+      <strong>💡 Recuerda:</strong> la pata larga del LED es el ánodo (+) y va al pin 13 (a través de la resistencia). La pata corta es el cátodo (-) y va a GND.
+    </div>
+
+    <h3>2. Escribir el código</h3>
+    <p>Cambia el editor a modo "Texto" en Tinkercad. Escribe este código, rellenando los espacios en blanco con los valores de tu diseño:</p>
+
+<div class="codigo"><span class="kw">void</span> <span class="fn">setup</span>() {
+  <span class="fn">pinMode</span>(<span class="num">13</span>, OUTPUT);
+}
+
+<span class="kw">void</span> <span class="fn">loop</span>() {
+  <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; ___; i++) {
+    <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+    <span class="fn">delay</span>(___);
+    <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+    <span class="fn">delay</span>(___);
+  }
+  <span class="fn">delay</span>(___);   <span class="cmt">// pausa larga entre tandas</span>
+}</div>
+
+    <h3>3. Entender el for</h3>
+    <p>Lee el <code>for</code> así:</p>
+    <ul>
+      <li><code>int i = 0</code> → empieza con <strong>i valiendo 0</strong>.</li>
+      <li><code>i &lt; 5</code> → <strong>repite mientras i sea menor que 5</strong>.</li>
+      <li><code>i++</code> → <strong>al final de cada vuelta, súmale 1 a i</strong>.</li>
+    </ul>
+    <p>Resultado: el código de dentro se ejecuta 5 veces, con <code>i</code> valiendo 0, 1, 2, 3 y 4. Cuando <code>i</code> llega a 5, ya no se cumple <code>i &lt; 5</code> y el bucle se acaba.</p>
+
+    <h3>4. Probar y comprobar</h3>
+    <ol>
+      <li>Pulsa <strong>Iniciar simulación</strong> en Tinkercad.</li>
+      <li>Observa el LED.</li>
+    </ol>
+
+    <div class="check">
+      <strong>🎯 ¿Cómo sé que está bien?</strong> El LED parpadea 5 veces seguidas (no 4 ni 6), luego hay una pausa de 2 segundos, y vuelve a parpadear 5 veces. Indefinidamente.
+    </div>
+
+    <h3>5. Entregar el reto base</h3>
+    <ol>
+      <li>Guarda el proyecto en Tinkercad.</li>
+      <li>Pulsa <strong>Compartir</strong> y copia el enlace público.</li>
+      <li>Pega el enlace en el <strong>recuadro morado</strong> de tu ficha.</li>
+      <li>Sube la ficha a Google Classroom.</li>
+    </ol>
+
+    <div class="entrega-morado">🟣 Enlace de entrega del reto base → recuadro morado de la ficha.</div>
+
+    <div class="seccion-banda banda-ampliacion">🚀  AMPLIACIÓN — Para los que acaban antes</div>
+
+    <p>Si tu LED parpadea correctamente y has entregado el reto base, lánzate a la ampliación: <strong>El LED nervioso de verdad</strong>.</p>
+
+    <h3>Comportamiento esperado</h3>
+    <ul>
+      <li>🟢 <strong>Si NO pulsas el botón:</strong> el LED parpadea LENTO (500 ms encendido, 500 ms apagado) de forma indefinida.</li>
+      <li>🔴 <strong>Si pulsas el botón:</strong> el LED parpadea RÁPIDO (100 ms encendido, 100 ms apagado) <strong>10 veces seguidas</strong> y vuelve solo al parpadeo lento anterior.</li>
+    </ul>
+
+    <h3>Circuito de la ampliación</h3>
+    <p>Al circuito anterior le añades un <strong>pulsador conectado al pin 7</strong> con una resistencia <strong>pull-down de 10kΩ a GND</strong> (igual que en S02). Monta este circuito:</p>
+
+    <img src="circuito-ampliacion.png" alt="Circuito de la ampliación: LED en pin 13 + pulsador en pin 7 con pull-down 10kΩ" class="circuito-img">
+
+    <div class="tip">
+      <strong>💡 Recuerda del S02:</strong> con la resistencia pull-down, el pin 7 está en <strong>LOW</strong> cuando NO se pulsa el botón, y pasa a <strong>HIGH</strong> cuando sí se pulsa.
+    </div>
+
+    <h3>Pista de programación</h3>
+    <p>En la ficha tienes un esqueleto incompleto del código. Combina dos cosas que ya conoces:</p>
+    <ul>
+      <li>Un <code>if</code> que comprueba si el pulsador está en HIGH (lo aprendiste en S02).</li>
+      <li>Un <code>for</code> que hace 10 parpadeos rápidos (lo acabas de aprender hoy).</li>
+    </ul>
+    <p>Después del <code>if</code>, fuera de él, pones el código del parpadeo lento (un único parpadeo, sin <code>for</code>). Como el <code>loop()</code> se repite infinitamente, el parpadeo lento se ejecuta una y otra vez por sí solo.</p>
+
+    <div class="tip">
+      <strong>💡 Reflexiona:</strong> cuando estás en pleno parpadeo lento y pulsas el botón, notarás que el LED tarda un poco en cambiar a modo rápido. ¿Por qué? Tiene que ver con que el Arduino está "dormido" durante los <code>delay()</code>. Lo aceptamos como aprendizaje: lo arreglaremos en sesiones más avanzadas.
+    </div>
+
+    <div class="entrega-azul">🔵 Enlace de entrega de la ampliación → recuadro azul de la ficha.</div>
+
+    <div class="footer">
+      DESAFÍO ROBÓTICA 2026 · IES Punta del Verde
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

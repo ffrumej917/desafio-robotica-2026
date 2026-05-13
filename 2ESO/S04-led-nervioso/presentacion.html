@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S04 2º ESO — El LED nervioso</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; background: #0a0e1a; font-family: 'Segoe UI', system-ui, sans-serif; color: #e0e6f0; }
+  .slide { position: absolute; inset: 0; display: none; padding: 4vh 6vw; flex-direction: column; justify-content: center; }
+  .slide.active { display: flex; }
+  h1 { font-size: clamp(2.5rem, 6vw, 5rem); color: #34d399; margin-bottom: 2vh; line-height: 1.1; }
+  h2 { font-size: clamp(2rem, 4.5vw, 3.5rem); color: #7c4dff; margin-bottom: 3vh; }
+  p, li { font-size: clamp(1.1rem, 2vw, 1.8rem); line-height: 1.6; margin-bottom: 1.5vh; }
+  ul { margin-left: 2.5rem; }
+  .emoji { font-size: clamp(3rem, 8vw, 6rem); }
+  .badge { display: inline-block; background: #34d399; color: #0a0e1a; padding: 0.5rem 1.5rem; border-radius: 999px; font-weight: 700; font-size: clamp(0.9rem, 1.5vw, 1.3rem); margin-bottom: 2vh; letter-spacing: 0.05em; }
+  .grid-comparativa { display: grid; grid-template-columns: 1fr 1fr; gap: 3vw; margin-top: 2vh; }
+  .col { background: #131829; border-radius: 1rem; padding: 2vh 2vw; border: 2px solid #1f2940; }
+  .col.malo { border-color: #ff5252; }
+  .col.bueno { border-color: #69f0ae; }
+  .col-titulo { font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: 700; margin-bottom: 1.5vh; }
+  .col.malo .col-titulo { color: #ff5252; }
+  .col.bueno .col-titulo { color: #69f0ae; }
+  pre.code { font-family: 'Consolas', 'Courier New', monospace; background: #0f1426; padding: 1.2rem; border-radius: 0.6rem; font-size: clamp(0.7rem, 1.1vw, 1rem); color: #e0e6f0; line-height: 1.4; overflow-x: auto; }
+  pre.code .kw { color: #c084fc; }
+  pre.code .fn { color: #60a5fa; }
+  pre.code .num { color: #fbbf24; }
+  pre.code .cmt { color: #6b7280; font-style: italic; }
+  .nav { position: fixed; bottom: 2vh; right: 2vw; display: flex; gap: 1rem; align-items: center; }
+  .nav button { background: #1f2940; color: #34d399; border: none; padding: 0.8rem 1.2rem; border-radius: 0.5rem; font-size: 1.5rem; cursor: pointer; transition: background 0.2s; }
+  .nav button:hover { background: #2a3650; }
+  .counter { color: #7c4dff; font-weight: 700; font-size: 1.2rem; }
+  .pista-f11 { position: fixed; top: 2vh; right: 2vw; color: #4a5680; font-size: 0.9rem; }
+  .destacado { color: #34d399; font-weight: 700; }
+  .destacado-morado { color: #b39dff; font-weight: 700; }
+  .destacado-amarillo { color: #fbbf24; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="slide active">
+  <div class="badge">S04 · 2º ESO · DESAFÍO ROBÓTICA</div>
+  <h1>El LED nervioso <span class="emoji">💡</span></h1>
+  <p style="font-size: clamp(1.3rem, 2.5vw, 2.2rem); color: #a0a8bf; margin-top: 2vh;">
+    Hasta hoy, para hacer parpadear un LED 5 veces, tendrías que copiar y pegar el código 5 veces.
+  </p>
+  <p style="margin-top: 3vh; color: #34d399; font-size: clamp(1.2rem, 2.2vw, 2rem);">
+    Hoy le enseñamos a Arduino a <span class="destacado">repetir</span>.
+  </p>
+</div>
+
+<div class="slide">
+  <h2>5 parpadeos a lo bestia 🤕</h2>
+  <p>Sin <code style="color: #34d399; background: #0f1426; padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-family: monospace;">for</code>, este sería el código para 5 parpadeos:</p>
+  <div class="grid-comparativa">
+    <div class="col malo">
+      <div class="col-titulo">😩 Sin for</div>
+<pre class="code"><span class="kw">void</span> <span class="fn">loop</span>() {
+  <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+  <span class="fn">delay</span>(<span class="num">300</span>);
+  <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+  <span class="fn">delay</span>(<span class="num">300</span>);
+  <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+  <span class="fn">delay</span>(<span class="num">300</span>);
+  <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+  <span class="fn">delay</span>(<span class="num">300</span>);
+  <span class="cmt">// y así 3 veces más...</span>
+}</pre>
+    </div>
+    <div class="col bueno">
+      <div class="col-titulo">😎 Con for</div>
+<pre class="code"><span class="kw">void</span> <span class="fn">loop</span>() {
+  <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+    <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+    <span class="fn">delay</span>(<span class="num">300</span>);
+    <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+    <span class="fn">delay</span>(<span class="num">300</span>);
+  }
+  <span class="fn">delay</span>(<span class="num">2000</span>);
+}</pre>
+      <p style="margin-top: 1.5vh; color: #69f0ae; font-size: clamp(0.95rem, 1.6vw, 1.3rem);">
+        ¡Mismo efecto, mitad de código!
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="slide">
+  <h2>Anatomía del for 🔬</h2>
+<pre class="code" style="font-size: clamp(1rem, 1.6vw, 1.5rem); padding: 2rem;"><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+   <span class="cmt">// lo que repetir</span>
+}</pre>
+
+  <ul style="margin-top: 3vh;">
+    <li><span class="destacado-amarillo">int i = 0</span> → empieza con i valiendo 0</li>
+    <li><span class="destacado-amarillo">i &lt; 5</span> → repite mientras i sea menor que 5</li>
+    <li><span class="destacado-amarillo">i++</span> → al final de cada vuelta, súmale 1 a i</li>
+  </ul>
+
+  <p style="margin-top: 3vh; color: #a0a8bf;">
+    Resultado: se repite con <span class="destacado">i = 0, 1, 2, 3, 4</span>. Cinco veces.
+  </p>
+</div>
+
+<div class="slide">
+  <h2>El reto de hoy 🎯</h2>
+  <ul>
+    <li>💡 <span class="destacado">Reto base:</span> LED en pin 13 parpadea 5 veces, espera 2 segundos, y vuelve a parpadear. Para siempre.</li>
+    <li>📝 Antes de programar, completa la <span class="destacado-morado">ficha de diseño</span> con tu pareja.</li>
+    <li>🚀 Si terminas pronto: <span style="color: #5c6bc0; font-weight: 700;">ampliación → con un pulsador, el LED se vuelve nervioso</span>.</li>
+  </ul>
+  <p style="margin-top: 4vh; color: #34d399; font-size: clamp(1.2rem, 2.2vw, 1.8rem);">
+    Recuerda: <span class="destacado">Entender → Diseñar → Programar</span>. En ese orden. 🧠✏️💻
+  </p>
+</div>
+
+<div class="nav">
+  <span class="counter" id="counter">1 / 4</span>
+  <button onclick="prev()">←</button>
+  <button onclick="next()">→</button>
+</div>
+
+<div class="pista-f11">Pulsa F11 para pantalla completa</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    document.getElementById('counter').textContent = `${current + 1} / ${slides.length}`;
+  }
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+</script>
+
+</body>
+</html>

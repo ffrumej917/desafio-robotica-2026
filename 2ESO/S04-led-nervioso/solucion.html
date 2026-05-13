@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>S04 2º ESO — 🔑 Solución ampliación: El LED nervioso</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0e1a; color: #e0e6f0; line-height: 1.6; padding: 2rem; min-height: 100vh; }
+  .container { max-width: 900px; margin: 0 auto; background: #131829; padding: 3rem; border-radius: 1rem; box-shadow: 0 4px 30px rgba(52,211,153,0.1); border: 1px solid #1f2940; }
+  .badge { display: inline-block; background: #34d399; color: #0a0e1a; padding: 0.4rem 1.2rem; border-radius: 999px; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 1rem; }
+  .badge-prof { background: #7c4dff; color: #fff; margin-left: 0.5rem; }
+  h1 { font-size: 2.2rem; color: #34d399; margin-bottom: 0.5rem; }
+  .subtitulo { color: #a0a8bf; font-size: 1.1rem; margin-bottom: 2rem; }
+  h2 { color: #7c4dff; margin: 2.5rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #1f2940; font-size: 1.5rem; }
+  h3 { color: #69f0ae; margin: 1.5rem 0 0.8rem 0; font-size: 1.2rem; }
+  p { margin-bottom: 1rem; }
+  ul, ol { margin-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.5rem; }
+  code { background: #1f2940; padding: 0.15rem 0.5rem; border-radius: 0.3rem; color: #fbbf24; font-family: 'Consolas', monospace; font-size: 0.95rem; }
+  .codigo { background: #0a0e1a; padding: 1.5rem; border-radius: 0.75rem; margin: 1rem 0; border: 1px solid #1f2940; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.95rem; color: #e2e8f0; line-height: 1.5; white-space: pre; overflow-x: auto; }
+  .codigo .kw { color: #c084fc; }
+  .codigo .fn { color: #60a5fa; }
+  .codigo .num { color: #fbbf24; }
+  .codigo .cmt { color: #6b7280; font-style: italic; }
+  .nota-prof { background: #1a1633; border-left: 4px solid #7c4dff; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .nota-prof strong { color: #b39dff; }
+  .razonamiento { background: #0f1f1a; border-left: 4px solid #69f0ae; padding: 1rem 1.5rem; margin: 1rem 0; border-radius: 0 0.5rem 0.5rem 0; }
+  .razonamiento strong { color: #69f0ae; }
+  .destacado { color: #34d399; font-weight: 700; }
+  .destacado-morado { color: #b39dff; font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; background: #0a0e1a; border-radius: 0.5rem; overflow: hidden; }
+  th, td { padding: 0.7rem 1rem; text-align: left; border-bottom: 1px solid #1f2940; }
+  th { background: #1f2940; color: #34d399; }
+  td code { background: transparent; padding: 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="badge">S04 · 2º ESO</div>
+  <span class="badge badge-prof">🔑 SOLUCIÓN PROFESOR</span>
+
+  <h1 style="margin-top: 1rem;">💡 El LED nervioso</h1>
+  <p class="subtitulo">Solución completa: reto base + ampliación con pulsador.</p>
+
+  <h2>🧠 Idea de la solución</h2>
+
+  <p>El reto base es la introducción canónica al <code>for</code>: parpadear N veces con un único bloque de código. La ampliación combina <strong>el <code>for</code> de hoy con el <code>if</code> de S02</strong>, aprovechando que el <code>loop()</code> se repite infinitamente para producir el "parpadeo lento por defecto".</p>
+
+  <div class="razonamiento">
+    <strong>🎯 La clave didáctica:</strong> el <code>loop()</code> ya hace de "bucle infinito" por sí mismo. No hace falta meter el parpadeo lento en otro bucle. Si el código del parpadeo lento está dentro del <code>loop()</code>, se ejecuta indefinidamente sin esfuerzo adicional. El <code>if</code> simplemente <em>interrumpe</em> ese parpadeo lento con 10 rápidos cuando se detecta el pulsador.
+  </div>
+
+  <h2>💻 Reto base — Código completo</h2>
+
+  <div class="codigo"><span class="kw">void</span> <span class="fn">setup</span>() {
+  <span class="fn">pinMode</span>(<span class="num">13</span>, OUTPUT);
+}
+
+<span class="kw">void</span> <span class="fn">loop</span>() {
+  <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+    <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+    <span class="fn">delay</span>(<span class="num">300</span>);
+    <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+    <span class="fn">delay</span>(<span class="num">300</span>);
+  }
+  <span class="fn">delay</span>(<span class="num">2000</span>);   <span class="cmt">// pausa larga entre tandas</span>
+}</div>
+
+  <p>Cinco parpadeos a 300ms (600ms cada parpadeo completo = 3 segundos totales), luego pausa de 2 segundos, y el <code>loop()</code> vuelve a empezar.</p>
+
+  <h2>💻 Ampliación — Código completo</h2>
+
+  <div class="codigo"><span class="kw">void</span> <span class="fn">setup</span>() {
+  <span class="fn">pinMode</span>(<span class="num">13</span>, OUTPUT);
+  <span class="fn">pinMode</span>(<span class="num">7</span>, INPUT);
+}
+
+<span class="kw">void</span> <span class="fn">loop</span>() {
+  <span class="kw">if</span> (<span class="fn">digitalRead</span>(<span class="num">7</span>) == HIGH) {
+    <span class="cmt">// Modo nervioso: 10 parpadeos rápidos</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">10</span>; i++) {
+      <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+      <span class="fn">delay</span>(<span class="num">100</span>);
+      <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+      <span class="fn">delay</span>(<span class="num">100</span>);
+    }
+  }
+
+  <span class="cmt">// Parpadeo lento por defecto (siempre se ejecuta una vez por vuelta del loop)</span>
+  <span class="fn">digitalWrite</span>(<span class="num">13</span>, HIGH);
+  <span class="fn">delay</span>(<span class="num">500</span>);
+  <span class="fn">digitalWrite</span>(<span class="num">13</span>, LOW);
+  <span class="fn">delay</span>(<span class="num">500</span>);
+}</div>
+
+  <h2>🔍 Cómo se lee el código</h2>
+
+  <ul>
+    <li><strong>Cada vuelta del <code>loop()</code></strong> comprueba si el pulsador está pulsado.</li>
+    <li><strong>Si NO está pulsado</strong> (caso por defecto): el <code>if</code> es falso, se salta el <code>for</code> y va directamente al parpadeo lento. Después vuelve al inicio del <code>loop()</code>, vuelve a comprobar el pulsador, y vuelve a hacer otro parpadeo lento. Y así infinitamente.</li>
+    <li><strong>Si SÍ está pulsado:</strong> entra en el <code>for</code> y hace 10 parpadeos rápidos seguidos (2 segundos en total). Cuando acaba, sale del <code>if</code> y ejecuta UN parpadeo lento. Luego vuelve al principio del <code>loop()</code>. Si el alumno ha soltado el botón, se mantiene en lentos.</li>
+  </ul>
+
+  <h2>⚠️ Errores típicos del alumnado</h2>
+
+  <ul>
+    <li><strong>Olvidar el segundo <code>delay()</code> dentro del <code>for</code>:</strong> hacen <code>digitalWrite(HIGH) + delay + digitalWrite(LOW)</code> y se olvidan del último <code>delay</code>. El LED parece encendido permanentemente porque el siguiente HIGH ocurre inmediatamente.</li>
+    <li><strong>Confundir <code>i &lt; 5</code> con <code>i &lt;= 5</code>:</strong> con <code>i &lt;= 5</code> se repite 6 veces (i = 0, 1, 2, 3, 4, 5). Pueden confundirse de uno arriba o uno abajo.</li>
+    <li><strong>Meter el parpadeo lento DENTRO del <code>if</code>:</strong> entonces el LED solo parpadea (rápido o lento) cuando se pulsa el botón. Sin pulsar, el LED estará apagado y el <code>loop()</code> no hace nada visible. Hay que insistir en que el parpadeo lento va FUERA del <code>if</code>.</li>
+    <li><strong>Esperar que el cambio sea instantáneo:</strong> los alumnos pulsan el botón y se quejan de que "no responde rápido". Aquí toca explicar la limitación del <code>delay()</code> y aceptarla como aprendizaje real. Lo notarán especialmente con el parpadeo lento de 500 ms.</li>
+  </ul>
+
+  <h2>🎓 Variantes válidas que pueden traer los alumnos</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Variante</th>
+        <th>Validez</th>
+        <th>Comentario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Otros valores de delay (250/250, 400/400 para el lento)</td>
+        <td style="color: #69f0ae;">✅ Válido</td>
+        <td>Mientras la diferencia entre lento y rápido sea clara.</td>
+      </tr>
+      <tr>
+        <td><code>for (int i = 1; i &lt;= 10; i++)</code> en vez de <code>i = 0; i &lt; 10</code></td>
+        <td style="color: #69f0ae;">✅ Válido</td>
+        <td>Misma cantidad de iteraciones (10), aunque la convención habitual en C++ es empezar en 0.</td>
+      </tr>
+      <tr>
+        <td>Usar <code>else</code> con el parpadeo lento dentro</td>
+        <td style="color: #fbbf24;">⚠️ Funciona pero discutir</td>
+        <td>Funciona igual, pero rompe la elegancia de que el parpadeo lento es el "comportamiento por defecto". Mejor sin <code>else</code>.</td>
+      </tr>
+      <tr>
+        <td>Variable <code>bool</code> para guardar estado</td>
+        <td style="color: #ff5252;">❌ Innecesario</td>
+        <td>Algunos avanzados intentarán esto. No hace falta: el <code>loop()</code> ya hace de "estado natural".</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>🎓 Estructuras usadas en esta solución</h2>
+
+  <div class="nota-prof">
+    <strong>📌 Verificación pedagógica:</strong> esta solución usa <strong>solo</strong> estructuras vistas hasta esta sesión:
+    <ul style="margin-top: 0.5rem;">
+      <li><code>pinMode</code>, <code>digitalWrite</code>, <code>digitalRead</code>, <code>delay</code> (S01)</li>
+      <li><code>if</code> (S02)</li>
+      <li><code>for</code> (concepto principal de S04)</li>
+    </ul>
+    <strong>No</strong> se han adelantado: <code>while</code>, <code>millis()</code>, funciones propias, arrays, ni operadores lógicos (AND/OR/NOT). El uso de <code>bool</code> tampoco aparece (aunque S03 lo introdujo) porque no se necesita.
+  </div>
+
+  <p style="margin-top: 2rem; text-align: center; color: #4a5680; font-size: 0.9rem; padding-top: 2rem; border-top: 1px solid #1f2940;">
+    DESAFÍO ROBÓTICA 2026 · IES Punta del Verde · 🔑 Material exclusivo del profesor
+  </p>
+
+</div>
+
+</body>
+</html>
