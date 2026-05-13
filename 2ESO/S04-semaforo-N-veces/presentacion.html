@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S04 – Semáforo de N ciclos | Desafío Robótica 2026</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0d0d1a; color:#f0f0f0; font-family:'Segoe UI',Arial,sans-serif; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+  .slide { display:none; width:100vw; height:100vh; padding:5vh 6vw; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:absolute; top:0; left:0; }
+  .slide.active { display:flex; }
+
+  /* Slide 1 */
+  .slide-1 { background:radial-gradient(ellipse at center,#0a1a2e 0%,#0d0d1a 70%); }
+  .badge { background:#4c97ff; color:#fff; font-size:clamp(0.7rem,1.5vw,0.9rem); font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:6px 18px; border-radius:20px; margin-bottom:2vh; display:inline-block; }
+  .emoji-big { font-size:clamp(3rem,8vw,5rem); margin-bottom:2vh; }
+  .slide-1 h1 { font-size:clamp(2rem,5vw,3.8rem); font-weight:900; color:#fff; line-height:1.1; margin-bottom:1.5vh; }
+  .slide-1 h1 span { color:#4c97ff; }
+  .subtitle { font-size:clamp(1rem,2.5vw,1.5rem); color:#aab4c8; margin-bottom:3vh; }
+  .tag-row { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .tag { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:6px 16px; border-radius:12px; font-size:clamp(0.75rem,1.5vw,0.9rem); color:#c8d6f0; }
+
+  /* Slide 2 */
+  .slide-2 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-2 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#4c97ff; margin-bottom:3vh; width:100%; }
+  .compare-grid { display:grid; grid-template-columns:1fr 1fr; gap:2vw; width:100%; max-width:900px; margin-bottom:2.5vh; }
+  .compare-box { border-radius:14px; padding:clamp(16px,2vw,24px); }
+  .infinite-box { background:rgba(255,107,107,0.1); border:2px solid #ff6b6b; }
+  .for-box { background:rgba(52,211,153,0.1); border:2px solid #34d399; }
+  .infinite-box .label { color:#ff8080; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.1rem); margin-bottom:10px; }
+  .for-box .label { color:#5de8b0; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.1rem); margin-bottom:10px; }
+  .compare-box p { font-size:clamp(0.8rem,1.6vw,1rem); color:#ccd; line-height:1.6; }
+  .compare-box code { background:rgba(0,0,0,0.4); padding:1px 6px; border-radius:4px; font-family:'Courier New',monospace; color:#fbbf24; }
+  .note-box { background:rgba(251,188,4,0.08); border-left:4px solid #fbbc04; border-radius:8px; padding:clamp(12px,1.5vw,18px); max-width:900px; width:100%; }
+  .note-box p { font-size:clamp(0.82rem,1.7vw,1rem); color:#f0e0a0; line-height:1.6; }
+
+  /* Slide 3 */
+  .slide-3 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-3 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#fff; margin-bottom:2.5vh; width:100%; }
+  .slide-3 h2 span { color:#4c97ff; }
+  .reto-card { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:clamp(14px,2vw,24px); max-width:860px; width:100%; margin-bottom:2vh; }
+  .reto-card .reto-title { font-size:clamp(1rem,2.2vw,1.2rem); font-weight:700; color:#ffcc00; margin-bottom:10px; }
+  .reto-card p { font-size:clamp(0.82rem,1.7vw,1rem); color:#ccd; line-height:1.7; }
+  .circuit-info { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5vw; max-width:860px; width:100%; }
+  .ci-box { background:rgba(76,151,255,0.08); border:1.5px solid rgba(76,151,255,0.3); border-radius:12px; padding:clamp(10px,1.4vw,16px); text-align:center; }
+  .ci-comp { font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:4px; }
+  .ci-label { font-size:clamp(0.8rem,1.6vw,1rem); font-weight:700; color:#fff; }
+  .ci-pin { font-size:clamp(0.7rem,1.3vw,0.85rem); color:#8899bb; margin-top:4px; }
+
+  /* Slide 4 */
+  .slide-4 { background:#0d0d1a; text-align:left; align-items:flex-start; }
+  .slide-4 h2 { font-size:clamp(1.4rem,3.5vw,2.5rem); font-weight:800; color:#fff; margin-bottom:2.5vh; width:100%; }
+  .slide-4 h2 span { color:#4c97ff; }
+  .two-col { display:grid; grid-template-columns:1.2fr 0.8fr; gap:2vw; width:100%; max-width:900px; }
+  .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:clamp(14px,2vw,22px); font-family:'Courier New',monospace; font-size:clamp(0.7rem,1.3vw,0.88rem); line-height:1.85; color:#e2e8f0; }
+  .code-block .kw { color:#f472b6; font-weight:700; }
+  .code-block .cm { color:#6b7280; font-style:italic; }
+  .code-block .num { color:#fbbf24; }
+  .code-block .i1 { margin-left:1.5em; }
+  .code-block .i2 { margin-left:3em; }
+  .entrega-panel { display:flex; flex-direction:column; gap:1.5vh; }
+  .entrega-box { background:rgba(168,85,247,0.15); border:2px solid #a855f7; border-radius:14px; padding:clamp(14px,2vw,22px); }
+  .entrega-box .ent-title { font-size:clamp(0.85rem,1.8vw,1rem); font-weight:700; color:#c084fc; margin-bottom:8px; }
+  .entrega-box p { font-size:clamp(0.75rem,1.5vw,0.88rem); color:#ccd; line-height:1.6; }
+
+  .nav { position:fixed; bottom:3vh; right:3vw; display:flex; gap:10px; z-index:100; }
+  .nav button { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; width:44px; height:44px; border-radius:50%; font-size:1.1rem; cursor:pointer; transition:background 0.2s; }
+  .nav button:hover { background:rgba(255,255,255,0.22); }
+  .nav button:disabled { opacity:0.25; cursor:default; }
+  .counter { position:fixed; bottom:3vh; left:50%; transform:translateX(-50%); font-size:0.8rem; color:rgba(255,255,255,0.35); letter-spacing:1px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Portada -->
+<div class="slide slide-1 active">
+  <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 4</div>
+  <div class="emoji-big">🚦</div>
+  <h1>Semáforo de <span>N ciclos</span></h1>
+  <p class="subtitle">Bucle FOR: el programa hace algo un número exacto de veces y luego para</p>
+  <div class="tag-row">
+    <span class="tag">⚡ Tinkercad</span>
+    <span class="tag">🔁 FOR</span>
+    <span class="tag">🔴 LED pin 11</span>
+    <span class="tag">🟡 LED pin 12</span>
+    <span class="tag">🟢 LED pin 13</span>
+    <span class="tag">⏱ 55 min</span>
+  </div>
+</div>
+
+<!-- SLIDE 2: Concepto FOR vs loop infinito -->
+<div class="slide slide-2">
+  <h2>Concepto: FOR vs loop() infinito</h2>
+  <div class="compare-grid">
+    <div class="compare-box infinite-box">
+      <div class="label">♾️ loop() — infinito</div>
+      <p>El código dentro de <code>void loop()</code> se ejecuta una y otra vez <strong>sin parar</strong> hasta que se desconecta la placa.<br><br>Útil cuando quieres una respuesta continua (semáforo eterno).</p>
+    </div>
+    <div class="compare-box for-box">
+      <div class="label">🔁 for — con final</div>
+      <p><code>for (int i = 0; i &lt; N; i++) { ... }</code><br><br>Ejecuta el bloque <strong>N veces</strong> y después continúa con el siguiente código. Tiene un <strong>final programado</strong>.</p>
+    </div>
+  </div>
+  <div class="note-box">
+    <p>💡 <strong>Hoy queremos un semáforo que se apague solo:</strong> hace 5 ciclos completos y se detiene. Ponemos el <code>for</code> dentro de <code>setup()</code> (se ejecuta una sola vez al arrancar) y dejamos <code>loop()</code> vacío.</p>
+  </div>
+</div>
+
+<!-- SLIDE 3: El reto + circuito -->
+<div class="slide slide-3">
+  <h2>El reto de hoy 🎯 <span>Semáforo de N ciclos</span></h2>
+  <div class="reto-card">
+    <div class="reto-title">📋 ¿Qué tienes que hacer?</div>
+    <p>
+      Monta un semáforo con <strong>3 LEDs</strong> (rojo, ámbar, verde) y haz que recorra su ciclo completo <strong>5 veces</strong>. Cuando termine, los tres LEDs deben quedar apagados.<br>
+      👉 <strong>Rojo 1 s · Ámbar 0,5 s · Verde 1 s · Ámbar 0,5 s.</strong> Ese ciclo se repite 5 veces.<br>
+      Usa un <code style="background:rgba(0,0,0,0.4);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;color:#fbbf24;">for (int i = 0; i &lt; 5; i++)</code> dentro de <code style="background:rgba(0,0,0,0.4);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;color:#fbbf24;">setup()</code>.
+    </p>
+  </div>
+  <div class="circuit-info">
+    <div class="ci-box"><div class="ci-comp">🔴</div><div class="ci-label">LED rojo</div><div class="ci-pin">Pin 11 · 220 Ω</div></div>
+    <div class="ci-box"><div class="ci-comp">🟡</div><div class="ci-label">LED ámbar</div><div class="ci-pin">Pin 12 · 220 Ω</div></div>
+    <div class="ci-box"><div class="ci-comp">🟢</div><div class="ci-label">LED verde</div><div class="ci-pin">Pin 13 · 220 Ω</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Código + Entrega -->
+<div class="slide slide-4">
+  <h2>El <span>código</span> con FOR 💻</h2>
+  <div class="two-col">
+    <div class="code-block">
+      <div><span class="kw">const int</span> rojo  = <span class="num">11</span>;</div>
+      <div><span class="kw">const int</span> ambar = <span class="num">12</span>;</div>
+      <div><span class="kw">const int</span> verde = <span class="num">13</span>;</div>
+      <div>&nbsp;</div>
+      <div><span class="kw">void</span> setup() {</div>
+      <div class="i1">pinMode(rojo,  <span class="kw">OUTPUT</span>);</div>
+      <div class="i1">pinMode(ambar, <span class="kw">OUTPUT</span>);</div>
+      <div class="i1">pinMode(verde, <span class="kw">OUTPUT</span>);</div>
+      <div>&nbsp;</div>
+      <div class="i1"><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {</div>
+      <div class="i2">digitalWrite(rojo, <span class="kw">HIGH</span>);  delay(<span class="num">1000</span>); digitalWrite(rojo, <span class="kw">LOW</span>);</div>
+      <div class="i2">digitalWrite(ambar,<span class="kw">HIGH</span>); delay(<span class="num">500</span>);  digitalWrite(ambar,<span class="kw">LOW</span>);</div>
+      <div class="i2">digitalWrite(verde,<span class="kw">HIGH</span>); delay(<span class="num">1000</span>); digitalWrite(verde,<span class="kw">LOW</span>);</div>
+      <div class="i2">digitalWrite(ambar,<span class="kw">HIGH</span>); delay(<span class="num">500</span>);  digitalWrite(ambar,<span class="kw">LOW</span>);</div>
+      <div class="i1">}</div>
+      <div>}</div>
+      <div>&nbsp;</div>
+      <div><span class="kw">void</span> loop() { <span class="cm">// vacío</span> }</div>
+    </div>
+    <div class="entrega-panel">
+      <div class="entrega-box">
+        <div class="ent-title">🟣 ¿Cómo entregar?</div>
+        <p>1. Monta el circuito en Tinkercad.<br>2. Escribe el código y simula.<br>3. Comparte el proyecto (botón Compartir).<br>4. Copia el enlace y pégalo en tu ficha.<br>5. Entrega la ficha en Classroom.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button id="prev" onclick="cambiar(-1)" disabled>◀</button>
+  <button id="next" onclick="cambiar(1)">▶</button>
+</div>
+<div class="counter" id="counter">1 / 4</div>
+<script>
+  let actual = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.addEventListener('keydown', e => {
+    if (e.key==='ArrowRight'||e.key==='ArrowDown') cambiar(1);
+    if (e.key==='ArrowLeft'||e.key==='ArrowUp') cambiar(-1);
+  });
+  function cambiar(dir) {
+    slides[actual].classList.remove('active');
+    actual = Math.max(0, Math.min(slides.length-1, actual+dir));
+    slides[actual].classList.add('active');
+    document.getElementById('prev').disabled = actual===0;
+    document.getElementById('next').disabled = actual===slides.length-1;
+    document.getElementById('counter').textContent = `${actual+1} / ${slides.length}`;
+  }
+</script>
+</body>
+</html>

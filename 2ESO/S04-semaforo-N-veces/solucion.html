@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solución ampliación — S04 Semáforo de N ciclos</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#0d0d1a;color:#f0f0f0;font-family:'Segoe UI',Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+  .card{max-width:720px;width:100%}
+  .top-badge{display:inline-block;background:#4c97ff;color:#fff;font-size:0.75rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:20px}
+  .top-badge.prof{background:#7c4dff;margin-left:6px}
+  h1{font-size:clamp(1.4rem,4vw,2rem);font-weight:900;color:#fff;margin-bottom:6px}
+  h1 span{color:#4c97ff}
+  .meta{font-size:0.85rem;color:#667;margin-bottom:28px}
+  .reto-box{background:rgba(79,70,229,0.1);border:1.5px solid rgba(79,70,229,0.4);border-radius:12px;padding:18px 22px;margin-bottom:24px}
+  .reto-box .reto-label{font-size:0.78rem;font-weight:700;color:#818cf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+  .reto-box p{font-size:0.92rem;color:#c7d2fe;line-height:1.7}
+  .code-wrap{background:#0a0a14;border:1px solid #1e293b;border-radius:12px;overflow:hidden;margin-bottom:24px}
+  .code-header{background:#111827;padding:10px 18px;display:flex;align-items:center;gap:10px}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .dot.r{background:#ff5f57} .dot.y{background:#febc2e} .dot.g{background:#28c840}
+  .lang{font-size:0.78rem;color:#4b5563;margin-left:auto;font-family:'Courier New',monospace}
+  pre{padding:22px;font-family:'Courier New',monospace;font-size:clamp(0.76rem,1.5vw,0.88rem);line-height:1.8;overflow-x:auto;color:#e2e8f0;white-space:pre}
+  .kw{color:#f472b6;font-weight:700}
+  .cm{color:#4b5563;font-style:italic}
+  .num{color:#fbbf24}
+  .sec{color:#34d399;font-weight:700}
+  h2 { color:#a855f7; font-size:1.1rem; margin:0 0 12px 0; padding-bottom:6px; border-bottom:1px solid rgba(168,85,247,0.3); }
+  .razonamiento{background:rgba(52,211,153,0.06);border-left:4px solid #34d399;padding:12px 18px;margin:14px 0;border-radius:0 8px 8px 0;font-size:0.9rem;color:#c8efd5;line-height:1.7}
+  .razonamiento strong{color:#5de8b0}
+  .errores{background:rgba(255,107,107,0.06);border-left:4px solid #ff6b6b;padding:12px 18px;margin:14px 0;border-radius:0 8px 8px 0}
+  .errores h3{color:#ff8080;font-size:0.95rem;margin-bottom:8px}
+  .errores ul{margin-left:18px;font-size:0.88rem;color:#ccd;line-height:1.7}
+  .errores li strong{color:#fff}
+  .nota-prof{background:#1a1633;border-left:4px solid #7c4dff;padding:12px 18px;margin:14px 0;border-radius:0 8px 8px 0;font-size:0.88rem;color:#ccd;line-height:1.7}
+  .nota-prof strong{color:#b39dff}
+  .back{display:inline-flex;align-items:center;gap:6px;margin-top:20px;font-size:0.85rem;color:#4b5563;text-decoration:none}
+  .back:hover{color:#818cf8}
+  code{background:rgba(0,0,0,0.4);padding:1px 6px;border-radius:4px;font-family:'Courier New',monospace;color:#fbbf24;font-size:0.85rem}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="top-badge">🚀 Solución ampliación</div>
+  <span class="top-badge prof">🔑 Solución profesor</span>
+  <h1>S04 — <span>Semáforo de N ciclos</span></h1>
+  <p class="meta">2º ESO · Tinkercad · Test de luces (FOR anidado) + semáforo de 5 ciclos</p>
+
+  <div class="reto-box">
+    <div class="reto-label">El reto de ampliación era…</div>
+    <p>Antes de los 5 ciclos del semáforo, hacer un <strong>test de luces</strong>: cada LED parpadea 3 veces para confirmar que está bien cableado. Después, ya sí, los 5 ciclos del semáforo normal.</p>
+  </div>
+
+  <h2>🧠 Idea de la solución</h2>
+
+  <div class="razonamiento">
+    <strong>🎯 La idea clave:</strong> el reto base usaba <strong>un</strong> bucle FOR (los 5 ciclos del semáforo). La ampliación añade <strong>tres bucles FOR más</strong> antes del semáforo, uno por cada LED del test. Total: 4 bucles FOR seguidos dentro de <code>setup()</code>.
+    <br><br>
+    El test de luces es lineal: primero parpadea el rojo 3 veces, luego el ámbar 3 veces, luego el verde 3 veces. Después arranca el semáforo.
+  </div>
+
+  <h2>💻 Código completo</h2>
+
+  <div class="code-wrap">
+    <div class="code-header">
+      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+      <span class="lang">Arduino C++</span>
+    </div>
+    <pre><span class="kw">const int</span> rojo  = <span class="num">11</span>;
+<span class="kw">const int</span> ambar = <span class="num">12</span>;
+<span class="kw">const int</span> verde = <span class="num">13</span>;
+
+<span class="kw">void</span> setup() {
+    pinMode(rojo,  OUTPUT);
+    pinMode(ambar, OUTPUT);
+    pinMode(verde, OUTPUT);
+
+    <span class="sec">// === TEST DE LUCES: cada LED parpadea 3 veces ===</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+        digitalWrite(rojo, HIGH);  delay(<span class="num">200</span>);
+        digitalWrite(rojo, LOW);   delay(<span class="num">200</span>);
+    }
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+        digitalWrite(ambar, HIGH); delay(<span class="num">200</span>);
+        digitalWrite(ambar, LOW);  delay(<span class="num">200</span>);
+    }
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">3</span>; i++) {
+        digitalWrite(verde, HIGH); delay(<span class="num">200</span>);
+        digitalWrite(verde, LOW);  delay(<span class="num">200</span>);
+    }
+
+    delay(<span class="num">500</span>);  <span class="sec">// pequeña pausa antes del semáforo</span>
+
+    <span class="sec">// === SEMÁFORO: 5 ciclos completos ===</span>
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+        digitalWrite(rojo,  HIGH); delay(<span class="num">1000</span>); digitalWrite(rojo,  LOW);
+        digitalWrite(ambar, HIGH); delay(<span class="num">500</span>);  digitalWrite(ambar, LOW);
+        digitalWrite(verde, HIGH); delay(<span class="num">1000</span>); digitalWrite(verde, LOW);
+        digitalWrite(ambar, HIGH); delay(<span class="num">500</span>);  digitalWrite(ambar, LOW);
+    }
+}
+
+<span class="kw">void</span> loop() {
+    <span class="sec">// Vacío: todo el espectáculo ocurre en setup().</span>
+}</pre>
+  </div>
+
+  <h2>🔍 Cómo se lee el código</h2>
+
+  <ul style="margin-left:20px; font-size:0.92rem; color:#ccd; line-height:1.8;">
+    <li>Cada uno de los <strong>tres primeros <code>for</code></strong> hace que un LED parpadee 3 veces a 200 ms (200 encendido + 200 apagado).</li>
+    <li>Tras un <code>delay(500)</code> de descanso, viene el <strong>cuarto <code>for</code></strong> con los 5 ciclos del semáforo (idéntico al reto base).</li>
+    <li>Al terminar todos los <code>for</code>, <code>setup()</code> acaba y el programa entra en <code>loop()</code>, que está vacío → los LEDs quedan apagados.</li>
+  </ul>
+
+  <div class="errores">
+    <h3>⚠️ Errores típicos del alumnado</h3>
+    <ul>
+      <li><strong>Reutilizan la variable <code>i</code> sin redeclararla.</strong> En cada <code>for</code> hay que volver a poner <code>int i</code>, no basta con escribir <code>for (i = 0; …)</code>.</li>
+      <li><strong>Olvidan el <code>delay</code> entre HIGH y LOW</strong> al apagar el LED. Resultado: parece que el LED ni siquiera se enciende (porque se apaga inmediatamente).</li>
+      <li><strong>Meten los 4 <code>for</code> dentro de <code>loop()</code></strong> en lugar de <code>setup()</code>. Resultado: el test + semáforo se repite eternamente.</li>
+      <li><strong>Cambian los pines y se les olvida actualizar <code>pinMode()</code></strong>. Si conectan el rojo al pin 9 pero <code>pinMode(11, OUTPUT)</code>, el LED rojo no se enciende.</li>
+    </ul>
+  </div>
+
+  <div class="nota-prof">
+    <strong>📌 Verificación pedagógica:</strong> esta solución usa <strong>solo</strong> conceptos ya vistos hasta S04:
+    <ul style="margin-left:20px; margin-top:6px;">
+      <li><code>setup()</code> / <code>loop()</code> (S01)</li>
+      <li><code>pinMode</code>, <code>digitalWrite</code>, <code>delay</code> (S01)</li>
+      <li><code>const int</code> y nombres simbólicos de pines (S01-S02)</li>
+      <li><code>for (int i = 0; i &lt; N; i++)</code> (concepto principal S04)</li>
+    </ul>
+    <strong>No</strong> se han adelantado funciones propias, arrays, condicionales <em>if</em> ni ningún otro concepto pendiente para sesiones siguientes.
+  </div>
+
+  <a href="presentacion.html" class="back">← Volver a la presentación</a>
+</div>
+</body>
+</html>

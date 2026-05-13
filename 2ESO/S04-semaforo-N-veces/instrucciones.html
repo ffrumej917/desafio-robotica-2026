@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instrucciones – S04 Semáforo de N ciclos | 2º ESO</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f0f1e; color:#e8eaf0; font-family:'Segoe UI',Arial,sans-serif; min-height:100vh; padding:40px 20px 60px; }
+  .page-header { max-width:860px; margin:0 auto 40px; text-align:center; }
+  .page-header .badge { display:inline-block; background:#4c97ff; color:#fff; font-size:0.78rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:20px; margin-bottom:14px; }
+  .page-header h1 { font-size:clamp(1.6rem,4vw,2.4rem); font-weight:900; color:#fff; margin-bottom:8px; }
+  .page-header h1 span { color:#4c97ff; }
+  .page-header p { font-size:clamp(0.9rem,2vw,1.05rem); color:#8899bb; }
+  .phases-bar { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; max-width:860px; margin:0 auto 40px; }
+  .phase-pill { display:flex; align-items:center; gap:7px; padding:7px 18px; border-radius:20px; font-size:0.82rem; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; }
+  .phase-pill.coral { background:rgba(255,107,107,0.18); border:1.5px solid #ff6b6b; color:#ff9090; }
+  .phase-pill.amber { background:rgba(251,188,4,0.13); border:1.5px solid #fbbc04; color:#fbcc44; }
+  .phase-pill.green { background:rgba(52,211,153,0.13); border:1.5px solid #34d399; color:#5de8b0; }
+  .container { max-width:860px; margin:0 auto; }
+  .section { border-radius:16px; padding:28px 30px; margin-bottom:24px; }
+  .section.entender { background:rgba(255,107,107,0.08); border:1.5px solid rgba(255,107,107,0.35); }
+  .section.diseniar { background:rgba(251,188,4,0.07); border:1.5px solid rgba(251,188,4,0.3); }
+  .section.programar { background:rgba(52,211,153,0.07); border:1.5px solid rgba(52,211,153,0.3); }
+  .section-header { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+  .section-icon { font-size:1.6rem; width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .entender .section-icon { background:rgba(255,107,107,0.2); }
+  .diseniar .section-icon { background:rgba(251,188,4,0.15); }
+  .programar .section-icon { background:rgba(52,211,153,0.15); }
+  .section-title { font-size:1.15rem; font-weight:800; }
+  .entender .section-title { color:#ff8080; }
+  .diseniar .section-title { color:#fbcc44; }
+  .programar .section-title { color:#5de8b0; }
+  .section-time { font-size:0.78rem; color:#667; margin-top:2px; }
+  .step { display:flex; gap:16px; margin-bottom:20px; align-items:flex-start; }
+  .step-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:800; flex-shrink:0; margin-top:2px; }
+  .entender .step-num { background:rgba(255,107,107,0.3); color:#ff8080; border:1.5px solid #ff6b6b; }
+  .diseniar .step-num { background:rgba(251,188,4,0.2); color:#fbcc44; border:1.5px solid #fbbc04; }
+  .programar .step-num { background:rgba(52,211,153,0.2); color:#5de8b0; border:1.5px solid #34d399; }
+  .step-body { flex:1; }
+  .step-body p { font-size:0.95rem; line-height:1.7; color:#ccd; }
+  .step-body p strong { color:#fff; }
+  .hint { margin-top:8px; background:rgba(255,255,255,0.05); border-left:3px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 14px; font-size:0.85rem; color:#99aabb; line-height:1.6; }
+  .circuit-desc { background:rgba(76,151,255,0.06); border:1.5px solid rgba(76,151,255,0.3); border-radius:10px; padding:14px 18px; margin:12px 0; font-size:0.9rem; line-height:1.8; color:#c8d6f0; }
+  .circuit-desc strong { color:#fff; }
+  table.timing { width:100%; border-collapse:collapse; margin:10px 0; background:rgba(0,0,0,0.2); border-radius:8px; overflow:hidden; }
+  table.timing th, table.timing td { padding:8px 12px; text-align:left; font-size:0.88rem; border-bottom:1px solid rgba(255,255,255,0.06); }
+  table.timing th { background:rgba(76,151,255,0.15); color:#a8c0ff; font-weight:700; }
+  table.timing td { color:#ccd; }
+  .code-block { background:#111827; border:1px solid #2d3748; border-radius:12px; padding:18px 22px; font-family:'Courier New',monospace; font-size:0.86rem; line-height:1.85; color:#e2e8f0; margin:12px 0; overflow-x:auto; }
+  .code-block .kw { color:#f472b6; font-weight:700; }
+  .code-block .cm { color:#6b7280; font-style:italic; }
+  .code-block .num { color:#fbbf24; }
+  .code-block .i1 { margin-left:1.5em; }
+  .code-block .i2 { margin-left:3em; }
+  .entrega-final { background:rgba(168,85,247,0.12); border:2px solid #a855f7; border-radius:16px; padding:24px 28px; margin-top:10px; max-width:860px; margin-left:auto; margin-right:auto; }
+  .entrega-final h3 { color:#c084fc; font-size:1.05rem; margin-bottom:12px; }
+  .entrega-final ol { margin-left:20px; }
+  .entrega-final li { color:#ccd; font-size:0.92rem; line-height:1.8; }
+  .entrega-final li strong { color:#fff; }
+</style>
+</head>
+<body>
+<div class="page-header">
+  <div class="badge">🤖 Desafío Robótica 2026 · 2º ESO · Sesión 4</div>
+  <h1>🚦 Semáforo de <span>N ciclos</span></h1>
+  <p>Guía paso a paso · Bucle FOR en Tinkercad · 55 minutos</p>
+</div>
+<div class="phases-bar">
+  <div class="phase-pill coral">🧠 Entender · 10 min</div>
+  <div class="phase-pill amber">✏️ Diseñar · 10 min</div>
+  <div class="phase-pill green">💻 Programar · 30 min</div>
+</div>
+<div class="container">
+
+  <div class="section entender">
+    <div class="section-header">
+      <div class="section-icon">🧠</div>
+      <div><div class="section-title">ENTENDER — Bucle FOR con número de repeticiones</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <p>Hasta ahora todo el código iba dentro de <strong><code>void loop()</code></strong>, que se ejecuta una y otra vez sin parar. Eso es perfecto para un semáforo eterno, pero ¿y si queremos que el semáforo haga <strong>solo 5 ciclos</strong> y se apague? Necesitamos algo que tenga un <strong>final programado</strong>.</p>
+        <div class="hint">📌 Esa estructura es el <strong>bucle FOR</strong>: <code>for (int i = 0; i &lt; N; i++) { ... }</code>. Le decimos cuántas veces N y el bloque de dentro se ejecuta exactamente esas veces.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <p>El FOR tiene <strong>tres partes</strong> entre paréntesis separadas por punto y coma:</p>
+        <ul style="margin-left:20px; margin-top:6px; color:#ccd; font-size:0.9rem; line-height:1.8;">
+          <li><strong><code>int i = 0</code></strong> — inicialización: crea un contador <code>i</code> que empieza en 0.</li>
+          <li><strong><code>i &lt; N</code></strong> — condición: mientras se cumpla, el bucle sigue.</li>
+          <li><strong><code>i++</code></strong> — paso: al final de cada vuelta, suma 1 al contador.</li>
+        </ul>
+        <div class="hint">💡 Lectura mental: «empieza con i=0, mientras i sea menor que N, ejecuta el bloque y suma 1 a i». Cuando i llega a N, el bucle termina y el programa sigue con lo de fuera.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <p>Lo importante de hoy: pondremos el FOR <strong>dentro de <code>setup()</code></strong>, no de <code>loop()</code>. Como <code>setup()</code> se ejecuta una sola vez al arrancar la placa, el semáforo hará sus 5 ciclos al encender Arduino y luego se quedará apagado. Si lo metieras en <code>loop()</code> haría 5 ciclos, breve pausa, otros 5 ciclos, breve pausa… eternamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section diseniar">
+    <div class="section-header">
+      <div class="section-icon">✏️</div>
+      <div><div class="section-title">DISEÑAR — Planifica el circuito y los tiempos</div><div class="section-time">⏱ 10 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <p>El circuito tiene <strong>3 LEDs en paralelo</strong>, uno por color, cada uno con su resistencia de 220 Ω en serie. Comparten todos el mismo GND.</p>
+        <div class="circuit-desc">
+          🔴 <strong>LED rojo:</strong> ánodo → resistencia 220 Ω → <strong>pin 11</strong> · cátodo → GND.<br>
+          🟡 <strong>LED ámbar:</strong> ánodo → resistencia 220 Ω → <strong>pin 12</strong> · cátodo → GND.<br>
+          🟢 <strong>LED verde:</strong> ánodo → resistencia 220 Ω → <strong>pin 13</strong> · cátodo → GND.<br>
+          <em>(En el ánodo va el patilla larga del LED; en el cátodo, la corta.)</em>
+        </div>
+        <div class="hint">⚠️ Sin las resistencias de 220 Ω, los LEDs se queman casi inmediatamente. Cada LED necesita la suya, no se puede compartir una.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <p>Antes de tocar código, escribe en tu ficha la <strong>tabla de tiempos</strong> de un ciclo completo del semáforo:</p>
+        <table class="timing">
+          <thead>
+            <tr><th>Orden</th><th>LED encendido</th><th>Duración</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>🔴 Rojo</td><td>1 segundo</td></tr>
+            <tr><td>2</td><td>🟡 Ámbar</td><td>0,5 segundos</td></tr>
+            <tr><td>3</td><td>🟢 Verde</td><td>1 segundo</td></tr>
+            <tr><td>4</td><td>🟡 Ámbar</td><td>0,5 segundos</td></tr>
+          </tbody>
+        </table>
+        <div class="hint">📐 Un ciclo dura 3 segundos. Si hacemos 5 ciclos: 5 × 3 = <strong>15 segundos</strong> en total antes de que el semáforo se apague.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section programar">
+    <div class="section-header">
+      <div class="section-icon">💻</div>
+      <div><div class="section-title">PROGRAMAR — Monta y codifica en Tinkercad</div><div class="section-time">⏱ 30 minutos</div></div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body"><p>Abre <strong><a href="https://www.tinkercad.com" target="_blank" style="color:#5de8b0;">tinkercad.com</a></strong> → <em>Circuits</em> → <strong>Crear nuevo circuito</strong>. Monta los 3 LEDs con sus resistencias según la descripción del paso 4.</p></div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <p>Abre el editor de código (botón <strong>Código</strong> arriba a la derecha), cambia a <strong>Texto</strong> y escribe este programa:</p>
+        <div class="code-block">
+          <div><span class="kw">const int</span> rojo  = <span class="num">11</span>;</div>
+          <div><span class="kw">const int</span> ambar = <span class="num">12</span>;</div>
+          <div><span class="kw">const int</span> verde = <span class="num">13</span>;</div>
+          <div>&nbsp;</div>
+          <div><span class="kw">void</span> setup() {</div>
+          <div class="i1">pinMode(rojo,  <span class="kw">OUTPUT</span>);</div>
+          <div class="i1">pinMode(ambar, <span class="kw">OUTPUT</span>);</div>
+          <div class="i1">pinMode(verde, <span class="kw">OUTPUT</span>);</div>
+          <div>&nbsp;</div>
+          <div class="i1"><span class="cm">// 5 ciclos completos del semáforo</span></div>
+          <div class="i1"><span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {</div>
+          <div class="i2">digitalWrite(rojo,  <span class="kw">HIGH</span>); delay(<span class="num">1000</span>); digitalWrite(rojo,  <span class="kw">LOW</span>);</div>
+          <div class="i2">digitalWrite(ambar, <span class="kw">HIGH</span>); delay(<span class="num">500</span>);  digitalWrite(ambar, <span class="kw">LOW</span>);</div>
+          <div class="i2">digitalWrite(verde, <span class="kw">HIGH</span>); delay(<span class="num">1000</span>); digitalWrite(verde, <span class="kw">LOW</span>);</div>
+          <div class="i2">digitalWrite(ambar, <span class="kw">HIGH</span>); delay(<span class="num">500</span>);  digitalWrite(ambar, <span class="kw">LOW</span>);</div>
+          <div class="i1">}</div>
+          <div>}</div>
+          <div>&nbsp;</div>
+          <div><span class="kw">void</span> loop() {</div>
+          <div class="i1"><span class="cm">// Vacío: el semáforo solo se ejecuta una vez al arrancar.</span></div>
+          <div>}</div>
+        </div>
+        <div class="hint">💡 La <strong>variable <code>i</code></strong> es interna del bucle: vale 0 en la primera vuelta, 1 en la segunda, 2 en la tercera… y el bucle termina cuando <code>i</code> intenta valer 5 (porque ya no se cumple <code>i &lt; 5</code>).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">8</div>
+      <div class="step-body">
+        <p>Pulsa <strong>Iniciar simulación</strong>. Comprueba:</p>
+        <ul style="margin-left:20px; margin-top:6px; color:#ccd; font-size:0.9rem; line-height:1.8;">
+          <li>El semáforo arranca, hace los 5 ciclos completos (≈ 15 segundos).</li>
+          <li>Cuando termina, los <strong>tres LEDs quedan apagados</strong>.</li>
+          <li>El semáforo <strong>no</strong> vuelve a empezar (porque <code>loop()</code> está vacío).</li>
+        </ul>
+        <div class="hint">🔍 Si quieres reiniciar el semáforo, pulsa <strong>Detener</strong> y <strong>Iniciar</strong> de nuevo: <code>setup()</code> se ejecuta otra vez.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">9</div>
+      <div class="step-body">
+        <p>Haz clic en <strong>Compartir</strong> en Tinkercad y copia el <strong>enlace público</strong> del proyecto.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="entrega-final">
+    <h3>🟣 ENTREGA FINAL</h3>
+    <ol>
+      <li>Copia el <strong>enlace público</strong> de tu circuito en Tinkercad.</li>
+      <li>Pégalo en el <strong>recuadro de entrega</strong> de tu ficha.</li>
+      <li>Rellena la tabla de tiempos en la sección Diseño.</li>
+      <li>Si te queda tiempo, mira la <strong>ampliación</strong> en la ficha: añade un «test de luces» antes del semáforo (cada LED parpadea 3 veces).</li>
+      <li>Sube la ficha en <strong>Google Classroom</strong>.</li>
+    </ol>
+  </div>
+</div>
+</body>
+</html>
